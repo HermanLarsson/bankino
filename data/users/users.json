@@ -1,0 +1,16 @@
+{
+    "4xj38" : {
+        "first_name" : "Kim",
+        "last_name" : "Duso Joviken",
+        "middle_name" : "Sebastian Valentino",
+        "personal_number" : 199011090539,
+        "join_date" : "2025-11-18",
+        "user_id" : "4xj38",
+        "bank_accounts" : [
+            "isk99tt",
+            "sav92ds",
+            "cas32os"
+        ],
+        "password" : "password"
+    }
+}
