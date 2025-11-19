@@ -1,0 +1,98 @@
+{
+  "4XJ38": {
+    "ISK99TT": {
+      "account_id": "ISK99TT",
+      "account_type": "ISK",
+      "account_name": "Main",
+      "balance": 14523.45,
+      "currency": "SEK",
+      "date_created": "2025-11-16",
+      "user_id": "4XJ38",
+      "transactions": [
+        {
+          "amount": 34.65,
+          "date": "2025-11-13",
+          "from_acc": "ISK99TT",
+          "to_acc": "SAV89DT"
+        },
+        {
+          "amount": 69.86,
+          "date": "2025-11-07",
+          "from_acc": "CHE99HG",
+          "to_acc": "ISK99TT"
+        }
+      ]
+    },
+    "SAV89DT": {
+      "account_id": "SAV89DT",
+      "account_type": "SAV",
+      "account_name": "Savings",
+      "balance": 32000.0,
+      "currency": "SEK",
+      "date_created": "2025-05-03",
+      "user_id": "4XJ38",
+      "transactions": [
+        {
+          "amount": 1200.0,
+          "date": "2025-10-28",
+          "from_acc": "SAV89DT",
+          "to_acc": "CHE22PP"
+        },
+        {
+          "amount": 34.65,
+          "date": "2025-11-13",
+          "from_acc": "ISK99TT",
+          "to_acc": "SAV89DT"
+        }
+      ]
+    }
+  },
+  "9FD21": {
+    "CHE12AB": {
+      "account_id": "CHE12AB",
+      "account_type": "CHE",
+      "account_name": "Daily Use",
+      "balance": 8421.74,
+      "currency": "SEK",
+      "date_created": "2024-09-12",
+      "user_id": "9FD21",
+      "transactions": [
+        {
+          "amount": 250.05,
+          "date": "2025-11-14",
+          "from_acc": "CHE12AB",
+          "to_acc": "SAV55LL"
+        },
+        {
+          "amount": 999.09,
+          "date": "2025-11-10",
+          "from_acc": "EMPLOYER01",
+          "to_acc": "CHE12AB"
+        }
+      ]
+    },
+    "SAV55LL": {
+      "account_id": "SAV55LL",
+      "account_type": "SAV",
+      "account_name": "Long-term Savings",
+      "balance": 50200.5,
+      "currency": "SEK",
+      "date_created": "2023-04-22",
+      "user_id": "9FD21",
+      "transactions": [
+        {
+          "amount": 250.0,
+          "date": "2025-11-14",
+          "from_acc": "CHE12AB",
+          "to_acc": "SAV55LL"
+        },
+        {
+          "amount": 1000.99,
+          "date": "2025-11-02",
+          "from_acc": "SAV55LL",
+          "to_acc": "INV88YX"
+        }
+      ]
+    }
+  }
+}
