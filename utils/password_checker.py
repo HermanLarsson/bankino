@@ -14,19 +14,11 @@ def hash_password(user_input):
 
 # Compares a hashed password to the hashed password in the db based on personal_number. 
 def verify_user(personal_number, hashed_password):
-    user_to_verify = None
-
     with open ("./data/users/users.json", "r") as file:
         all_users = json.load(file)
         for user_data in all_users.values():
             if user_data["personal_number"] == personal_number and user_data["password"] == hashed_password:
-                user_to_verify = user_data
-
-    if user_to_verify:
-        return True
-    else:
-        return False
-    
+                return True
 
 # example of how program could work...
 hashed_password = hash_password(user_password)
