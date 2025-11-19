@@ -1,0 +1,27 @@
+{
+  "4xj38": [
+    {
+      "account_id": "ISK99TT",
+      "account_type": "ISK",
+      "account_name": "Main",
+      "balance": 14523.45,
+      "currency": "SEK",
+      "date_created": "2025-11-16",
+      "user_id": "4xj38",
+      "transactions": [
+        {
+          "amount": 34.65,
+          "date": "2025-11-13",
+          "from_acc": "ISK99TT",
+          "to_acc": "SAV89DT"
+        },
+        {
+          "amount": 69.86,
+          "date": "2025-11-07",
+          "from_acc": "CHE99HG",
+          "to_acc": "ISK99TT"
+        }
+      ]
+    }
+  ]
+}
