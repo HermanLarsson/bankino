@@ -1,16 +1,12 @@
 {
-    "4XJ38" : {
-        "first_name" : "Kim",
-        "last_name" : "Duso Joviken",
-        "middle_name" : "Sebastian Valentino",
-        "personal_number" : 199011090539,
-        "join_date" : "2025-11-18",
-        "user_id" : "4XJ38",
-        "bank_accounts" : [
-            "ISK99TT",
-            "SAV92DS",
-            "CAS32OS"
-        ],
-        "password" : "password"
-    }
+  "4XJ38": {
+    "first_name": "Kim",
+    "last_name": "Duso Joviken",
+    "middle_name": "Sebastian Valentino",
+    "personal_number": 199011090539,
+    "join_date": "2025-11-18",
+    "user_id": "4XJ38",
+    "bank_accounts": ["ISK99TT", "SAV92DS"],
+    "password": "password"
+  }
 }

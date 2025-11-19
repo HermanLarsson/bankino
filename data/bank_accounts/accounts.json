@@ -13,7 +13,7 @@
           "amount": 34.65,
           "date": "2025-11-13",
           "from_acc": "ISK99TT",
-          "to_acc": "SAV89DT"
+          "to_acc": "SAV92DS"
         },
         {
           "amount": 69.86,
@@ -23,8 +23,8 @@
         }
       ]
     },
-    "SAV89DT": {
-      "account_id": "SAV89DT",
+    "SAV92DS": {
+      "account_id": "SAV92DS",
       "account_type": "SAV",
       "account_name": "Savings",
       "balance": 32000.0,
@@ -35,14 +35,14 @@
         {
           "amount": 1200.0,
           "date": "2025-10-28",
-          "from_acc": "SAV89DT",
+          "from_acc": "SAV92DS",
           "to_acc": "CHE22PP"
         },
         {
           "amount": 34.65,
           "date": "2025-11-13",
           "from_acc": "ISK99TT",
-          "to_acc": "SAV89DT"
+          "to_acc": "SAV92DS"
         }
       ]
     }
