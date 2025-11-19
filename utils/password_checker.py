@@ -6,9 +6,9 @@ personal_number = int(input("Enter personnummer: "))
 user_password = input("Enter password: ")
 
 # hash it
-def hash_password(user_password):
+def hash_password(user_input):
     hash = hashlib.new("SHA256")
-    hash.update(user_password.encode())
+    hash.update(user_input.encode())
     hashed_password = hash.hexdigest()
 
     return hashed_password
@@ -29,4 +29,11 @@ def verify_user(personal_number, hashed_password):
         return False
     
 
-print(verify_user(personal_number, hash_password(user_password)))
+
+# example of how program could work...
+hashed_password = hash_password(user_password)
+
+if verify_user(personal_number, hashed_password):
+    print("Login successful.")
+else:
+    print("Invalid credentials.")

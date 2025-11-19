@@ -8,5 +8,60 @@
     "user_id": "4XJ38",
     "bank_accounts": ["ISK99TT", "SAV92DS"],
     "password": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
+  },
+
+  "A7P91": {
+    "first_name": "Dominic",
+    "last_name": "Wooldridge",
+    "middle_name": "Paul",
+    "personal_number": 199903117530,
+    "join_date": "2024-03-02",
+    "user_id": "A7P91",
+    "bank_accounts": ["CHK12AB", "SAV77LK"],
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
+  },
+
+  "Q9Z52": {
+    "first_name": "Isac",
+    "last_name": "Bibit Mattsson",
+    "middle_name": "None",
+    "personal_number": 199705158812,
+    "join_date": "2023-06-19",
+    "user_id": "Q9Z52",
+    "bank_accounts": ["INV33PL"],
+    "password": "6cb75f652a9b52798eb6cf2201057c73e0677e5e4abf7b2deab8f7df5afc8eae"
+  },
+
+  "M3T84": {
+    "first_name": "Filip",
+    "last_name": "Andersson",
+    "middle_name": "None",
+    "personal_number": 200112249978,
+    "join_date": "2025-01-14",
+    "user_id": "M3T84",
+    "bank_accounts": ["SAV11QR", "CHK55OP", "ISK01WD"],
+    "password": "3c01bdbb26f358bab27f267924aa2c9a03fcfdb8e1d9e53e708b42e3f1f3e594"
+  },
+
+  "V2H67": {
+    "first_name": "Herman",
+    "last_name": "Larsson",
+    "middle_name": "None",
+    "personal_number": 199309041234,
+    "join_date": "2022-11-09",
+    "user_id": "V2H67",
+    "bank_accounts": ["CHK09XY"],
+    "password": "9b74c9897bac770ffc029102a200c5de7f8e3dbf87f5f8c3bc8c3db6027b9fba"
+  },
+
+  "K8W20": {
+    "first_name": "Farzam",
+    "last_name": "Forghanitorbaghan",
+    "middle_name": "None",
+    "personal_number": 200605230441,
+    "join_date": "2025-05-27",
+    "user_id": "K8W20",
+    "bank_accounts": ["SAV20MN"],
+    "password": "e3afed0047b08059d0fada10f400c1e5a0f50a9c9a41e8b5ba4c6e97ed8c5e5f"
   }
 }
