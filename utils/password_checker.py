@@ -5,7 +5,6 @@ import json
 personal_number = int(input("Enter personnummer: "))
 user_password = input("Enter password: ")
 
-# hash it
 def hash_password(user_input):
     hash = hashlib.new("SHA256")
     hash.update(user_input.encode())
@@ -13,7 +12,7 @@ def hash_password(user_input):
 
     return hashed_password
 
-# check the hashed password to the hashed password of that user in the db. 
+# Compares a hashed password to the hashed password in the db based on personal_number. 
 def verify_user(personal_number, hashed_password):
     user_to_verify = None
 
@@ -28,7 +27,6 @@ def verify_user(personal_number, hashed_password):
     else:
         return False
     
-
 
 # example of how program could work...
 hashed_password = hash_password(user_password)
