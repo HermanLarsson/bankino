@@ -1,10 +1,6 @@
 import hashlib
 import json
 
-# take a user inputted password and personal_number
-personal_number = int(input("Enter personnummer: "))
-user_password = input("Enter password: ")
-
 def hash_password(user_input):
     try:
         hash = hashlib.new("SHA256")
@@ -32,6 +28,11 @@ def verify_user(personal_number, hashed_password):
             return True
 
 # example of how program could work...
+
+# take a user inputted password and personal_number
+personal_number = int(input("Enter personnummer: "))
+user_password = input("Enter password: ")
+
 hashed_password = hash_password(user_password)
 
 if verify_user(personal_number, hashed_password):
