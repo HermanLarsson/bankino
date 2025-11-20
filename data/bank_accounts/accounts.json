@@ -47,9 +47,9 @@
       ]
     }
   },
-  "9FD21": {
-    "CHE12AB": {
-      "account_id": "CHE12AB",
+  "A7P91": {
+    "CHK12AB": {
+      "account_id": "CHK12AB",
       "account_type": "CHE",
       "account_name": "Daily Use",
       "balance": 8421.74,
@@ -60,19 +60,19 @@
         {
           "amount": 250.05,
           "date": "2025-11-14",
-          "from_acc": "CHE12AB",
-          "to_acc": "SAV55LL"
+          "from_acc": "CHK12AB",
+          "to_acc": "SAV77LK"
         },
         {
           "amount": 999.09,
           "date": "2025-11-10",
           "from_acc": "EMPLOYER01",
-          "to_acc": "CHE12AB"
+          "to_acc": "CHK12AB"
         }
       ]
     },
-    "SAV55LL": {
-      "account_id": "SAV55LL",
+    "SAV77LK": {
+      "account_id": "SAV77LK",
       "account_type": "SAV",
       "account_name": "Long-term Savings",
       "balance": 50200.5,
@@ -83,13 +83,13 @@
         {
           "amount": 250.0,
           "date": "2025-11-14",
-          "from_acc": "CHE12AB",
-          "to_acc": "SAV55LL"
+          "from_acc": "CHK12AB",
+          "to_acc": "SAV77LK"
         },
         {
           "amount": 1000.99,
           "date": "2025-11-02",
-          "from_acc": "SAV55LL",
+          "from_acc": "SAV77LK",
           "to_acc": "INV88YX"
         }
       ]
