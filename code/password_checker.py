@@ -30,12 +30,12 @@ def verify_user(personal_number, hashed_password):
 # example of how program could work...
 
 # take a user inputted password and personal_number
-personal_number = int(input("Enter personnummer: "))
-user_password = input("Enter password: ")
+# personal_number = int(input("Enter personnummer: "))
+# user_password = input("Enter password: ")
 
-hashed_password = hash_password(user_password)
+# hashed_password = hash_password(user_password)
 
-if verify_user(personal_number, hashed_password):
-    print("Login successful.")
-else:
-    print("Invalid credentials.")
+# if verify_user(personal_number, hashed_password):
+#     print("Login successful.")
+# else:
+#     print("Invalid credentials.")
