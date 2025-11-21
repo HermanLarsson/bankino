@@ -10,9 +10,6 @@ file_path = os.path.abspath(os.path.join(BASE_DIR, "..", "data", "users", "users
 def generate_user_id():
    
     
-    
-    
-    
     #Load existing users to check if id does not exist
     with open(file_path, "r") as users:
         all_users = json.load(users)
@@ -30,22 +27,11 @@ def generate_user_id():
     else:
         return generated_id
 
-
-
-
-
-
-
     
 def sign_up(first_name, last_name, middle_name, personal_number, join_date, password): # we should change join date in future
 
 
-
-
-
-
     new_id = generate_user_id()
-
 
 
     user_data = {
@@ -59,7 +45,6 @@ def sign_up(first_name, last_name, middle_name, personal_number, join_date, pass
         "password": password,
     }
 
-    
 
     with open(file_path, "r") as old_users:
         all_users = json.load(old_users)
@@ -68,9 +53,3 @@ def sign_up(first_name, last_name, middle_name, personal_number, join_date, pass
     
     with open(file_path, "w") as new_users:
         json.dump(all_users , new_users , indent=2)
-
-
-
-
-
-
