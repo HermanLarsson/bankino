@@ -15,8 +15,13 @@ def login_user():
     hashed_password = password_checker.hash_password(saved_info["password"])
 
     login_check = password_checker.verify_user(int(saved_info["personal_number"]), hashed_password)
-    if login_check == " ":
+    if login_check == "":
         print("Invalid credentials.")
+        try:
+            with open ("./data/cache/logged_in_user.cache", "w") as file:
+                file.write(login_check)
+        except FileNotFoundError:
+            print("File not found")
     else:
         print("Login successful.")
         try:
@@ -68,7 +73,6 @@ def load_window():
 
     header_font = tkFont.Font(family="Times", size=25, weight="bold")
 
-    global bababa
     header = tk.Label(login_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
 
