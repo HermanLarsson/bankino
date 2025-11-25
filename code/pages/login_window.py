@@ -76,5 +76,9 @@ def load_window():
     header = tk.Label(login_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
 
+    # Sign up button
+    signup_button = tk.Button(login_window, text="Sign up")
+    signup_button.grid(column=0, row=3, pady=20)
+
     display_login()
     tk.mainloop()
