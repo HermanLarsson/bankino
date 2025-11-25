@@ -3,6 +3,9 @@ import tkinter.font as tkFont
 import backend.password_checker as password_checker
 import pages.landing_page as landing_page
 
+
+# Login user will save the user_id in cache-file and destroy the window if successful
+# If login fails, nothing will happen
 def login_user():
     saved_info = dict()
     saved_info['personal_number'] = personal_number.get()
@@ -11,15 +14,18 @@ def login_user():
 
     hashed_password = password_checker.hash_password(saved_info["password"])
 
-    if password_checker.verify_user(int(saved_info["personal_number"]), hashed_password):
-        print("Login successful.")
-        login_window.destroy()
-        landing_page.main("A7P91")
-        return True
-        
-    else:
+    login_check = password_checker.verify_user(int(saved_info["personal_number"]), hashed_password)
+    if login_check == " ":
         print("Invalid credentials.")
-        return False
+    else:
+        print("Login successful.")
+        try:
+            with open ("./data/cache/logged_in_user.cache", "w") as file:
+                file.write(login_check)
+        except FileNotFoundError:
+            print("File not found")
+        login_window.destroy()
+        
 
 
 def display_login():
@@ -43,7 +49,8 @@ def display_login():
     login_button = tk.Button(login_window, text="Login", command =login_user)
     login_button.grid(column=1, row=3, pady=20)
 
-def main():
+def load_window():
+   
     global login_window
     login_window = tk.Tk()  # Creates the window
     login_window.title('Bankino')
@@ -57,17 +64,13 @@ def main():
         login_window.columnconfigure(i, weight=1)
     for i in range(ROWS):
         login_window.rowconfigure(i, weight=1)
-
+    
 
     header_font = tkFont.Font(family="Times", size=25, weight="bold")
 
+    global bababa
     header = tk.Label(login_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
 
     display_login()
-
-
-if __name__ == "__main__":
-    main()
-
-tk.mainloop()
+    tk.mainloop()
