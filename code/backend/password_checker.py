@@ -19,25 +19,13 @@ def verify_user(personal_number, hashed_password):
             all_users = json.load(file)
     except FileNotFoundError:
         print("Error: User database file not found.")
-        return " "
+        return ""
+    
+    output = ""
     
     for user_data in all_users.values():
         if (user_data['personal_number'] == int(personal_number)) and user_data['password'] == hashed_password:
             print("Found user!")
-            return user_data["user_id"]
-        else:
-            print("Error: Invalid Credentials")
-            return " "
+            output = user_data["user_id"]
 
-# example of how program could work...
-
-# take a user inputted password and personal_number
-# personal_number = int(input("Enter personnummer: "))
-# user_password = input("Enter password: ")
-
-# hashed_password = hash_password(user_password)
-
-# if verify_user(personal_number, hashed_password):
-#     print("Login successful.")
-# else:
-#     print("Invalid credentials.")
+    return output
