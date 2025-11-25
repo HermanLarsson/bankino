@@ -17,6 +17,11 @@ def login_user():
     login_check = password_checker.verify_user(int(saved_info["personal_number"]), hashed_password)
     if login_check == "":
         print("Invalid credentials.")
+        try:
+            with open ("./data/cache/logged_in_user.cache", "w") as file:
+                file.write(login_check)
+        except FileNotFoundError:
+            print("File not found")
     else:
         print("Login successful.")
         try:
