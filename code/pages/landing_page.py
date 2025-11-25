@@ -46,7 +46,7 @@ def list_accounts():
 #Main functions which runs the program
 
 
-def main(user_id):
+def load_window(user_id):
 
     global landing_page 
     landing_page = tk.Tk() #Creates the window
