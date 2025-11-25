@@ -24,19 +24,19 @@ def show_account_data(user_id, account_id):
     all_accounts = get_all_account_data(user_id)
 
     account_data = all_accounts[account_id]
-    account_balance = tk.Label(bank_account, text = (f"Balance: "), font = label_font, anchor = "w")
+    account_balance = tk.Label(bank_account, text = (f"Balance: "), font = header2_font, anchor = "w")
     account_balance.grid(column = 0, row = 3, sticky = 'w')
 
     account_balance_value = tk.Label(bank_account, text = (f"{account_data['balance']} {account_data['currency']}"), font = value_font, anchor = "w")
     account_balance_value.grid(column = 0, row = 4, sticky = 'w')
 
-    account_name = tk.Label(bank_account, text = (f"Account Name: {account_data['account_name']}"), font = label_font, anchor = "w")
+    account_name = tk.Label(bank_account, text = (f"Account Name: {account_data['account_name']}"), font = header3_font, anchor = "w")
     account_name.grid(column = 0, row = 6, sticky = 'w')
 
-    account_type = tk.Label(bank_account, text = (f"Account Type: {account_data['account_type']}"), font = label_font, anchor = "w")
+    account_type = tk.Label(bank_account, text = (f"Account Type: {account_data['account_type']}"), font = header3_font, anchor = "w")
     account_type.grid(column = 0, row = 7, sticky = 'w')
 
-    account_currency = tk.Label(bank_account, text = (f"Currency: {account_data['currency']}"), font = label_font, anchor = "w")
+    account_currency = tk.Label(bank_account, text = (f"Currency: {account_data['currency']}"), font = header3_font, anchor = "w")
     account_currency.grid(column = 0, row = 8, sticky = 'w')
 
 
@@ -54,15 +54,17 @@ def main(user_id, account_id):
     for i in range(ROWS):
         bank_account.rowconfigure(i, weight = 1)
 
-    global label_font
+    global header2_font
     global header_font
     global account_font
     global value_font
+    global header3_font
 
-    label_font = tkFont.Font(family="Calibri", size = 20, weight = "bold")
     header_font = tkFont.Font(family = "Calibri", size = 30, weight = "bold")
+    header2_font = tkFont.Font(family="Calibri", size = 20, weight = "bold")
     account_font = tkFont.Font(family="Calibri", size = 25, weight = "normal")
     value_font = tkFont.Font(family = "Courier", size = 30, weight = "normal")
+    header3_font = tkFont.Font(family="Calibri", size = 20, weight = "normal")
 
     header = tk.Label(bank_account, text = "Bankino", font = header_font)
     header.grid(column = 0, row = 0, sticky = tk.NSEW)
