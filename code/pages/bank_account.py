@@ -18,12 +18,17 @@ def get_all_account_data(user_id):
         print(user_data)
         return user_data
 
-
 # Then take a Bank ID to access the specific bank account details. 
 def show_account_data(user_id, account_id):
     all_accounts = get_all_account_data(user_id)
 
+    # data for the individual account the user wants to display
     account_data = all_accounts[account_id]
+
+    # all of the labels holding acocunt data to be shown on the page
+    title = tk.Label(bank_account, text = f"Account: {account_id}", font = header2_font)
+    title.grid (column = 0, row = 1, sticky='w')
+
     account_balance = tk.Label(bank_account, text = (f"Balance: "), font = header2_font, anchor = "w")
     account_balance.grid(column = 0, row = 3, sticky = 'w')
 
@@ -41,12 +46,13 @@ def show_account_data(user_id, account_id):
 
 
 # display the banks details on the screen. 
-def main(user_id, account_id):
+def load_window(user_id, account_id):
     global bank_account
     bank_account = tk.Tk()
     bank_account.title(f"Account: {account_id}")
     bank_account.geometry('1000x1000')
 
+    # Configures the amount of columns and rows
     ROWS = 20
     COLUMNS = 20
     for i in range(COLUMNS):
@@ -54,22 +60,20 @@ def main(user_id, account_id):
     for i in range(ROWS):
         bank_account.rowconfigure(i, weight = 1)
 
+    # Different fonts/formatting for labels
     global header2_font
     global header_font
-    global account_font
     global value_font
     global header3_font
 
     header_font = tkFont.Font(family = "Calibri", size = 30, weight = "bold")
-    header2_font = tkFont.Font(family="Calibri", size = 20, weight = "bold")
-    account_font = tkFont.Font(family="Calibri", size = 25, weight = "normal")
+    header2_font = tkFont.Font(family = "Calibri", size = 20, weight = "bold")
     value_font = tkFont.Font(family = "Courier", size = 30, weight = "normal")
-    header3_font = tkFont.Font(family="Calibri", size = 20, weight = "normal")
+    header3_font = tkFont.Font(family = "Calibri", size = 20, weight = "normal")
+
 
     header = tk.Label(bank_account, text = "Bankino", font = header_font)
     header.grid(column = 0, row = 0, sticky = tk.NSEW)
-    title = tk.Label(bank_account, text = f"Account: {account_id}", font = account_font)
-    title.grid (column = 0, row = 1)
     separator = ttk.Separator(bank_account, orient = "horizontal")
     separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
 
@@ -77,5 +81,4 @@ def main(user_id, account_id):
     bank_account.mainloop()
 
 
-
-main(user_id, account_id)
+load_window(user_id, account_id)
