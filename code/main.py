@@ -1,6 +1,8 @@
 import pages.login_window
 
 
+#call pages.window_name.load_window() for each window you want to load. REMEMBER that you CAN pass variables to your load_window()-function if needed
+
 def main():
     pages.login_window.load_window()
     logged_in_user = ""
