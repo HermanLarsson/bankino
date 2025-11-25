@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
-import password_checker
-import landing_page
+import backend.password_checker as password_checker
+import pages.landing_page as landing_page
 
 def login_user():
     saved_info = dict()

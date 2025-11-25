@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.font as tkFont
-import sign_up
+import backend.sign_up as sign_up
 
 
 def sign_up_user():
