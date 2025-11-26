@@ -11,15 +11,13 @@ def get_file_path(file):
 
 
 #Gets the user info from the users.json file
-def get_user_info(personal_num):
+def get_user_info(user_id):
 
-    file_path = get_file_path("../data/users/users.json")
+    file_path = get_file_path("../../data/users/users.json")
     with open(file_path, "r", encoding="UTF-8") as jsonfile:
-        all_users = json.load(jsonfile)
+        all_users = json.load(jsonfile) 
 
-        for key in all_users:
-            if all_users[key]["personal_number"] == personal_num:
-                return all_users[key]
+    return all_users[user_id]
 
 
 #Creates an account id
@@ -51,7 +49,7 @@ def get_date():
 def add_new_account(account_id, today_date, user_id, account_name):
 
     #Saves the current accounts file in variable
-    file_path = get_file_path("../data/bank_accounts/accounts.json")
+    file_path = get_file_path("../../data/bank_accounts/accounts.json")
     with open(file_path, "r", encoding="UTF-8") as jsonfile:
         all_accounts = json.load(jsonfile)
         
@@ -84,13 +82,26 @@ def write_to_json(file, new_account):
         json.dump(new_account, jsonfile, indent = 4)
 
 
+def get_user_id():
+    logged_in_user = ""
+    file_path = get_file_path("../../data/cache/logged_in_user.cache")
+    try:
+        with open (file_path, "r") as file:
+            logged_in_user = file.read()
+    except FileNotFoundError:
+        print("File not found")
+    print("logged in user is : " + logged_in_user)
+    
+    return logged_in_user
 
 
-def create_new_account(personal_number, account_type, account_name): #The personal number should be saved in a variable when logging in and the account_type and account_name should be inputs.
 
-    user_info = get_user_info(personal_number)
+
+def create_new_account(account_type, account_name): #The personal number should be saved in a variable when logging in and the account_type and account_name should be inputs.
+    user_id = get_user_id()
+    user_info = get_user_info(user_id)
     account_id = create_account_id(user_info["bank_accounts"], account_type, CHARACTERS) 
     today_date = get_date() 
 
     all_accounts = add_new_account(account_id, today_date, user_info["user_id"], account_name)
-    write_to_json("../data/bank_accounts/accounts.json", all_accounts)
+    write_to_json("../../data/bank_accounts/accounts.json", all_accounts)
