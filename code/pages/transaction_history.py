@@ -51,6 +51,9 @@ def show_transactions(user_id, account_id):
         to_and_from_labels.append(tk.Label(transactions, text = f"Transferred from account {transaction["from_acc"]} to account {transaction["to_acc"]}", font = header3_font, anchor = "w"))
         to_and_from_labels[account_counter].grid(column = 0, row = current_row + 2, sticky = "w")
 
+        separator = ttk.Separator(transactions, orient = "horizontal")
+        separator.grid(column=0, row=current_row + 3, sticky="we")
+
         current_row += 4
         account_counter += 1
 
