@@ -77,13 +77,14 @@ def display_signup():
     signup_button = tk.Button(root, text="Sign Up", command=sign_up_user)
     signup_button.grid(column=1, row=7, pady=20)
 
-    def back_to_login():
+def back_to_login():
         root.destroy()   # destroys/closes the sign up window
         login_root.deiconify()
     
     # back to login button
-    back_button = tk.Button(root, text= "Back to Login", command = back_to_login)
-    back_button.grid(column=0, row=7, pady=20)
+back_button = tk.Button(root, text= "Back to Login", command = back_to_login)
+back_button.grid(column=0, row=7, pady=20)
+
 
 def load_window(login_window):
 

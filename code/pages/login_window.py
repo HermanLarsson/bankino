@@ -55,6 +55,11 @@ def display_login():
     login_button = tk.Button(login_window, text="Login", command =login_user)
     login_button.grid(column=1, row=3, pady=20)
 
+def open_signup_window():
+        login_window.withdraw() # hides the login window
+        sign_up_window.load_window(login_window) # opens the sign up window
+
+
 def load_window():
    
     global login_window
@@ -77,10 +82,6 @@ def load_window():
     header = tk.Label(login_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
     
-    def open_signup_window():
-        login_window.withdraw() # hides the login window
-    
-        sign_up_window.load_window(login_window) # opens the sign up window
 
     # Sign up button
     # pressing the button will call the function to open sign up page and hide the login window
