@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 import json
+import pages.transaction_history as transaction_history
 
 # hardcoded inputs for now
 user_id = "A7P91"
@@ -45,6 +46,12 @@ def show_account_data(user_id, account_id):
     account_currency = tk.Label(bank_account, text = (f"Currency: {account_data['currency']}"), font = header3_font, anchor = "w")
     account_currency.grid(column = 0, row = 8, sticky = 'w')
 
+    view_transactions_button = tk.Button(bank_account, text="View Transaction History", command = open_transaction_window)
+    view_transactions_button.grid(column = 0, row = 9, sticky = 'w')
+
+def open_transaction_window():
+     bank_account.withdraw() #hides the accounts window
+     transaction_history.load_window(user_id, account_id) #opens transaction history window
 
 # display the banks details on the screen. 
 def load_window(user_id, account_id):
