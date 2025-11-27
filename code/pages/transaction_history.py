@@ -22,11 +22,6 @@ def get_transactions(user_id, account_id):
 
     return transaction_history
 
-
-# hardcoded inputs for now
-user_id = "A7P91"
-account_id = "CHK12AB"
-
 # Takes the user_id and account_id to create labels for all transactions
 def show_transactions(user_id, account_id):
     transaction_history = get_transactions(user_id, account_id)
@@ -90,5 +85,3 @@ def load_window(user_id, account_id):
 
     show_transactions(user_id, account_id)
     transactions.mainloop()
-
-load_window(user_id, account_id)

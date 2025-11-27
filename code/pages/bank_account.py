@@ -4,10 +4,6 @@ from tkinter import ttk
 import json
 import pages.transaction_history as transaction_history
 
-# hardcoded inputs for now
-user_id = "A7P91"
-account_id = "CHK12AB"
-
 # Fetches all account data based on user_id
 def get_all_account_data(user_id):
     try: 
@@ -87,6 +83,3 @@ def load_window(user_id, account_id):
 
     show_account_data(user_id, account_id)
     bank_account.mainloop()
-
-
-load_window(user_id, account_id)

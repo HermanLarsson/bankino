@@ -2,9 +2,14 @@ import pages.login_window
 import pages.landing_page
 
 
+def reset_cache():
+    with open ("./data/cache/logged_in_user.cache", "w") as file:
+        file.write("")
+
 #call pages.window_name.load_window() for each window you want to load. REMEMBER that you CAN pass variables to your load_window()-function if needed
 
 def main():
+    reset_cache()
     pages.login_window.load_window()
 
     # Based on the info inputted in the login window, we try to login the user and navigate to their landing page. 
