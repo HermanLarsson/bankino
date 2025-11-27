@@ -3,6 +3,7 @@ import tkinter.font as tkFont
 from tkinter import ttk
 import json
 import pages.transaction_history as transaction_history
+import pages.landing_page as landing_page
 
 # Fetches all account data based on user_id
 def get_all_account_data(user_id):
@@ -45,9 +46,16 @@ def show_account_data(user_id, account_id):
     view_transactions_button = tk.Button(bank_account, text="View Transaction History", command=lambda: open_transaction_window(user_id, account_id))
     view_transactions_button.grid(column = 0, row = 9, sticky = 'w')
 
+    view_transactions_button = tk.Button(bank_account, text="Back to Landing Page", command=lambda: back_to_landing_page(user_id))
+    view_transactions_button.grid(column = 0, row = 10, sticky = 'w')
+
 def open_transaction_window(user_id, account_id):
     bank_account.withdraw() #hides the accounts window
     transaction_history.load_window(user_id, account_id) #opens transaction history window
+
+def back_to_landing_page(user_id):
+    bank_account.destroy()
+    landing_page.load_window(user_id)
 
 # display the banks details on the screen. 
 def load_window(user_id, account_id):

@@ -4,12 +4,6 @@ from tkinter import ttk
 import json
 import pages.bank_account as bank_account
 
-logged_in_id = ""
-account_headers = []
-account_names = []
-account_amounts = []
-account_buttons = []
-
 #Loads the users bank accounts. 
 def load_bank_accounts(user_id):
     try:
@@ -24,6 +18,10 @@ def load_bank_accounts(user_id):
 #Creates labels for each accounts id, name and amount as well as button
 # Två sätt framåt, antingen sätta knappen som account ID och sen fetcha texten, eller gömma variabel med account id
 def list_accounts(user_id):
+    account_headers = []
+    account_amounts = []
+    account_buttons = []
+
     account_counter = 0
     current_row = 3
     bank_accounts = load_bank_accounts(user_id)
@@ -41,12 +39,10 @@ def list_accounts(user_id):
         current_row += 2
         account_counter += 1
 
-
-
 def OnButtonClick(user_id, clicked_id):
+    landing_page.destroy()
     bank_account.load_window(user_id, clicked_id)
     print(clicked_id)
-    landing_page.destroy()
 
 #Program starts here
 #Main functions which runs the program
@@ -77,9 +73,6 @@ def load_window(user_id):
     header_font = tkFont.Font(family = "Calibri", size = 30, weight = "bold")
     header2_font = tkFont.Font(family="Calibri", size = 25, weight = "bold")
     value_font = tkFont.Font(family = "Courier", size = 15, weight = "normal")
-
-
-
 
     #Creates the header as a Label over the entire cell
     header = tk.Label(landing_page, text = "Bankino", font = header_font)
