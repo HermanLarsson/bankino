@@ -4,7 +4,6 @@ import backend.password_checker as password_checker
 import pages.landing_page as landing_page
 import pages.sign_up_window as sign_up_window
 
-
 # Login user will save the user_id in cache-file and destroy the window if successful
 # If login fails, nothing will happen
 def login_user():
@@ -32,8 +31,6 @@ def login_user():
             print("File not found")
         login_window.destroy()
         
-
-
 def display_login():
     personal_number_label = tk.Label(login_window, text="Personal Number:", bg="#B6B6B6")
     personal_number_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
@@ -59,7 +56,6 @@ def open_signup_window():
         login_window.withdraw() # hides the login window
         sign_up_window.load_window(login_window) # opens the sign up window
 
-
 def load_window():
    
     global login_window
@@ -76,13 +72,11 @@ def load_window():
     for i in range(ROWS):
         login_window.rowconfigure(i, weight=1)
     
-
     header_font = tkFont.Font(family="Times", size=25, weight="bold")
 
     header = tk.Label(login_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
     
-
     # Sign up button
     # pressing the button will call the function to open sign up page and hide the login window
     signup_button = tk.Button(login_window, text="Sign up", command = open_signup_window) 
