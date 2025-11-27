@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 import backend.password_checker as password_checker
 import pages.landing_page as landing_page
+import pages.sign_up_window as sign_up_window
 
 
 # Login user will save the user_id in cache-file and destroy the window if successful
@@ -75,9 +76,15 @@ def load_window():
 
     header = tk.Label(login_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
+    
+    def open_signup_window():
+        login_window.withdraw() # hides the login window
+    
+        sign_up_window.load_window(login_window) # opens the sign up window
 
     # Sign up button
-    signup_button = tk.Button(login_window, text="Sign up")
+    # pressing the button will call the function to open sign up page and hide the login window
+    signup_button = tk.Button(login_window, text="Sign up", command = open_signup_window) 
     signup_button.grid(column=0, row=3, pady=20)
 
     display_login()
