@@ -10,7 +10,9 @@ def reset_cache():
 
 def main():
     reset_cache()
-    pages.login_window.load_window()
+
+    login_window = pages.login_window.load_window()
+    login_window.mainloop()
 
     # Based on the info inputted in the login window, we try to login the user and navigate to their landing page. 
     logged_in_user = ""
@@ -21,7 +23,7 @@ def main():
                 print("Unable to navigate to landing page because user is not logged in")
             else:
                 print("logged in user is : " + logged_in_user)
-                pages.landing_page.load_window(logged_in_user)
+                pages.landing_page.load_window(logged_in_user, pages.login_window.login_window())
     except FileNotFoundError:
         print("File not found")
 

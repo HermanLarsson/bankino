@@ -51,16 +51,16 @@ def show_account_data(user_id, account_id):
 
 def open_transaction_window(user_id, account_id):
     bank_account.withdraw() #hides the accounts window
-    transaction_history.load_window(user_id, account_id) #opens transaction history window
+    transaction_history.load_window(user_id, account_id, bank_account) #opens transaction history window
 
 def back_to_landing_page(user_id):
-    bank_account.destroy()
-    landing_page.load_window(user_id)
+    bank_account.withdraw()
+    landing_page.load_window(user_id, bank_account)
 
 # display the banks details on the screen. 
-def load_window(user_id, account_id):
+def load_window(user_id, account_id, previous_window): 
     global bank_account
-    bank_account = tk.Toplevel()
+    bank_account = tk.Toplevel(previous_window) # creates a new window on top of the previous one
     bank_account.title(f"Account: {account_id}")
     bank_account.geometry('1000x1000')
 
@@ -90,4 +90,4 @@ def load_window(user_id, account_id):
     separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
 
     show_account_data(user_id, account_id)
-    bank_account.mainloop()
+    

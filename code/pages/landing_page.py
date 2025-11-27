@@ -40,17 +40,17 @@ def list_accounts(user_id):
         account_counter += 1
 
 def OnButtonClick(user_id, clicked_id):
-    landing_page.destroy()
-    bank_account.load_window(user_id, clicked_id)
+    landing_page.withdraw()
+    bank_account.load_window(user_id, clicked_id, landing_page)
 
 #Program starts here
 #Main functions which runs the program
 
 
-def load_window(user_id):
+def load_window(user_id, login_window):
 
     global landing_page 
-    landing_page = tk.Toplevel() #Creates the window
+    landing_page = tk.Toplevel(login_window) #Creates the window
     landing_page.title('Bankino')
     landing_page.geometry('1000x1000')
     #landing_page.configure(bg = "#B6B6B6") #Configures the background
@@ -83,4 +83,4 @@ def load_window(user_id):
 
     #load_bank_accounts(user_id)
     list_accounts(user_id)
-    landing_page.mainloop() 
+    

@@ -29,7 +29,8 @@ def login_user():
                 file.write(login_check)
         except FileNotFoundError:
             print("File not found")
-        login_window.destroy()
+    login_window.withdraw() # hides the login window
+    landing_page.load_window(login_check, login_window) # opens the landing page
         
 def display_login():
     personal_number_label = tk.Label(login_window, text="Personal Number:", bg="#B6B6B6")
@@ -83,4 +84,4 @@ def load_window():
     signup_button.grid(column=0, row=3, pady=20)
 
     display_login()
-    tk.mainloop()
+    return login_window # returns created tk.TK() window, which is used to start gui from main
