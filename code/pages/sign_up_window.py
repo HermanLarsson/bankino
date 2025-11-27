@@ -1,6 +1,10 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import backend.sign_up as sign_up
+import re
+import tkinter.messagebox as messagebox
+from datetime import date
+
 
 def sign_up_user():
     # get inputs
@@ -11,9 +15,53 @@ def sign_up_user():
     join_date_input = join_date_entry.get()
     password_input = user_password_entry.get()
 
+
+    # Checking if inputs have the requirments.
+    # Name should only contain letters.
+    name_regex = r"^[A-Za-z]+$"
+    # Middle name should only contain letters or be empty.
+    middle_name_regex = r"^[A-Za-z]*$"
+    # Middle name should contain 10 or 12 digits.
+    personal_number_regex = r"^\d{10}(\d{2})?$"
+    if not re.fullmatch(name_regex, first_name_input):
+        messagebox.showerror("Error", "First name must contain letters.")
+        return
+    if not re.fullmatch(name_regex, last_name_input):
+        messagebox.showerror("Error", "Last name must contain letters.")
+        return
+    if not re.fullmatch(middle_name_regex, middle_name_input):
+        messagebox.showerror("Error", "Middle name must contain only letters or be empty.")
+        return
+    if not re.fullmatch(personal_number_regex, personal_number_input):
+        messagebox.showerror("Error", "Personal number must be 10 or 12 digits.")
+    # Password must contain at least 8 characters. 
+        return
+    if not re.fullmatch(r"^.{8,}$", password_input):
+        messagebox.showerror("Error", "Password must contain at least 8 characters.")
+        return
+    # Password must contain at least one capital letters.
+    if not re.fullmatch(r".*[A-Z].*", password_input):
+        messagebox.showerror("Error", "Password must contain at least one capital letters.")
+        return
+    # Password must contain at least one lowercase letters.
+    if not re.fullmatch(r".*[a-z].*", password_input):
+        messagebox.showerror("Error", "Password must contain at least one lowercase letters.")
+        return
+    # Password must contain at least one digit.
+    if not re.fullmatch(r".*\d.*", password_input):
+        messagebox.showerror("Error", "Password must contain at least one digit.")
+        return
+    # Password must contain at least one special character.
+    if not re.fullmatch(r"(?=.*[!#$%&'()*+,./:;<=>?@\[\]^_`{|}~]).+", password_input):
+        messagebox.showerror("Error", "Password must contain at least one special character.")
+        return
+
+
     # Call the sign up function
     sign_up.sign_up(first_name_input, last_name_input, middle_name_input,
                     personal_number_input, join_date_input, password_input)
+    # Show massabe user account created successfully!
+    messagebox.showinfo("Success", "User account created successfully!")
     
 def display_signup():
     global first_name_entry, last_name_entry, middle_name_entry
