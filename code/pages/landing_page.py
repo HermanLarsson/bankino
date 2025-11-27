@@ -9,9 +9,6 @@ account_names = []
 account_amounts = []
 account_buttons = []
 
-
-
-
 #Loads the users bank accounts. 
 def load_bank_accounts(user_id):
     try:
@@ -21,7 +18,6 @@ def load_bank_accounts(user_id):
         return data[user_id]
     except FileNotFoundError:
         print("Database file not found")
-
 
 #Creates labels for each accounts id, name and amount as well as button
 def list_accounts(user_id):
@@ -35,22 +31,11 @@ def list_accounts(user_id):
         account_amounts.append(tk.Label(landing_page, text = (str(account[1]["balance"]) + " SEK"), font = value_font))
         account_amounts[account_counter].grid(column = 4, row = current_row)
 
-        account_buttons.append(tk.Button(landing_page, text=account_counter, command=lambda clicked_id = account[0] : OnButtonClick(clicked_id)))
-        account_buttons[account_counter].grid(row = current_row + 1, column = 0, sticky = "NW")
-
         current_row += 2
         account_counter += 1
 
-
-def OnButtonClick(clicked_id):
-    print(clicked_id)
-
-
-
 #Program starts here
 #Main functions which runs the program
-
-
 def load_window(user_id):
 
     global landing_page 
@@ -76,9 +61,6 @@ def load_window(user_id):
     header_font = tkFont.Font(family = "Calibri", size = 30, weight = "bold")
     header2_font = tkFont.Font(family="Calibri", size = 25, weight = "bold")
     value_font = tkFont.Font(family = "Courier", size = 15, weight = "normal")
-
-
-
 
     #Creates the header as a Label over the entire cell
     header = tk.Label(landing_page, text = "Bankino", font = header_font)
