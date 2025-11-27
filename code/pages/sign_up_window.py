@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
-import backend.sign_up as sign_up
+import backend.db_queries as db_queries
+
 
 
 def sign_up_user():
@@ -14,7 +15,7 @@ def sign_up_user():
 
 
     # Call the sign up function
-    sign_up.sign_up(first_name_input, last_name_input, middle_name_input,
+    db_queries.sign_up(first_name_input, last_name_input, middle_name_input,
                     personal_number_input, join_date_input, password_input)
     
 
