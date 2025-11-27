@@ -60,7 +60,7 @@ def back_to_landing_page(user_id):
 # display the banks details on the screen. 
 def load_window(user_id, account_id):
     global bank_account
-    bank_account = tk.Tk()
+    bank_account = tk.Toplevel()
     bank_account.title(f"Account: {account_id}")
     bank_account.geometry('1000x1000')
 

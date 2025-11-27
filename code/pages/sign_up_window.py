@@ -71,8 +71,8 @@ def display_signup():
     back_button.grid(column=0, row=7, pady=20)
 
 def back_to_login():
-        sign_up_window.destroy()   # destroys/closes the sign up window
-        login_window.deiconify()
+    sign_up_window.withdraw()   # destroys/closes the sign up window
+    login_window.deiconify()
 
 def load_window(previous_window):
 

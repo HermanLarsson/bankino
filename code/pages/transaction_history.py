@@ -64,7 +64,7 @@ def back_to_transactions(user_id, account_id):
 # Window for displaying the transaction information
 def load_window(user_id, account_id):
     global transactions
-    transactions = tk.Tk()
+    transactions = tk.Toplevel()
     transactions.title(f"Account: {account_id}")
     transactions.geometry('1000x1000')
 

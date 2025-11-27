@@ -53,8 +53,8 @@ def display_login():
     login_button.grid(column=1, row=3, pady=20)
 
 def open_signup_window():
-        login_window.withdraw() # hides the login window
-        sign_up_window.load_window(login_window) # opens the sign up window
+    login_window.withdraw() # hides the login window
+    sign_up_window.load_window(login_window) # opens the sign up window
 
 def load_window():
    
