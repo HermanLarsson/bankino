@@ -21,14 +21,14 @@ def login_user():
             with open ("./data/cache/logged_in_user.cache", "w") as file:
                 file.write(login_check)
         except FileNotFoundError:
-            print("File not found")
+            print("Cache not found")
     else:
         print("Login successful.")
         try:
             with open ("./data/cache/logged_in_user.cache", "w") as file:
                 file.write(login_check)
         except FileNotFoundError:
-            print("File not found")
+            print("Cache not found")
         login_window.destroy()
         
 

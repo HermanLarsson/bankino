@@ -1,6 +1,7 @@
 import hashlib
 import json
-from db_queries import *
+
+
 
 def hash_password(user_input):
     try:
