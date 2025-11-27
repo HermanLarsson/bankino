@@ -1,7 +1,15 @@
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
-import json
+import backend.db_queries as db_queries
+import os
+
+BASE_DIR = os.path.dirname(__file__)
+PAGES_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "pages"))
+
+import sys
+sys.path.append(PAGES_PATH)
+import create_bank_account_window
 
 logged_in_id = ""
 account_headers = []
@@ -9,26 +17,11 @@ account_names = []
 account_amounts = []
 account_buttons = []
 
-
-
-
-#Loads the users bank accounts. 
-def load_bank_accounts(user_id):
-    try:
-        f = open("./data/bank_accounts/accounts.json")
-        data = json.load(f)
-        f.close()
-        return data[user_id]
-    except FileNotFoundError:
-        print("Database file not found")
-
-
 #Creates labels for each accounts id, name and amount as well as button
-# Två sätt framåt, antingen sätta knappen som account ID och sen fetcha texten, eller gömma variabel med account id
 def list_accounts(user_id):
     account_counter = 0
     current_row = 3
-    bank_accounts = load_bank_accounts(user_id)
+    bank_accounts = db_queries.load_bank_accounts(user_id)
     for account in bank_accounts.items():
         account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = header3_font, anchor = "w"))
         account_headers[account_counter].grid(column = 0, row = current_row, sticky = "w")
@@ -42,17 +35,12 @@ def list_accounts(user_id):
         current_row += 2
         account_counter += 1
 
-
-
 def OnButtonClick(clicked_id):
     print(clicked_id)
-
-
+    #Call window function and pass clicked_id. It's the bank_account_id.
 
 #Program starts here
 #Main functions which runs the program
-
-
 def load_window(user_id):
 
     global landing_page 
@@ -79,9 +67,6 @@ def load_window(user_id):
     header2_font = tkFont.Font(family="Calibri", size = 25, weight = "bold")
     value_font = tkFont.Font(family = "Courier", size = 15, weight = "normal")
 
-
-
-
     #Creates the header as a Label over the entire cell
     header = tk.Label(landing_page, text = "Bankino", font = header_font)
     header.grid(column=0, row=0, sticky=tk.NSEW)
@@ -89,6 +74,11 @@ def load_window(user_id):
     title.grid (column = 0, row = 1)
     separator = ttk.Separator(landing_page, orient = "horizontal")
     separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
+
+    #Creates create new bank account button
+    create_bank_account_button = tk.Button(landing_page, text="Create New Bank Account", command=lambda: create_bank_account_window.load_window(landing_page))
+    create_bank_account_button.grid(column=19, row=0, sticky="nswe")
+
 
     #load_bank_accounts(user_id)
     list_accounts(user_id)
