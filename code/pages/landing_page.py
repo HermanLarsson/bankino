@@ -27,7 +27,7 @@ def list_accounts(user_id):
     account_counter = 0
     current_row = 3
     bank_accounts = load_bank_accounts(user_id)
-    
+
     for account in bank_accounts.items():
         account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = header3_font, anchor = "w"))
         account_headers[account_counter].grid(column = 0, row = current_row, sticky = "w")
@@ -46,8 +46,7 @@ def list_accounts(user_id):
 def OnButtonClick(user_id, clicked_id):
     bank_account.load_window(user_id, clicked_id)
     print(clicked_id)
-
-
+    landing_page.destroy()
 
 #Program starts here
 #Main functions which runs the program

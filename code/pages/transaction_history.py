@@ -2,6 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 import json
+import pages.bank_account as bank_account
 
 
 # Fetches all account data based on user_id
@@ -51,6 +52,14 @@ def show_transactions(user_id, account_id):
 
         current_row += 4
         account_counter += 1
+
+    back_button = tk.Button(transactions, text= "Back to Account", command = lambda : back_to_transactions(user_id, account_id))
+    back_button.grid(column=0, row=current_row+1, pady=20)
+
+def back_to_transactions(user_id, account_id):
+    transactions.destroy()
+    bank_account.load_window(user_id, account_id)
+
 
 # Window for displaying the transaction information
 def load_window(user_id, account_id):
