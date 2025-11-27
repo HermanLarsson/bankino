@@ -1,7 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
-import json
+import backend.db_queries as db_queries
 
 logged_in_id = ""
 account_headers = []
@@ -9,21 +9,11 @@ account_names = []
 account_amounts = []
 account_buttons = []
 
-#Loads the users bank accounts. 
-def load_bank_accounts(user_id):
-    try:
-        f = open("./data/bank_accounts/accounts.json")
-        data = json.load(f)
-        f.close()
-        return data[user_id]
-    except FileNotFoundError:
-        print("Database file not found")
-
 #Creates labels for each accounts id, name and amount as well as button
 def list_accounts(user_id):
     account_counter = 0
     current_row = 3
-    bank_accounts = load_bank_accounts(user_id)
+    bank_accounts = db_queries.load_bank_accounts(user_id)
     for account in bank_accounts.items():
         account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = header3_font, anchor = "w"))
         account_headers[account_counter].grid(column = 0, row = current_row, sticky = "w")
