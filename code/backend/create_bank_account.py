@@ -30,11 +30,12 @@ def get_date():
     return todays_date
 
 
-def create_new_account(personal_number, account_type, account_name): #The personal number should be saved in a variable when logging in and the account_type and account_name should be inputs.
+def create_new_account(account_type, account_name): #The personal number should be saved in a variable when logging in and the account_type and account_name should be inputs.
 
-    user_info = db_queries.get_user_info(personal_number)
+    user_id = db_queries.get_user_id()
+    user_info = db_queries.get_user_info(user_id)
     account_id = create_account_id(user_info["bank_accounts"], account_type, CHARACTERS) 
     today_date = get_date() 
 
     all_accounts = db_queries.add_new_account(account_id, today_date, user_info["user_id"], account_name)
-    db_queries.write_to_json("../data/bank_accounts/accounts.json", all_accounts)
+    db_queries.write_to_json(all_accounts)

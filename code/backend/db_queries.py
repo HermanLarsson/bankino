@@ -8,14 +8,20 @@ BANK_ACCOUNT_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "data", "
 
 # Create bankaccount
 
-def get_user_info(personal_num):
+def get_user_info(user_id):
     with open(USERS_PATH, "r", encoding="UTF-8") as jsonfile:
         all_users = json.load(jsonfile)
 
-        for key in all_users:
-            if all_users[key]["personal_number"] == personal_num:
-                return all_users[key]
-            
+        return all_users[user_id]
+
+def get_user_id():
+    try:
+            with open ("./data/cache/logged_in_user.cache", "r") as file:
+                logged_in_user = file.read()
+                print(logged_in_user)
+                return logged_in_user
+    except FileNotFoundError:
+            print("Main could not find cachefile")
 
 def add_new_account(account_id, today_date, user_id, account_name):
 
