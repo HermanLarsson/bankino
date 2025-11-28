@@ -142,4 +142,3 @@ def load_window(previous_window):
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
      
     display_signup()   
-    sign_up_window.mainloop()

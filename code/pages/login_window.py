@@ -48,7 +48,6 @@ def display_login():
     user_password = tk.Entry(login_window, show="*")
     user_password.grid(column=1, row=2, padx=10, pady=10, sticky="w")
 
-    # Login button
     login_button = tk.Button(login_window, text="Login", command =login_user)
     login_button.grid(column=1, row=3, pady=20)
 
@@ -71,7 +70,7 @@ def load_window():
         login_window.columnconfigure(i, weight=1)
     for i in range(ROWS):
         login_window.rowconfigure(i, weight=1)
-    
+
     header_font = tkFont.Font(family="Times", size=25, weight="bold")
 
     header = tk.Label(login_window, text="Bankino", bg="#B6B6B6", font=header_font)
