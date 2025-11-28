@@ -68,6 +68,7 @@ def load_window(user_id, account_id, bank_account_window):
 
     previous_account_window = bank_account_window
 
+    # uses Toplevel instead of Tk since it is a 'child' window
     transactions = tk.Toplevel(bank_account_window)
     transactions.title(f"Account: {account_id}")
     transactions.geometry('1000x1000')

@@ -50,6 +50,7 @@ def OnButtonClick(user_id, clicked_id):
 def load_window(user_id, login_window):
 
     global landing_page 
+    # uses Toplevel instead of Tk since it is a 'child' window
     landing_page = tk.Toplevel(login_window) #Creates the window
     landing_page.title('Bankino')
     landing_page.geometry('1000x1000')
