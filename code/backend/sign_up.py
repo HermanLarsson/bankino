@@ -4,7 +4,7 @@ import os
 
 
 BASE_DIR = os.path.dirname(__file__)  # directory of this script
-file_path = os.path.abspath(os.path.join(BASE_DIR, "..", "data", "users", "users.json"))
+file_path = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "data", "users", "users.json"))
 
 
 def generate_user_id():
