@@ -1,17 +1,18 @@
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
-import pages.bank_account as bank_account
+import json
 import backend.db_queries as db_queries
+import pages.create_bank_account_window as create_bank_account_window
+import pages.bank_account as bank_account
 
 logged_in_id = ""
-bank_accounts = {}
 account_headers = []
 account_names = []
 account_amounts = []
 account_buttons = []
 
-#Creates labels for each accounts id, name and amount
+#Creates labels for each accounts id, name and amount as well as button
 def list_accounts(user_id):
     account_counter = 0
     current_row = 3
@@ -72,6 +73,12 @@ def load_window(user_id, login_window):
     separator = ttk.Separator(landing_page, orient = "horizontal")
     separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
 
-    #load_bank_accounts(user_id)
+    #Creates create new bank account button
+    create_bank_account_button = tk.Button(landing_page, text="Create New Bank Account", command=lambda: create_bank_account_window.load_window(landing_page))
+    create_bank_account_button.grid(column=19, row=0, sticky="nswe")
+
+
+    ##load_bank_accounts(user_id)
     list_accounts(user_id)
+
     

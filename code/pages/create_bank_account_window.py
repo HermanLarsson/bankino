@@ -5,7 +5,7 @@ import tkinter.font as tkFont
 #Adds another directory for Python to import from
 import sys
 sys.path.append("C:\\Users\\herma\\Documents\\dit099\\project-bank\\code\\backend")
-import create_bank_account 
+import backend.create_bank_account as create_bank_account
 
 
 #Creates and displays a label, a entry box for account name, a radio button menu for account types and a button.
@@ -53,7 +53,7 @@ def run_create_new_account():
         print(chosen_name)
 
 
-def load_window():
+def load_window(old_page):
     global create_bank_account_page
     create_bank_account_page = tk.Tk()  # Creates the window
     create_bank_account_page.title('Bankino')
@@ -76,8 +76,3 @@ def load_window():
     header.grid(column=1, row=0, sticky="w", pady=10)
     #Calls the rest of whats to display
     display_create_bank_account()
-
-
-load_window()
-
-tk.mainloop()

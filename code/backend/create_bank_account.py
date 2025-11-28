@@ -1,6 +1,6 @@
 from datetime import date
 import string, random, json, os
-import db_queries as db_queries
+import backend.db_queries as db_queries
 
 CHARACTERS = list(string.ascii_uppercase + string.digits)
 
