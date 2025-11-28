@@ -1,6 +1,14 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import backend.db_queries as db_queries
+import tkinter.messagebox as messagebox
+import re
+from datetime import date
+
+
+def get_date():
+    todays_date = str(date.today())
+    return todays_date
 
 
 def sign_up_user():
@@ -9,22 +17,66 @@ def sign_up_user():
     last_name_input = last_name_entry.get()
     middle_name_input = middle_name_entry.get()
     personal_number_input = personal_number_entry.get()
-    join_date_input = join_date_entry.get()
+    join_date = get_date()
     password_input = user_password_entry.get()
+
+
+    # Checking if inputs have the requirments.
+    # Name should only contain letters.
+    name_regex = r"^[A-Za-z]+$"
+    # Middle name should only contain letters or be empty.
+    middle_name_regex = r"^[A-Za-z]*$"
+    # Personal number should contain 10 or 12 digits.
+    personal_number_regex = r"^\d{10}(\d{2})?$"
+    if not re.fullmatch(name_regex, first_name_input):
+        messagebox.showerror("Error", "First name must contain letters.")
+        return
+    if not re.fullmatch(name_regex, last_name_input):
+        messagebox.showerror("Error", "Last name must contain letters.")
+        return
+    if not re.fullmatch(middle_name_regex, middle_name_input):
+        messagebox.showerror("Error", "Middle name must contain only letters or be empty.")
+        return
+    if not re.fullmatch(personal_number_regex, personal_number_input):
+        messagebox.showerror("Error", "Personal number must be 10 or 12 digits.") 
+        return
+    # Password must contain at least 8 characters.
+    if not re.fullmatch(r"^.{8,}$", password_input):
+        messagebox.showerror("Error", "Password must contain at least 8 characters.")
+        return
+    # Password must contain at least one capital letters.
+    if not re.fullmatch(r".*[A-Z].*", password_input):
+        messagebox.showerror("Error", "Password must contain at least one capital letters.")
+        return
+    # Password must contain at least one lowercase letters.
+    if not re.fullmatch(r".*[a-z].*", password_input):
+        messagebox.showerror("Error", "Password must contain at least one lowercase letters.")
+        return
+    # Password must contain at least one digit.
+    if not re.fullmatch(r".*\d.*", password_input):
+        messagebox.showerror("Error", "Password must contain at least one digit.")
+        return
+    # Password must contain at least one special character.
+    if not re.fullmatch(r"(?=.*[!#$%&'()*+,./:;<=>?@\[\]^_`{|}~]).+", password_input):
+        messagebox.showerror("Error", "Password must contain at least one special character.")
+        return
+
 
     # Call the sign up function
     db_queries.sign_up(first_name_input, last_name_input, middle_name_input,
-                    personal_number_input, join_date_input, password_input)
+                    personal_number_input, join_date, password_input)
+    # Show massage user account created successfully!
+    messagebox.showinfo("Success", "User account created successfully!")
+
     
 def display_signup():
     global first_name_entry, last_name_entry, middle_name_entry
-    global personal_number_entry, join_date_entry, user_password_entry
+    global personal_number_entry, user_password_entry
 
     first_name_entry = tk.Entry(sign_up_window)
     last_name_entry = tk.Entry(sign_up_window)
     middle_name_entry = tk.Entry(sign_up_window)
     personal_number_entry = tk.Entry(sign_up_window)
-    join_date_entry = tk.Entry(sign_up_window)
     user_password_entry = tk.Entry(sign_up_window, show="*")
     
     # First Name
@@ -51,25 +103,20 @@ def display_signup():
     personal_number_label = tk.Label(sign_up_window, text="Personal Number:", bg="#B6B6B6")
     personal_number_label.grid(column=0, row=4, padx=10, pady=10, sticky="e")
 
-    # Join Date
-    join_date_entry = tk.Entry(sign_up_window)  # we should change join date in future
-    join_date_entry.grid(column=1, row=5, padx=10, pady=10, sticky="w")
-    join_date_label = tk.Label(sign_up_window, text="Join Date:", bg="#B6B6B6")
-    join_date_label.grid(column=0, row=5, padx=10, pady=10, sticky="e")
-
     # Password
     user_password_entry = tk.Entry(sign_up_window, show="*")
-    user_password_entry.grid(column=1, row=6, padx=10, pady=10, sticky="w")
+    user_password_entry.grid(column=1, row=5, padx=10, pady=10, sticky="w")
     password_label = tk.Label(sign_up_window, text="Password:", bg="#B6B6B6")
-    password_label.grid(column=0, row=6, padx=10, pady=10, sticky="e")
+    password_label.grid(column=0, row=5, padx=10, pady=10, sticky="e")
 
     # Sign Up button
     signup_button = tk.Button(sign_up_window, text="Sign Up", command=sign_up_user)
-    signup_button.grid(column=1, row=7, pady=20)
+    signup_button.grid(column=1, row=6, pady=20)
 
     # back to login button
     back_button = tk.Button(sign_up_window, text= "Back to Login", command = back_to_login)
-    back_button.grid(column=0, row=7, pady=20)
+    back_button.grid(column=0, row=6, pady=20)
+
 
 def back_to_login():
         sign_up_window.destroy()   # destroys/closes the sign up window
@@ -96,5 +143,4 @@ def load_window(previous_window):
     header = tk.Label(sign_up_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
      
-    display_signup()   
-    sign_up_window.mainloop()
+    display_signup()
