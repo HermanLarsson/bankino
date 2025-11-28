@@ -17,7 +17,7 @@ def sign_up_user():
     last_name_input = last_name_entry.get()
     middle_name_input = middle_name_entry.get()
     personal_number_input = personal_number_entry.get()
-    join_date_input = get_date()
+    join_date = get_date()
     password_input = user_password_entry.get()
 
 
@@ -26,7 +26,7 @@ def sign_up_user():
     name_regex = r"^[A-Za-z]+$"
     # Middle name should only contain letters or be empty.
     middle_name_regex = r"^[A-Za-z]*$"
-    # Middle name should contain 10 or 12 digits.
+    # Personal number should contain 10 or 12 digits.
     personal_number_regex = r"^\d{10}(\d{2})?$"
     if not re.fullmatch(name_regex, first_name_input):
         messagebox.showerror("Error", "First name must contain letters.")
@@ -64,8 +64,8 @@ def sign_up_user():
 
     # Call the sign up function
     sign_up.sign_up(first_name_input, last_name_input, middle_name_input,
-                    personal_number_input, join_date_input, password_input)
-    # Show massabe user account created successfully!
+                    personal_number_input, join_date, password_input)
+    # Show massage user account created successfully!
     messagebox.showinfo("Success", "User account created successfully!")
     
 def display_signup():
