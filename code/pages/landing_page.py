@@ -1,51 +1,31 @@
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
-import json
+import backend.db_queries as db_queries
 
 logged_in_id = ""
-bank_accounts = {}
 account_headers = []
 account_names = []
 account_amounts = []
+account_buttons = []
 
-
-
-
-#Loads the users bank accounts. 
-def load_bank_accounts(user_id):
-    try:
-        f = open("./data/bank_accounts/accounts.json")
-        data = json.load(f)
-        f.close()
-    except FileNotFoundError:
-        print("Databse file not found")
-        
-    if user_id in data.keys():
-        for account in data[user_id].items():
-            bank_accounts[account[0]] = account[1]
-    else:
-        print("nothing found")
-
-#Creates labels for each accounts id, name and amount
-def list_accounts():
+#Creates labels for each accounts id, name and amount as well as button
+def list_accounts(user_id):
     account_counter = 0
     current_row = 3
+    bank_accounts = db_queries.load_bank_accounts(user_id)
     for account in bank_accounts.items():
         account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = header3_font, anchor = "w"))
         account_headers[account_counter].grid(column = 0, row = current_row, sticky = "w")
         
         account_amounts.append(tk.Label(landing_page, text = (str(account[1]["balance"]) + " SEK"), font = value_font))
         account_amounts[account_counter].grid(column = 4, row = current_row)
-        
+
         current_row += 2
         account_counter += 1
 
-
 #Program starts here
 #Main functions which runs the program
-
-
 def load_window(user_id):
 
     global landing_page 
@@ -72,9 +52,6 @@ def load_window(user_id):
     header2_font = tkFont.Font(family="Calibri", size = 25, weight = "bold")
     value_font = tkFont.Font(family = "Courier", size = 15, weight = "normal")
 
-
-
-
     #Creates the header as a Label over the entire cell
     header = tk.Label(landing_page, text = "Bankino", font = header_font)
     header.grid(column=0, row=0, sticky=tk.NSEW)
@@ -83,7 +60,8 @@ def load_window(user_id):
     separator = ttk.Separator(landing_page, orient = "horizontal")
     separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
 
-    load_bank_accounts(user_id)
-    list_accounts()
+    db_queries.load_bank_accounts(user_id)
+    list_accounts(user_id)
     landing_page.mainloop() 
+
 

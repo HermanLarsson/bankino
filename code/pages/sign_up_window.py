@@ -1,15 +1,15 @@
 import tkinter as tk
 import tkinter.font as tkFont
-import backend.sign_up as sign_up
-import re
+import backend.db_queries as db_queries
 import tkinter.messagebox as messagebox
+import re
 from datetime import date
 
 
-#Gets todays date
 def get_date():
     todays_date = str(date.today())
     return todays_date
+
 
 def sign_up_user():
     # get inputs
@@ -63,10 +63,11 @@ def sign_up_user():
 
 
     # Call the sign up function
-    sign_up.sign_up(first_name_input, last_name_input, middle_name_input,
+    db_queries.sign_up(first_name_input, last_name_input, middle_name_input,
                     personal_number_input, join_date, password_input)
     # Show massage user account created successfully!
     messagebox.showinfo("Success", "User account created successfully!")
+
     
 def display_signup():
     global first_name_entry, last_name_entry, middle_name_entry
@@ -116,6 +117,7 @@ def display_signup():
     back_button = tk.Button(sign_up_window, text= "Back to Login", command = back_to_login)
     back_button.grid(column=0, row=6, pady=20)
 
+
 def back_to_login():
         sign_up_window.destroy()   # destroys/closes the sign up window
         login_window.deiconify()
@@ -141,4 +143,4 @@ def load_window(previous_window):
     header = tk.Label(sign_up_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
      
-    display_signup()   
+    display_signup()

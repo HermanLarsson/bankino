@@ -18,7 +18,7 @@ def main():
                 print("logged in user is : " + logged_in_user)
                 pages.landing_page.load_window(logged_in_user)
     except FileNotFoundError:
-        print("File not found")
+        print("Main could not find cachefile")
 
 if __name__ == "__main__":
     main()

@@ -1,6 +1,7 @@
 import tkinter as tk
 import tkinter.font as tkFont
 import backend.password_checker as password_checker
+import backend.db_queries as db_queries
 import pages.landing_page as landing_page
 import pages.sign_up_window as sign_up_window
 
@@ -14,21 +15,21 @@ def login_user():
 
     hashed_password = password_checker.hash_password(saved_info["password"])
 
-    login_check = password_checker.verify_user(int(saved_info["personal_number"]), hashed_password)
+    login_check = db_queries.verify_user(int(saved_info["personal_number"]), hashed_password)
     if login_check == "":
         print("Invalid credentials.")
         try:
             with open ("./data/cache/logged_in_user.cache", "w") as file:
                 file.write(login_check)
         except FileNotFoundError:
-            print("File not found")
+            print("Cache not found")
     else:
         print("Login successful.")
         try:
             with open ("./data/cache/logged_in_user.cache", "w") as file:
                 file.write(login_check)
         except FileNotFoundError:
-            print("File not found")
+            print("Cache not found")
         login_window.destroy()
         
 def display_login():
