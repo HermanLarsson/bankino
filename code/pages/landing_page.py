@@ -60,7 +60,7 @@ def load_window(user_id):
     separator = ttk.Separator(landing_page, orient = "horizontal")
     separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
 
-    #load_bank_accounts(user_id)
+    db_queries.load_bank_accounts(user_id)
     list_accounts(user_id)
     landing_page.mainloop() 
 
