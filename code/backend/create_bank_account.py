@@ -39,3 +39,4 @@ def create_new_account(account_type, account_name): #The personal number should 
 
     all_accounts = db_queries.add_new_account(account_id, today_date, user_info["user_id"], account_name)
     db_queries.write_to_json(all_accounts)
+    return account_id
