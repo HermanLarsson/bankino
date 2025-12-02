@@ -1,5 +1,5 @@
 # Byte-compiled / optimized / DLL files
 __pycache__/
-data/cache/
+data/cache/logged_in_user.cache
 data/users.json
 data/bank_accounts/accounts.json
