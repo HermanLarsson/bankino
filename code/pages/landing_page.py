@@ -23,7 +23,7 @@ def list_accounts(user_id):
         account_amounts.append(tk.Label(landing_page, text = (str(account[1]["balance"]) + " SEK"), font = value_font))
         account_amounts[account_counter].grid(column = 4, row = current_row)
 
-        account_buttons.append(tk.Button(landing_page, text=account_counter, command=lambda clicked_id = account[0] : OnButtonClick(user_id ,clicked_id)))
+        account_buttons.append(tk.Button(landing_page, text="View Account Details", command=lambda clicked_id = account[0] : OnButtonClick(user_id ,clicked_id)))
         account_buttons[account_counter].grid(row = current_row + 1, column = 0, sticky = "NW")
 
         current_row += 2
@@ -35,8 +35,6 @@ def OnButtonClick(user_id, clicked_id):
 
 #Program starts here
 #Main functions which runs the program
-
-
 def load_window(user_id, login_window):
 
     global landing_page 
@@ -82,20 +80,20 @@ def load_window(user_id, login_window):
     ##load_bank_accounts(user_id)
     list_accounts(user_id)
 
-
+#Displays the newly created account
 def display_specific_account(account_id):
     user_id = db_queries.get_user_id()
     bank_accounts = db_queries.load_bank_accounts(user_id)
 
-    print(bank_accounts[account_id])
-
-    placement = 1 + len(bank_accounts) * 2
-
+    newest_account_row = 1 + len(bank_accounts) * 2 #Length of bank_accounts * 2 is to get the amount of rows used up by old accounts (* 2 since we have to account for the buttons as well)
+                                                    #+ 1 to then jump one row more to not overlap
+    
+    #The rest is the same as the list_account function
     account_headers = tk.Label(landing_page, text = (bank_accounts[account_id]["account_id"]+ "  " + bank_accounts[account_id]["account_name"]), font = header3_font, anchor = "w")
-    account_headers.grid(column = 0, row = placement, sticky = "w")
+    account_headers.grid(column = 0, row = newest_account_row, sticky = "w")
 
     account_amounts = tk.Label(landing_page, text = (str(bank_accounts[account_id]["balance"]) + " SEK"), font = value_font)
-    account_amounts.grid(column = 4, row = placement)
+    account_amounts.grid(column = 4, row = newest_account_row)
 
-    account_buttons = tk.Button(landing_page, text="something", command=lambda clicked_id = bank_accounts[account_id] : OnButtonClick(user_id, clicked_id))
-    account_buttons.grid(row = placement + 1, column = 0, sticky = "NW")
+    account_buttons = tk.Button(landing_page, text="View Account Details", command=lambda clicked_id = bank_accounts[account_id]["account_id"] : OnButtonClick(user_id, clicked_id))
+    account_buttons.grid(row = newest_account_row + 1, column = 0, sticky = "NW")
