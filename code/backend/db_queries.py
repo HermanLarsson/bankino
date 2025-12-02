@@ -143,3 +143,22 @@ def verify_user(personal_number, hashed_password):
             output = user_data["user_id"]
 
     return output
+
+
+# Depositing funds logic
+
+def deposit_funds(user_id, bank_id, amount):
+    updated_acount_data = None
+
+    with open(BANK_ACCOUNT_PATH, "r", encoding="UTF-8") as file:
+        accounts = json.load(file)
+        account_to_update = accounts[user_id][bank_id]
+        account_to_update['balance'] = account_to_update['balance'] + amount
+        updated_acount_data = accounts
+
+    with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as file:
+        json.dump(updated_acount_data, file)
+
+
+# test to see if values are updated
+# deposit_funds('4XJ38', 'ISK99TT', 14559.09)
