@@ -1,10 +1,17 @@
 import pages.login_window
 import pages.landing_page
+import os
 
 
 def reset_cache():
-    with open ("./data/cache/logged_in_user.cache", "w") as file:
-        file.write("")
+    try:
+        with open ("./data/cache/logged_in_user.cache", "w") as file:
+            file.write("")
+    except:
+        os.makedirs("./data/cache")
+        with open ("./data/cache/logged_in_user.cache", "w") as file:
+            file.write("")
+
 
 #call pages.window_name.load_window() for each window you want to load. REMEMBER that you CAN pass variables to your load_window()-function if needed
 
