@@ -104,5 +104,15 @@
     "user_id": "5SJ24",
     "bank_accounts": [],
     "password": "sdfg1234@S"
+  },
+  "7GJ68": {
+    "first_name": "Filip",
+    "last_name": "Andersson",
+    "middle_name": "d",
+    "personal_number": 200307307116,
+    "join_date": "2025-12-03",
+    "user_id": "7GJ68",
+    "bank_accounts": [],
+    "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
   }
 }
