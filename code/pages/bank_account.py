@@ -34,20 +34,23 @@ def show_account_data(user_id, account_id):
     view_transactions_button = tk.Button(bank_account, text="View Transaction History", command=lambda: open_transaction_window(user_id, account_id))
     view_transactions_button.grid(column = 0, row = 9, sticky = 'w')
 
-    view_transactions_button = tk.Button(bank_account, text="Back to Landing Page", command=lambda: back_to_landing_page(user_id))
+    view_transactions_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
     view_transactions_button.grid(column = 0, row = 10, sticky = 'w')
 
 def open_transaction_window(user_id, account_id):
     bank_account.withdraw() #hides the accounts window
     transaction_history.load_window(user_id, account_id, bank_account) #opens transaction history window
 
-def back_to_landing_page(user_id):
+def back_to_landing_page():
     bank_account.withdraw()
-    landing_page.load_window(user_id, bank_account)
+    back_window.deiconify() #Brings back the landing page.
 
 # display the banks details on the screen. 
 def load_window(user_id, account_id, previous_window): 
     global bank_account
+    global back_window 
+    back_window = previous_window
+        
     bank_account = tk.Toplevel(previous_window) # creates a new window on top of the previous one, uses Toplevel instead of Tk since.
     bank_account.title(f"Account: {account_id}")
     bank_account.geometry('1000x1000')
