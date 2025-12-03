@@ -74,8 +74,13 @@ def load_window(user_id, login_window):
     create_bank_account_button = tk.Button(landing_page, text="Create New Bank Account", command=lambda: create_bank_account_window.load_window(landing_page, user_id))
     create_bank_account_button.grid(column=19, row=0, sticky="nswe")
 
+    # Deposit funds button
     deposit_funds_button = tk.Button(landing_page, text="Deposit Funds", command=lambda: print("PLACEHOLDER FUNCTION FOR NEW WINDOW"))
     deposit_funds_button.grid(column = 17, row = 0, sticky = "nswe")
+
+    # Transfer funds button
+    transfer_funds_button = tk.Button(landing_page, text="Transfer Funds", command=lambda: print("PLACEHOLDER FUNCTION FOR NEW WINDOW"))
+    transfer_funds_button.grid(column = 15, row = 0, sticky = "nsew")
         
 
 
