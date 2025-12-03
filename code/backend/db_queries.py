@@ -1,4 +1,5 @@
 import random, json, os
+import backend.password_checker as password_checker
 
 # Global paths used in all functions.
 BASE_DIR = os.path.dirname(__file__)
@@ -30,7 +31,7 @@ def add_new_account(account_id, today_date, user_id, account_name):
         
         #Checks if user already exist in file
         if user_id not in all_accounts.keys():
-            all_accounts[user_id][account_id] = dict()
+            all_accounts[user_id] = dict()
 
     #Adds the new account info to the variable
     all_accounts[user_id][account_id] = dict()
@@ -81,11 +82,11 @@ def sign_up(first_name, last_name, middle_name, personal_number, join_date, pass
         "first_name": first_name,
         "last_name": last_name,
         "middle_name": middle_name,
-        "personal_number": personal_number,
+        "personal_number": int(personal_number),
         "join_date": join_date,
         "user_id": new_id,
         "bank_accounts": [],
-        "password": password,
+        "password": password_checker.hash_password(password),
     }
 
 
@@ -182,4 +183,3 @@ def deposit_funds(user_id, bank_id, amount):
     except FileNotFoundError:
         print("Error: Bank account database file not found.")
         return
-    
