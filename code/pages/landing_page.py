@@ -4,6 +4,7 @@ from tkinter import ttk
 import backend.db_queries as db_queries
 import pages.create_bank_account_window as create_bank_account_window
 import pages.bank_account as bank_account
+import pages.deposit_funds_window as deposit_funds_window
 
 logged_in_id = ""
 account_headers = []
@@ -75,7 +76,7 @@ def load_window(user_id, login_window):
     create_bank_account_button.grid(column=19, row=0, sticky="nswe")
 
     # Deposit funds button
-    deposit_funds_button = tk.Button(landing_page, text="Deposit Funds", command=lambda: print("PLACEHOLDER FUNCTION FOR NEW WINDOW"))
+    deposit_funds_button = tk.Button(landing_page, text="Deposit Funds", command=lambda: deposit_funds_window.load_window(landing_page, user_id))
     deposit_funds_button.grid(column = 17, row = 0, sticky = "nswe")
 
     # Transfer funds button
