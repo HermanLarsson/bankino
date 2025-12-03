@@ -25,7 +25,7 @@ def display_create_bank_account():
         "CAS (Casino Account)"]
     
     global account_type
-    account_type = StringVar() #Need to check why this is needed.
+    account_type = StringVar(create_bank_account_window, "CAS (Casino Account)")
 
     #Radio button menu
     curr_row = 2
