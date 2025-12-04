@@ -2,18 +2,13 @@ import tkinter as tk
 import tkinter.font as tkFont 
 import backend.db_queries as db_queries 
 
-# Global variables holding user selections
-from_account = None  
+# Global variables
 current_user_id = None 
-to_account = None
-amount = None
+transfer_funds_window = None
 
 def display_transfer_funds():
-    global from_account
-    global to_account
-    global amount
 
-    # choose from accounts label
+    # choose from accounts label    
     from_label = tk.Label(transfer_funds_window, text="Choose account to transfer from:", bg="#B6B6B6")
     from_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
     
@@ -26,20 +21,19 @@ def display_transfer_funds():
     curr_row = 1
     for acc_id, acc_data in accounts.items():
         curr_row += 1
-        curr = tk.Radiobutton(
+        radiobutton = tk.Radiobutton(
             transfer_funds_window,
             text=f"{acc_id} ({acc_data['account_name']})",
             variable=from_account,
             value=acc_id,
             bg="#B6B6B6"
         )
-        curr.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
+        radiobutton.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
     # To account label
     to_label = tk.Label(transfer_funds_window, text="Transfer to (account id):", bg="#B6B6B6")
     to_label.grid(column=0, row=curr_row + 2, padx=10, pady=10, sticky="e")
 
-    global to_account
     to_account = tk.Entry(transfer_funds_window)
     to_account.grid(column=1, row=curr_row + 2, padx=10, pady=10, sticky="w")
 
@@ -47,16 +41,15 @@ def display_transfer_funds():
     amount_label = tk.Label(transfer_funds_window, text="Amount:", bg="#B6B6B6")
     amount_label.grid(column=0, row=curr_row + 3, padx=10, pady=10, sticky="e")
 
-    global amount
     amount = tk.Entry(transfer_funds_window)
     amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
     # confirm button
-    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=transfer_funds) # 
+    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: transfer_funds(from_account, to_account, amount))
     confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
-def transfer_funds():
+def transfer_funds(from_account, to_account, amount):
     # This function will run the logic
     print("DO LOGIC HERE")
     print("FROM:", from_account.get())
@@ -68,7 +61,7 @@ def transfer_funds():
 def load_window(parent, user_id):
     global current_user_id
     current_user_id = user_id
-
+    
     global transfer_funds_window
     transfer_funds_window = tk.Toplevel(parent) # Creates window 
     transfer_funds_window.title("Bankino - Transfer Funds")
