@@ -2,7 +2,7 @@ import backend.db_queries as db_queries
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import *
-import tkinter.messagebox
+import re
 
 
 def create_account_choices(avail_accounts):
@@ -25,19 +25,25 @@ def create_account_choices(avail_accounts):
 
 def process_deposit(user_id, account_id, amount):
     print("Processing")
-    try:
-        amount = float(amount)
-    except TypeError: 
-        print("Invalid amount entered!")
-    
-    if amount <= 0:
+    valid_input = r'\d+([.,]\d{2})?'
+    if re.fullmatch(valid_input, amount):
+        try:
+            amount = re.sub(r',', r'.', amount)
+            amount = float(amount)
+        except TypeError: 
+            print("Invalid amount entered!")
+            
+        if amount <= 0:
+            print("Amount must be greater than 0")
+            tk.messagebox.showinfo("Error", "Amount must be greater than 0")
+        else: 
+            db_queries.deposit_funds(user_id, account_id, amount)
+            print(f"{amount} succcessfully deposited to account {account_id}")
+            tk.messagebox.showinfo("Success", f"{amount:.2f} SEK succcessfully deposited to account {account_id}")
+            deposit_funds_window.destroy()
+    else:
         print("Amount must be greater than 0")
-        tk.messagebox.showinfo("Error", "Amount must be greater than 0")
-
-    else: 
-        db_queries.deposit_funds(user_id, account_id, amount)
-        print(f"{amount} succcessfully deposited to account {account_id}")
-        tk.messagebox.showinfo("Success", f"{amount} SEK succcessfully deposited to account {account_id}")
+        tk.messagebox.showinfo("Error", "Amount must have 0 or 2 decimal places")
 
 def load_window(parent, user_id):
     avail_accounts = db_queries.get_all_account_data(user_id)
