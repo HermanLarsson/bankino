@@ -30,20 +30,19 @@ def process_deposit(user_id, account_id, amount):
         try:
             amount = re.sub(r',', r'.', amount)
             amount = float(amount)
+
+            if amount == 0:
+                tk.messagebox.showinfo("Error", "Input cannot be 0,00 SEK")
+            else:
+                db_queries.deposit_funds(user_id, account_id, amount)
+                print(f"{amount} succcessfully deposited to account {account_id}")
+                tk.messagebox.showinfo("Success", f"{amount:.2f} SEK succcessfully deposited to account {account_id}")
+                deposit_funds_window.destroy()
         except TypeError: 
-            print("Invalid amount entered!")
-            
-        if amount <= 0:
-            print("Amount must be greater than 0")
-            tk.messagebox.showinfo("Error", "Amount must be greater than 0")
-        else: 
-            db_queries.deposit_funds(user_id, account_id, amount)
-            print(f"{amount} succcessfully deposited to account {account_id}")
-            tk.messagebox.showinfo("Success", f"{amount:.2f} SEK succcessfully deposited to account {account_id}")
-            deposit_funds_window.destroy()
+            print("Invalid amount entered!")  
     else:
         print("Amount must be greater than 0")
-        tk.messagebox.showinfo("Error", "Amount must have 0 or 2 decimal places")
+        tk.messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
 
 def load_window(parent, user_id):
     avail_accounts = db_queries.get_all_account_data(user_id)
