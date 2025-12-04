@@ -2,7 +2,7 @@ import backend.db_queries as db_queries
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import *
-
+import tkinter.messagebox
 
 
 def create_account_choices(avail_accounts):
@@ -23,6 +23,21 @@ def create_account_choices(avail_accounts):
         current_row += 1
         account_counter += 1
 
+def process_deposit(user_id, account_id, amount):
+    print("Processing")
+    try:
+        amount = float(amount)
+    except TypeError: 
+        print("Invalid amount entered!")
+    
+    if amount <= 0:
+        print("Amount must be greater than 0")
+        tk.messagebox.showinfo("Error", "Amount must be greater than 0")
+
+    else: 
+        db_queries.deposit_funds(user_id, account_id, amount)
+        print(f"{amount} succcessfully deposited to account {account_id}")
+        tk.messagebox.showinfo("Success", f"{amount} SEK succcessfully deposited to account {account_id}")
 
 def load_window(parent, user_id):
     avail_accounts = db_queries.get_all_account_data(user_id)
@@ -57,6 +72,6 @@ def load_window(parent, user_id):
 
     create_account_choices(avail_accounts)
 
-    confirm_button = tk.Button(deposit_funds_window, text = "Deposit", command=lambda: print(account_choice.get(), amount_entry.get()))
+    confirm_button = tk.Button(deposit_funds_window, text = "Deposit", command=lambda : process_deposit(user_id, account_choice.get(), amount_entry.get()))
     confirm_button.grid(column=5, row=10, sticky="S")
 
