@@ -7,11 +7,25 @@ import pages.bank_account as bank_account
 import pages.deposit_funds_window as deposit_funds_window
 import pages.transfer_funds_window as transfer_funds_window
 
-logged_in_id = ""
 account_headers = []
-account_names = []
 account_amounts = []
 account_buttons = []
+
+#Loops through the lists to destroy the widges one by one
+#After that it clears the lists so that new widgets can take their place.
+#Lastly, we call list_accounts to print them anew.
+def refresh_accounts(user_id):
+
+    for i in range(0, len(account_buttons)):
+        account_headers[i].destroy()
+        account_amounts[i].destroy()
+        account_buttons[i].destroy()
+
+    account_headers.clear()
+    account_amounts.clear()
+    account_buttons.clear()
+
+    list_accounts(user_id)
 
 #Creates labels for each accounts id, name and amount as well as button
 def list_accounts(user_id):
@@ -84,9 +98,9 @@ def load_window(user_id, login_window):
     transfer_funds_button = tk.Button(landing_page, text="Transfer Funds", command=lambda: transfer_funds_window.load_window(landing_page, user_id))
     transfer_funds_button.grid(column = 15, row = 0, sticky = "nsew")
         
+    refresh_button = tk.Button(landing_page, text="Refresh", command=lambda: refresh_accounts(user_id))
+    refresh_button.grid(column = 12, row = 0, sticky = "nsew")
 
-
-    ##load_bank_accounts(user_id)
     list_accounts(user_id)
 
 #Displays the newly created account
