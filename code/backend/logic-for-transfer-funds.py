@@ -1,46 +1,34 @@
-import json
-import os
 from datetime import date
+from db_queries import load_all_bank_accounts, write_to_json
+
+
+def add_transaction_to_history(user_id, from_account_id, to_account_id, amount, transaction_date, all_accounts):
+    # Add a transaction record to both accounts' transaction history
+    
+    transaction = {
+        "amount": amount,
+        "date": transaction_date,
+        "from_acc": from_account_id,
+        "to_acc": to_account_id
+    }
+    
+    all_accounts[user_id][from_account_id]["transactions"].append(transaction)
+    all_accounts[user_id][to_account_id]["transactions"].append(transaction)
 
 
 def transfer_money(user_id, from_account_id, to_account_id, amount):
-    #Transfer money between two bank accounts
+    # Transfer money between two bank accounts
     
-    # Get path to accounts file
-    current_dir = os.path.dirname(__file__)
-    json_path = os.path.join(current_dir, '..', '..', 'data', 'bank_accounts', 'accounts.json')
+    all_accounts = load_all_bank_accounts()
+    user_accounts = all_accounts[user_id]
     
-    # Load all accounts
-    with open(json_path, 'r') as f:
-        all_accounts = json.load(f)
+    from_account = user_accounts[from_account_id]
+    to_account = user_accounts[to_account_id]
     
-    # Get accounts
-    from_account = all_accounts[user_id][from_account_id]
-    to_account = all_accounts[user_id][to_account_id]
-    fee_account = all_accounts["4XJ38"]["ISK99TT"]
+    from_account["balance"] -= amount
+    to_account["balance"] += amount
     
-    # Check balance
-    if from_account["balance"] >= amount + 0.25:
-        # Transfer money
-        from_account["balance"] -= amount + 0.25
-        to_account["balance"] += amount
-        fee_account["balance"] += 0.25
-        
-        # Add transaction
-        transaction = {
-            "amount": amount,
-            "date": str(date.today()),
-            "from_acc": from_account_id,
-            "to_acc": to_account_id
-        }
-        
-        from_account["transactions"].append(transaction)
-        to_account["transactions"].append(transaction)
-        
-        # Save all changes back to file
-        with open(json_path, 'w') as f:
-            json.dump(all_accounts, f, indent=2)
-        
-        print(f"Success: Transferred {amount} SEK")
-    else:
-        print("Insufficient funds")
+    transaction_date = str(date.today())
+    add_transaction_to_history(user_id, from_account_id, to_account_id, amount, transaction_date, all_accounts)
+    
+    write_to_json(all_accounts)

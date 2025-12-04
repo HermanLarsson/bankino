@@ -183,3 +183,18 @@ def deposit_funds(user_id, bank_id, amount):
     except FileNotFoundError:
         print("Error: Bank account database file not found.")
         return
+
+
+# Load all bank accounts
+
+def load_all_bank_accounts():
+    # Load all bank accounts from the JSON file
+    data = {}
+    try:
+        f = open("./data/bank_accounts/accounts.json")
+        data = json.load(f)
+        f.close()
+    except FileNotFoundError:
+        print("Database file not found")
+    
+    return data
