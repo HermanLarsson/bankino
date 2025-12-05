@@ -48,11 +48,11 @@ def display_transfer_funds():
     amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
     # confirm button
-    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: process_transfer(from_account, to_account, amount))
+    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: process_transfer(current_user_id, from_account, to_account, amount))
     confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
-def process_transfer(from_account, to_account, amount):
+def process_transfer(user_id, from_account, to_account, amount):
     print("Processing")
     # Saves the user input in varibles
     from_acc_input = from_account.get()
@@ -74,6 +74,15 @@ def process_transfer(from_account, to_account, amount):
          messagebox.showinfo("Error", "Select an amount to transfer")
          return
     
+    # Validate that to account exists in the database
+    if not db_queries.account_exists(user_id, to_acc_input):
+        messagebox.showinfo("Error", f"Account '{to_acc_input}' does not exist")
+        return
+    
+    if to_acc_input == from_acc_input:
+        messagebox.showinfo("Error", f"Can't transfer to the same account")
+        return
+
     valid_input = r'\d+([.,]\d{2})?'
     if re.fullmatch(valid_input,amount_input):
         try: 
