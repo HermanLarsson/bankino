@@ -208,3 +208,16 @@ def load_all_bank_accounts():
         print("Database file not found")
     
     return data
+
+# Checks if account exsist in database
+def account_exists(user_id, account_id):
+    try: 
+        with open("./data/bank_accounts/accounts.json", "r") as file:
+            all_accounts = json.load(file)
+    except FileNotFoundError:
+        print("Database file not found")
+        return
+
+    if account_id in all_accounts[user_id]:
+        return True
+        
