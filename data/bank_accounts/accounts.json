@@ -4,7 +4,7 @@
       "account_id": "ISK99TT",
       "account_type": "ISK",
       "account_name": "Main",
-      "balance": 24559.09,
+      "balance": 24893.59,
       "currency": "SEK",
       "date_created": "2025-11-16",
       "user_id": "4XJ38",
@@ -20,6 +20,18 @@
           "date": "2025-11-07",
           "from_acc": "CHE99HG",
           "to_acc": "ISK99TT"
+        },
+        {
+          "amount": 100,
+          "date": "2025-12-04",
+          "from_acc": "SAV92DS",
+          "to_acc": "ISK99TT"
+        },
+        {
+          "amount": 234,
+          "date": "2025-12-04",
+          "from_acc": "SAV92DS",
+          "to_acc": "ISK99TT"
         }
       ]
     },
@@ -27,7 +39,7 @@
       "account_id": "SAV92DS",
       "account_type": "SAV",
       "account_name": "Savings",
-      "balance": 53000.0,
+      "balance": 52665.5,
       "currency": "SEK",
       "date_created": "2025-05-03",
       "user_id": "4XJ38",
@@ -43,6 +55,18 @@
           "date": "2025-11-13",
           "from_acc": "ISK99TT",
           "to_acc": "SAV92DS"
+        },
+        {
+          "amount": 100,
+          "date": "2025-12-04",
+          "from_acc": "SAV92DS",
+          "to_acc": "ISK99TT"
+        },
+        {
+          "amount": 234,
+          "date": "2025-12-04",
+          "from_acc": "SAV92DS",
+          "to_acc": "ISK99TT"
         }
       ]
     }
