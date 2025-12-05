@@ -1,6 +1,9 @@
-import tkinter as tk 
+import tkinter as tk
+from tkinter import messagebox
 import tkinter.font as tkFont 
+import re
 import backend.db_queries as db_queries 
+import backend.logic_for_transfer_funds as transfer_funds
 
 # Global variables
 current_user_id = None 
@@ -45,17 +48,69 @@ def display_transfer_funds():
     amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
     # confirm button
-    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: transfer_funds(from_account, to_account, amount))
+    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: process_transfer(current_user_id, from_account, to_account, amount))
     confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
-def transfer_funds(from_account, to_account, amount):
-    # This function will run the logic
-    print("DO LOGIC HERE")
-    print("FROM:", from_account.get())
-    print("TO:", to_account.get())
-    print("AMOUNT:", amount.get())
+def process_transfer(user_id, from_account, to_account, amount):
+    print("Processing")
+    # Saves the user input in varibles
+    from_acc_input = from_account.get()
+    to_acc_input = to_account.get()
+    amount_input = amount.get()
 
+    # Checks if user selected option on the radiobutton
+    if from_acc_input == "":
+        messagebox.showinfo("Error", "Select an account to transfer from")  
+        return 
+    
+    # Checks if user inputted an account to transfer to
+    if to_acc_input == "":
+         messagebox.showinfo("Error", "Select an account to transfer to")
+         return
+    
+    # Checks if user inputted an amount to transfer 
+    if amount_input == "":
+         messagebox.showinfo("Error", "Select an amount to transfer")
+         return
+    
+    # Validate that to account exists in the database
+    if not db_queries.account_exists(user_id, to_acc_input):
+        messagebox.showinfo("Error", f"Account '{to_acc_input}' does not exist")
+        return
+    
+    if to_acc_input == from_acc_input:
+        messagebox.showinfo("Error", f"Can't transfer to the same account")
+        return
+
+    valid_input = r'\d+([.,]\d{2})?'
+    if re.fullmatch(valid_input,amount_input):
+        try: 
+            amount_input = re.sub(r',', r'.', amount_input) # converts inputted coma to a dot
+            amount_value = float(amount_input)
+
+            # Checks if inputted amount is zero
+            if amount_value == 0: 
+                messagebox.showinfo("Error", "Input cannot be 0.00 SEK")
+                return
+            
+            # Calls the backend logic to transfer funds         
+            transfer_funds.transfer_money(current_user_id, from_acc_input, to_acc_input, amount_value)
+            print(f"{amount_value} successfully transferred from {from_acc_input} to {to_acc_input}")
+
+            # Messege box for user when transfer succeded 
+            messagebox.showinfo("Success", f"{amount_value:.2f} SEK successfully transfered from {from_acc_input} to {to_acc_input}")
+
+            # Closes the pop-up window
+            transfer_funds_window.destroy()
+
+         # Throws error if inputted amount is not a float 
+        except ValueError:
+            print("Invalid amount entered")
+            messagebox.showinfo("Error", "Invalid amount entered")
+    else:
+        print("amount has to be greater than 0")
+        messagebox.showinfo("Error", "Input must be postive and have 0 or 2 decimal places")
 
 
 def load_window(parent, user_id):

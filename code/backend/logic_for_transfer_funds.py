@@ -1,5 +1,5 @@
 from datetime import date
-from db_queries import load_all_bank_accounts, write_to_json
+from backend.db_queries import load_all_bank_accounts, write_to_json
 
 def validate_receiving_account(all_accounts, user_accounts, to_account_id):
     if to_account_id in user_accounts.items():
