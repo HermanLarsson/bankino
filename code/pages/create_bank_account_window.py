@@ -6,7 +6,7 @@ import pages.landing_page as landing_page
 
 
 #Creates and displays a label, a entry box for account name, a radio button menu for account types and a button.
-def display_create_bank_account():
+def display_create_bank_account(user_id):
 
     #Label and entry box
     global account_name
@@ -35,16 +35,16 @@ def display_create_bank_account():
         curr.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
     #"Create new bank account" buttom
-    create_button = tk.Button(create_bank_account_window, text="Create New Bank Account", command=run_create_new_account)
+    create_button = tk.Button(create_bank_account_window, text="Create New Bank Account", command=lambda: run_create_new_account(user_id))
     create_button.grid(column=1, row=7, pady=10, sticky="w")
 
 #Calls the function that creates and stores a new bank account in data/bank_accounts/accounts.json
 #Need the run_create_new_account() to be able to pass parameters to create_new_account()
-def run_create_new_account():
+def run_create_new_account(user_id):
     chosen_type = account_type.get()
     chosen_name = account_name.get()
     try:
-        account_id = create_bank_account.create_new_account(chosen_type[:3] , chosen_name)
+        create_bank_account.create_new_account(chosen_type[:3] , chosen_name)
         create_bank_account_window.destroy()
        
 
@@ -53,7 +53,7 @@ def run_create_new_account():
         print("KeyError in create_new_account")
         print(chosen_type[:3])
         print(chosen_name)
-    landing_page.display_specific_account(account_id)
+    landing_page.refresh_accounts(user_id)
 
 def load_window(parent, user_id):
     global curr_user_id
@@ -79,4 +79,4 @@ def load_window(parent, user_id):
     header = tk.Label(create_bank_account_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky="w", pady=10)
     #Calls the rest of whats to display
-    display_create_bank_account()
+    display_create_bank_account(user_id)
