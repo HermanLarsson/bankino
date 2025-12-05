@@ -2,7 +2,7 @@ import backend.db_queries as db_queries
 import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import *
-
+import re
 
 
 def create_account_choices(avail_accounts):
@@ -23,6 +23,26 @@ def create_account_choices(avail_accounts):
         current_row += 1
         account_counter += 1
 
+def process_deposit(user_id, account_id, amount):
+    print("Processing")
+    valid_input = r'\d+([.,]\d{2})?'
+    if re.fullmatch(valid_input, amount):
+        try:
+            amount = re.sub(r',', r'.', amount)
+            amount = float(amount)
+
+            if amount == 0:
+                tk.messagebox.showinfo("Error", "Input cannot be 0,00 SEK")
+            else:
+                db_queries.deposit_funds(user_id, account_id, amount)
+                print(f"{amount} succcessfully deposited to account {account_id}")
+                tk.messagebox.showinfo("Success", f"{amount:.2f} SEK succcessfully deposited to account {account_id}")
+                deposit_funds_window.destroy()
+        except TypeError: 
+            print("Invalid amount entered!")  
+    else:
+        print("Amount must be greater than 0")
+        tk.messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
 
 def load_window(parent, user_id):
     avail_accounts = db_queries.get_all_account_data(user_id)
@@ -57,6 +77,6 @@ def load_window(parent, user_id):
 
     create_account_choices(avail_accounts)
 
-    confirm_button = tk.Button(deposit_funds_window, text = "Deposit", command=lambda: print(account_choice.get(), amount_entry.get()))
+    confirm_button = tk.Button(deposit_funds_window, text = "Deposit", command=lambda : process_deposit(user_id, account_choice.get(), amount_entry.get()))
     confirm_button.grid(column=5, row=10, sticky="S")
 
