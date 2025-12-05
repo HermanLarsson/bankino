@@ -1,5 +1,6 @@
 import random, json, os
 import backend.password_checker as password_checker
+from datetime import date
 
 # Global paths used in all functions.
 BASE_DIR = os.path.dirname(__file__)
@@ -172,6 +173,15 @@ def deposit_funds(user_id, bank_id, amount):
         # add the amount to the existing balance and store the new dictionary w/ updated account balance
         account_to_update['balance'] += amount
         updated_acount_data = accounts
+
+        transaction = {
+            "amount": amount,
+            "date": str(date.today()),
+            "from_acc": "DEPOSIT",
+            "to_acc": bank_id
+        }
+
+        updated_acount_data[user_id][bank_id]["transactions"].append(transaction)
     except TypeError:
         print("Amount must be an int")
         return
@@ -183,3 +193,18 @@ def deposit_funds(user_id, bank_id, amount):
     except FileNotFoundError:
         print("Error: Bank account database file not found.")
         return
+
+
+# Load all bank accounts
+
+def load_all_bank_accounts():
+    # Load all bank accounts from the JSON file
+    data = {}
+    try:
+        f = open("./data/bank_accounts/accounts.json")
+        data = json.load(f)
+        f.close()
+    except FileNotFoundError:
+        print("Database file not found")
+    
+    return data
