@@ -48,12 +48,11 @@ def run_create_new_account():
         create_bank_account_window.destroy()
        
 
-
+        landing_page.display_specific_account(account_id)
     except KeyError:
         print("KeyError in create_new_account")
         print(chosen_type[:3])
         print(chosen_name)
-    landing_page.display_specific_account(account_id)
 
 def load_window(parent, user_id):
     global curr_user_id
