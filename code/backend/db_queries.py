@@ -110,7 +110,6 @@ def get_all_account_data(user_id):
             print("Error: Accounts database file not found.")
 
     user_data = accounts[user_id]
-    print(user_data)
     return user_data
 
 
@@ -221,3 +220,16 @@ def account_exists(user_id, account_id):
     if account_id in all_accounts[user_id]:
         return True
         
+
+def toggle_locked_account(user_id, account_id):
+    all_accounts = load_all_bank_accounts()
+    chosen_account = all_accounts[user_id][account_id]
+
+    if chosen_account['is_locked'] == True:
+        chosen_account['is_locked'] = False
+    else:
+        chosen_account['is_locked'] = True
+
+    write_to_json(all_accounts)
+    print(f"Is locked status: {chosen_account['is_locked']}")
+    return chosen_account['is_locked']
