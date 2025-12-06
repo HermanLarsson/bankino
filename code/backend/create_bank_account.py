@@ -38,7 +38,7 @@ def create_new_account(account_type, account_name): #The personal number should 
     today_date = get_date() 
 
     updated_accounts = db_queries.add_new_account_to_accounts(account_id, today_date, user_info["user_id"], account_name)
-    db_queries.write_to_json(updated_accounts)
+    db_queries.write_to_accounts_json(updated_accounts)
     updated_users = db_queries.add_new_account_to_users(user_id, account_id)
     db_queries.write_to_users_json(updated_users)
     return account_id

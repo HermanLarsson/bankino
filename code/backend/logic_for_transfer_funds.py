@@ -1,5 +1,5 @@
 from datetime import date
-from backend.db_queries import load_all_bank_accounts, write_to_json
+from backend.db_queries import load_all_bank_accounts, write_to_accounts_json
 
 
 def add_transaction_to_history(user_id, from_account_id, to_account_id, amount, transaction_date, all_accounts):
@@ -31,4 +31,4 @@ def transfer_money(user_id, from_account_id, to_account_id, amount):
     transaction_date = str(date.today())
     add_transaction_to_history(user_id, from_account_id, to_account_id, amount, transaction_date, all_accounts)
     
-    write_to_json(all_accounts)
+    write_to_accounts_json(all_accounts)

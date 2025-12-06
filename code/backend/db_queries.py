@@ -57,7 +57,7 @@ def add_new_account_to_users(user_id, new_bank_account):
     return all_accounts
     
 
-def write_to_json(updated_data):
+def write_to_accounts_json(updated_data):
     with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as jsonfile:
         json.dump(updated_data, jsonfile, indent = 4)
 
