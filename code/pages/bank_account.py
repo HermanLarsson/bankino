@@ -34,8 +34,11 @@ def show_account_data(user_id, account_id):
     view_transactions_button = tk.Button(bank_account, text="View Transaction History", command=lambda: open_transaction_window(user_id, account_id))
     view_transactions_button.grid(column = 0, row = 9, sticky = 'w')
 
-    view_transactions_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
-    view_transactions_button.grid(column = 0, row = 10, sticky = 'w')
+    lock_account_button = tk.Button(bank_account, text="Lock Account", command=lambda: print("get locked bro"))
+    lock_account_button.grid(column = 0, row = 10, sticky = 'w')
+
+    back_to_landing_page_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
+    back_to_landing_page_button.grid(column = 0, row = 11, sticky = 'w')
 
 def open_transaction_window(user_id, account_id):
     bank_account.withdraw() #hides the accounts window
