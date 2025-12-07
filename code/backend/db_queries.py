@@ -25,7 +25,7 @@ def get_user_id():
     except FileNotFoundError:
             print("Main could not find cachefile")
 
-def add_new_account(account_id, today_date, user_id, account_name):
+def add_new_account_to_accounts(account_id, today_date, user_id, account_name):
 
     with open(BANK_ACCOUNT_PATH, "r", encoding="UTF-8") as jsonfile:
         all_accounts = json.load(jsonfile)
@@ -49,12 +49,23 @@ def add_new_account(account_id, today_date, user_id, account_name):
     all_accounts[user_id][account_id]["card_number"] = ""
 
     return all_accounts
+
+def add_new_account_to_users(user_id, new_bank_account):
+    with open(USERS_PATH, "r", encoding="UTF-8") as jsonfile:
+        all_accounts = json.load(jsonfile)
+
+    all_accounts[user_id]['bank_accounts'].append(new_bank_account)
+    return all_accounts
     
-def write_to_json(new_account):
 
+def write_to_accounts_json(updated_data):
     with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as jsonfile:
-        json.dump(new_account, jsonfile, indent = 4)
+        json.dump(updated_data, jsonfile, indent = 4)
 
+
+def write_to_users_json(updated_data):
+    with open(USERS_PATH, "w", encoding="UTF-8") as jsonfile:
+        json.dump(updated_data, jsonfile, indent = 2)
 
 # Signup user
 
@@ -209,8 +220,8 @@ def load_all_bank_accounts():
     
     return data
 
-# Checks if account exsist in database
-def account_exists(user_id, account_id):
+# Checks if receiving account exist in database 
+def check_account_exists(account_id):
     try: 
         with open("./data/bank_accounts/accounts.json", "r") as file:
             all_accounts = json.load(file)
@@ -218,8 +229,9 @@ def account_exists(user_id, account_id):
         print("Database file not found")
         return
 
-    if account_id in all_accounts[user_id]:
-        return True
+    for user in all_accounts:
+        if account_id in all_accounts[user]:
+            return True
         
 
 def toggle_locked_account(user_id, account_id):
@@ -231,6 +243,6 @@ def toggle_locked_account(user_id, account_id):
     else:
         chosen_account['is_locked'] = True
 
-    write_to_json(all_accounts)
+    write_to_accounts_json(all_accounts)
     print(f"Is locked status: {chosen_account['is_locked']}")
     return chosen_account['is_locked']
