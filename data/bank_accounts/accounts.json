@@ -33,7 +33,9 @@
           "from_acc": "SAV92DS",
           "to_acc": "ISK99TT"
         }
-      ]
+      ],
+      "card_connected": true,
+      "card_number": "123456789ABCDEF6"
     },
     "SAV92DS": {
       "account_id": "SAV92DS",
@@ -68,7 +70,9 @@
           "from_acc": "SAV92DS",
           "to_acc": "ISK99TT"
         }
-      ]
+      ],
+      "card_connected": false,
+      "card_number": ""
     }
   },
   "A7P91": {
@@ -93,7 +97,9 @@
           "from_acc": "EMPLOYER01",
           "to_acc": "CHK12AB"
         }
-      ]
+      ],
+      "card_connected": true,
+      "card_number": "987654321A123456"
     },
     "SAV77LK": {
       "account_id": "SAV77LK",
@@ -116,7 +122,9 @@
           "from_acc": "SAV77LK",
           "to_acc": "INV88YX"
         }
-      ]
+      ],
+      "card_connected": false,
+      "card_number": ""     
     }
   }
 }
