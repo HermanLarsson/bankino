@@ -1,0 +1,27 @@
+{
+  "4XJ38": {
+    "123456789ABCDEF6": {
+      "account_id": "ISK99TT",
+      "card_number": "123456789ABCDEF6",
+      "cardholder_first_name" : "Kim",
+      "cardholder_last_name": "Duso Joviken",
+      "cardholder_middle_name": "Sebastian Valentino",
+      "expiration_date": "2028-07",
+      "security_code": "123",
+      "PIN_code": "hashed"
+    }
+  },
+
+  "A7P91": {
+    "987654321A123456": {
+      "account_id": "CHK12AB",
+      "card_number": "987654321A123456",
+      "cardholder_first_name": "Dominic",
+      "cardholder_last_name": "Wooldridge",
+      "cardholder_middle_name": "Paul",
+      "expiration_date": "2029-03",
+      "security_code": "456",
+      "PIN_code": "hashed"
+    }
+  }
+}
