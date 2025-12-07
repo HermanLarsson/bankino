@@ -52,7 +52,7 @@ def display_transfer_funds():
     confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
-def process_transfer(user_id, from_account, to_account, amount):
+def process_transfer(from_account, to_account, amount):
     print("Processing")
     # Saves the user input in varibles
     from_acc_input = from_account.get()
@@ -75,7 +75,7 @@ def process_transfer(user_id, from_account, to_account, amount):
          return
     
     # Validate that to account exists in the database
-    if not db_queries.account_exists(user_id, to_acc_input):
+    if not db_queries.check_account_exists(to_acc_input):
         messagebox.showinfo("Error", f"Account '{to_acc_input}' does not exist")
         return
     
