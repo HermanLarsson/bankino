@@ -14,7 +14,7 @@ account_buttons = []
 #Loops through the lists to destroy the widges one by one
 #After that it clears the lists so that new widgets can take their place.
 #Lastly, we call list_accounts to print them anew.
-def refresh_accounts(user_id):
+def refresh_accounts(user_id): 
 
     for i in range(0, len(account_buttons)):
         account_headers[i].destroy()
