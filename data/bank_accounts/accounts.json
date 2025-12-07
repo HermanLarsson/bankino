@@ -3,8 +3,9 @@
     "ISK99TT": {
       "account_id": "ISK99TT",
       "account_type": "ISK",
+      "is_locked": false,
       "account_name": "Main",
-      "balance": 24893.59,
+      "balance": 26516.59,
       "currency": "SEK",
       "date_created": "2025-11-16",
       "user_id": "4XJ38",
@@ -22,12 +23,6 @@
           "to_acc": "ISK99TT"
         },
         {
-          "amount": 100,
-          "date": "2025-12-04",
-          "from_acc": "SAV92DS",
-          "to_acc": "ISK99TT"
-        },
-        {
           "amount": 234,
           "date": "2025-12-04",
           "from_acc": "SAV92DS",
@@ -38,6 +33,7 @@
     "SAV92DS": {
       "account_id": "SAV92DS",
       "account_type": "SAV",
+      "is_locked": false,
       "account_name": "Savings",
       "balance": 52665.5,
       "currency": "SEK",
@@ -55,18 +51,6 @@
           "date": "2025-11-13",
           "from_acc": "ISK99TT",
           "to_acc": "SAV92DS"
-        },
-        {
-          "amount": 100,
-          "date": "2025-12-04",
-          "from_acc": "SAV92DS",
-          "to_acc": "ISK99TT"
-        },
-        {
-          "amount": 234,
-          "date": "2025-12-04",
-          "from_acc": "SAV92DS",
-          "to_acc": "ISK99TT"
         }
       ]
     }
@@ -75,8 +59,9 @@
     "CHK12AB": {
       "account_id": "CHK12AB",
       "account_type": "CHE",
+      "is_locked": false,
       "account_name": "Daily Use",
-      "balance": 8421.74,
+      "balance": 2566.26,
       "currency": "SEK",
       "date_created": "2024-09-12",
       "user_id": "9FD21",
@@ -92,29 +77,36 @@
           "date": "2025-11-10",
           "from_acc": "EMPLOYER01",
           "to_acc": "CHK12AB"
+        },
+        {
+          "amount": 1000.0,
+          "date": "2025-12-06",
+          "from_acc": "CHK12AB",
+          "to_acc": "SAV77LK"
         }
       ]
     },
     "SAV77LK": {
       "account_id": "SAV77LK",
       "account_type": "SAV",
+      "is_locked": false,
       "account_name": "Long-term Savings",
-      "balance": 50200.5,
+      "balance": 29700.5,
       "currency": "SEK",
       "date_created": "2023-04-22",
       "user_id": "9FD21",
       "transactions": [
         {
-          "amount": 250.0,
-          "date": "2025-11-14",
+          "amount": 1000.0,
+          "date": "2025-12-06",
           "from_acc": "CHK12AB",
           "to_acc": "SAV77LK"
         },
         {
-          "amount": 1000.99,
-          "date": "2025-11-02",
+          "amount": 1500.0,
+          "date": "2025-12-07",
           "from_acc": "SAV77LK",
-          "to_acc": "INV88YX"
+          "to_acc": "ISK99TT"
         }
       ]
     }

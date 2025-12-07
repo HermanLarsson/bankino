@@ -38,6 +38,7 @@ def add_new_account_to_accounts(account_id, today_date, user_id, account_name):
     all_accounts[user_id][account_id] = dict()
     all_accounts[user_id][account_id]["account_id"] = account_id
     all_accounts[user_id][account_id]["account_type"] = account_id[:3]
+    all_accounts[user_id][account_id]["is_locked"] = False
     all_accounts[user_id][account_id]["account_name"] = account_name
     all_accounts[user_id][account_id]["balance"] = 0.0
     all_accounts[user_id][account_id]["currency"] = "SEK"
@@ -121,7 +122,6 @@ def get_all_account_data(user_id):
             print("Error: Accounts database file not found.")
 
     user_data = accounts[user_id]
-    print(user_data)
     return user_data
 
 
@@ -228,8 +228,21 @@ def check_account_exists(account_id):
     except FileNotFoundError:
         print("Database file not found")
         return
+
     for user in all_accounts:
         if account_id in all_accounts[user]:
             return True
-
         
+
+def toggle_locked_account(user_id, account_id):
+    all_accounts = load_all_bank_accounts()
+    chosen_account = all_accounts[user_id][account_id]
+
+    if chosen_account['is_locked'] == True:
+        chosen_account['is_locked'] = False
+    else:
+        chosen_account['is_locked'] = True
+
+    write_to_accounts_json(all_accounts)
+    print(f"Is locked status: {chosen_account['is_locked']}")
+    return chosen_account['is_locked']
