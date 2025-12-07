@@ -48,7 +48,7 @@ def display_transfer_funds():
     amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
     # confirm button
-    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: process_transfer(current_user_id, from_account, to_account, amount))
+    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: process_transfer(from_account, to_account, amount))
     confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
