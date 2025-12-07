@@ -1,6 +1,6 @@
 import tkinter as tk
 import tkinter.font as tkFont
-from tkinter import ttk
+from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
 import pages.transaction_history as transaction_history
 
@@ -33,13 +33,29 @@ def show_account_data(user_id, account_id):
     view_transactions_button = tk.Button(bank_account, text="View Transaction History", command=lambda: open_transaction_window(user_id, account_id))
     view_transactions_button.grid(column = 0, row = 9, sticky = 'w')
 
-    view_transactions_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
-    view_transactions_button.grid(column = 0, row = 10, sticky = 'w')
+    if account_data['account_type'] == "SAV":
+        lock_account_button = tk.Button(bank_account, text="Lock Account", command=lambda: toggle_lock(user_id, account_id))
+        lock_account_button.grid(column = 0, row = 10, sticky = 'w')
+
+        back_to_landing_page_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
+        back_to_landing_page_button.grid(column = 0, row = 11, sticky = 'w')
+    else:
+        back_to_landing_page_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
+        back_to_landing_page_button.grid(column = 0, row = 10, sticky = 'w')
 
 def open_transaction_window(user_id, account_id):
     bank_account.withdraw() #hides the accounts window
     transaction_history.load_window(user_id, account_id, bank_account) #opens transaction history window
 
+def toggle_lock(user_id, account_id):
+    status = db_queries.toggle_locked_account(user_id, account_id)
+    if status:
+        message = f"Account {account_id} is now LOCKED"
+    else:
+        message = f"Account {account_id} is now UNLOCKED"
+    messagebox.showinfo("Success", message)
+    return
+    
 def back_to_landing_page():
     bank_account.withdraw()
     back_window.deiconify() #Brings back the landing page.
