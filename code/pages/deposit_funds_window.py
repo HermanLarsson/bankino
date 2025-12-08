@@ -4,7 +4,6 @@ import tkinter.font as tkFont
 from tkinter import *
 import re
 
-
 def create_account_choices(avail_accounts):
     account_buttons = []
     #Counter for the loop
@@ -43,7 +42,7 @@ def process_deposit(user_id, account_id, amount):
     else:
         print("Amount must be greater than 0")
         tk.messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
-
+    
 def load_window(parent, user_id):
     avail_accounts = db_queries.get_all_account_data(user_id)
 
@@ -52,7 +51,7 @@ def load_window(parent, user_id):
     deposit_funds_window = tk.Toplevel(parent) #Creates the window
     deposit_funds_window.title('Bankino')
     deposit_funds_window.geometry('600x400')
-       
+
     #Configures the amount of columns and rows
     ROWS = 20
     COLUMNS = 20
@@ -73,8 +72,6 @@ def load_window(parent, user_id):
     amount_entry = tk.Entry(deposit_funds_window)
     amount_entry.grid(column=1, row=4, padx=10, pady=10, sticky="w")
     
-
-
     create_account_choices(avail_accounts)
 
     confirm_button = tk.Button(deposit_funds_window, text = "Deposit", command=lambda : process_deposit(user_id, account_choice.get(), amount_entry.get()))

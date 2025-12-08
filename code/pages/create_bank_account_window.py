@@ -2,7 +2,6 @@ import tkinter as tk
 from tkinter import *
 import tkinter.font as tkFont
 import backend.create_bank_account as create_bank_account
-import pages.landing_page as landing_page
 
 
 #Creates and displays a label, a entry box for account name, a radio button menu for account types and a button.
@@ -44,11 +43,9 @@ def run_create_new_account():
     chosen_type = account_type.get()
     chosen_name = account_name.get()
     try:
-        account_id = create_bank_account.create_new_account(chosen_type[:3] , chosen_name)
+        create_bank_account.create_new_account(chosen_type[:3] , chosen_name)
         create_bank_account_window.destroy()
-       
 
-        landing_page.display_specific_account(account_id)
     except KeyError:
         print("KeyError in create_new_account")
         print(chosen_type[:3])

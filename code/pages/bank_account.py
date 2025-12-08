@@ -3,7 +3,6 @@ import tkinter.font as tkFont
 from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
 import pages.transaction_history as transaction_history
-import pages.landing_page as landing_page
 
 # Then take a Bank ID to access the specific bank account details. 
 def show_account_data(user_id, account_id):
