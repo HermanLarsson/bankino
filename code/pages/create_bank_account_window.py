@@ -2,11 +2,10 @@ import tkinter as tk
 from tkinter import *
 import tkinter.font as tkFont
 import backend.create_bank_account as create_bank_account
-import pages.landing_page as landing_page
 
 
 #Creates and displays a label, a entry box for account name, a radio button menu for account types and a button.
-def display_create_bank_account(user_id):
+def display_create_bank_account():
 
     #Label and entry box
     global account_name
@@ -35,20 +34,18 @@ def display_create_bank_account(user_id):
         curr.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
     #"Create new bank account" buttom
-    create_button = tk.Button(create_bank_account_window, text="Create New Bank Account", command=lambda: run_create_new_account(user_id))
+    create_button = tk.Button(create_bank_account_window, text="Create New Bank Account", command=run_create_new_account)
     create_button.grid(column=1, row=7, pady=10, sticky="w")
 
 #Calls the function that creates and stores a new bank account in data/bank_accounts/accounts.json
 #Need the run_create_new_account() to be able to pass parameters to create_new_account()
-def run_create_new_account(user_id):
+def run_create_new_account():
     chosen_type = account_type.get()
     chosen_name = account_name.get()
     try:
         create_bank_account.create_new_account(chosen_type[:3] , chosen_name)
         create_bank_account_window.destroy()
-       
 
-        landing_page.display_specific_account(account_id)
     except KeyError:
         print("KeyError in create_new_account")
         print(chosen_type[:3])
@@ -78,4 +75,4 @@ def load_window(parent, user_id):
     header = tk.Label(create_bank_account_window, text="Bankino", bg="#B6B6B6", font=header_font)
     header.grid(column=1, row=0, sticky="w", pady=10)
     #Calls the rest of whats to display
-    display_create_bank_account(user_id)
+    display_create_bank_account()
