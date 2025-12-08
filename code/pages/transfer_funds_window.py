@@ -94,6 +94,15 @@ def process_transfer(from_account, to_account, amount):
                 messagebox.showinfo("Error", "Input cannot be 0.00 SEK")
                 return
             
+            users_accounts = db_queries.get_all_account_data(current_user_id)
+            current_balance = users_accounts[from_acc_input]['balance']
+            
+            has_sufficient_funds = transfer_funds.check_sufficient_funds(current_balance, amount_value)
+
+            if not has_sufficient_funds:
+                messagebox.showinfo("Error", f"Account {from_acc_input} does not has suffiecient funds for this transfer")  
+                return
+            
             # Calls the backend logic to transfer funds         
             transfer_funds.transfer_money(current_user_id, from_acc_input, to_acc_input, amount_value)
             print(f"{amount_value} successfully transferred from {from_acc_input} to {to_acc_input}")
