@@ -3,6 +3,7 @@ import tkinter.font as tkFont
 from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
 import pages.transaction_history as transaction_history
+import pages.savings_window as savings_window
 
 # Then take a Bank ID to access the specific bank account details. 
 def show_account_data(user_id, account_id):
@@ -48,12 +49,8 @@ def open_transaction_window(user_id, account_id):
     transaction_history.load_window(user_id, account_id, bank_account) #opens transaction history window
 
 def toggle_lock(user_id, account_id):
-    status = db_queries.toggle_locked_account(user_id, account_id)
-    if status:
-        message = f"Account {account_id} is now LOCKED"
-    else:
-        message = f"Account {account_id} is now UNLOCKED"
-    messagebox.showinfo("Success", message)
+    savings_window.load_window(account_id, bank_account)
+    db_queries.toggle_locked_account(user_id, account_id)
     return
     
 def back_to_landing_page():
