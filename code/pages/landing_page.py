@@ -92,13 +92,17 @@ def load_window(user_id, login_window):
 
     # Deposit funds button
     deposit_funds_button = tk.Button(landing_page, text="Deposit Funds", command=lambda: deposit_funds_window.load_window(landing_page, user_id))
-    deposit_funds_button.grid(column = 17, row = 0, sticky = "nswe")
+    deposit_funds_button.grid(column = 18, row = 0, sticky = "nswe")
 
     # Transfer funds button
     transfer_funds_button = tk.Button(landing_page, text="Transfer Funds", command=lambda: transfer_funds_window.load_window(landing_page, user_id))
-    transfer_funds_button.grid(column = 15, row = 0, sticky = "nsew")
+    transfer_funds_button.grid(column = 17, row = 0, sticky = "nsew")
         
     refresh_button = tk.Button(landing_page, text="Refresh", command=lambda: refresh_accounts(user_id))
-    refresh_button.grid(column = 12, row = 0, sticky = "nsew")
+    refresh_button.grid(column = 15, row = 0, sticky = "nsew")
+
+    # Account management button
+    account_management_button = tk.Button(landing_page, text="Account Management")
+    account_management_button.grid(column= 16, row=0, sticky="nswe")
 
     list_accounts(user_id)
