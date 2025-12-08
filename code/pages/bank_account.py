@@ -56,15 +56,6 @@ def toggle_lock(user_id, account_id):
     messagebox.showinfo("Success", message)
     return
 
-def fine_user(user_id, account_id):
-    all_accounts = db_queries.load_all_bank_accounts()
-    chosen_account = all_accounts[user_id][account_id]
-    # Amount to be fined = 100kr
-    FINE = 100
-    chosen_account['balance'] -= FINE
-    db_queries.write_to_accounts_json(all_accounts)
-
-    print(f"Account {account_id} has been fined 100 SEK")
     
 def back_to_landing_page():
     bank_account.withdraw()
