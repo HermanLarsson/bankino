@@ -59,9 +59,10 @@ The data for bank-accounts is stored seperately in ./data/bank_accounts. Also th
 }`
 
 ##4. Account-Cards data
-The data for accounts-cards is stored seperately in ./data/accounts-cards. Also this is a monolithic file with key-value pairs where the key is the **userID** and the value is a nested dictionary with all the different values stored.
+The data for accounts-cards is stored seperately in ./data/account-cards/cards.json. Also this is a monolithic file with key-value pairs where the key is the **userID** and the value is a nested dictionary with all the different values stored.
 How and what data will be stored:
-{
+
+`{
   "user_id": {
     "card_number": {
       "account_id": string,
@@ -70,8 +71,7 @@ How and what data will be stored:
       "cardholder_last_name": string,
       "cardholder_middle_name": string,
       "expiration_date": string //only year and month,
-      "security_code": string,
-      "PIN_code": "string //will be hashed"
+      "security_code": string
     }
   }
-}
+}`

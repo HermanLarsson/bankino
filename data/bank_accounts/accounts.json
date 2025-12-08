@@ -30,7 +30,7 @@
         }
       ],
       "card_connected": true,
-      "card_number": "123456789ABCDEF6"
+      "card_number": "1213111111111111"
     },
     "SAV92DS": {
       "account_id": "SAV92DS",
@@ -90,7 +90,7 @@
         }
       ],
       "card_connected": true,
-      "card_number": "987654321A123456"
+      "card_number": "1213111111111112"
     },
     "SAV77LK": {
       "account_id": "SAV77LK",
