@@ -49,7 +49,11 @@ def open_transaction_window(user_id, account_id):
     transaction_history.load_window(user_id, account_id, bank_account) #opens transaction history window
 
 def toggle_lock(user_id, account_id):
-    savings_window.load_window(account_id, bank_account)
+    users_accounts = db_queries.get_all_account_data(user_id)
+    if not users_accounts[account_id]["is_locked"]:
+        savings_window.load_window(account_id, bank_account)
+    else:
+        messagebox.showinfo("Message","Account is unlocked")
     db_queries.toggle_locked_account(user_id, account_id)
     return
     
