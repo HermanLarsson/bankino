@@ -58,6 +58,7 @@ def process_transfer(from_account, to_account, amount):
     from_acc_input = from_account.get()
     to_acc_input = to_account.get()
     amount_input = amount.get()
+    user_accounts = db_queries.get_all_account_data(current_user_id)
 
     # Checks if user selected option on the radiobutton
     if from_acc_input == "":
@@ -94,15 +95,17 @@ def process_transfer(from_account, to_account, amount):
                 messagebox.showinfo("Error", "Input cannot be 0.00 SEK")
                 return
             
-            users_accounts = db_queries.get_all_account_data(current_user_id)
-            current_balance = users_accounts[from_acc_input]['balance']
-            
+            current_balance = user_accounts[from_acc_input]['balance']
             has_sufficient_funds = transfer_funds.check_sufficient_funds(current_balance, amount_value)
 
             if not has_sufficient_funds:
                 messagebox.showinfo("Error", f"Account {from_acc_input} does not has suffiecient funds for this transfer")  
                 return
             
+            if user_accounts[from_acc_input]["is_locked"]:
+                messagebox.showinfo("Error", "Cannot transfer funds from a locked account.")
+                return
+
             # Calls the backend logic to transfer funds         
             transfer_funds.transfer_money(current_user_id, from_acc_input, to_acc_input, amount_value)
             print(f"{amount_value} successfully transferred from {from_acc_input} to {to_acc_input}")
@@ -112,6 +115,7 @@ def process_transfer(from_account, to_account, amount):
 
             # Closes the pop-up window
             transfer_funds_window.destroy()
+
 
          # Throws error if inputted amount is not a float 
         except ValueError:
