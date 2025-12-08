@@ -19,7 +19,7 @@ User data is stored in a monolithic file consisting of one key-pair value for ea
         join_date : string,
         email : string,
         address : string,
-        phonr : string,
+        phone : string,
         user_id : string,
         bank_accounts : [
             accountID(string),
