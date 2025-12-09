@@ -248,16 +248,16 @@ def toggle_locked_account(user_id, account_id):
     return chosen_account['is_locked']
 
 
-# Load all users
-def load_all_users():
+# Load all cards
+def load_all_cards():
     with open(CARDS_PATH, "r", encoding="UTF-8") as users:
         all_users = json.load(users)
     return all_users
 
 
-# Laod all cards
-def load_all_cards():
-    all_users = load_all_users()
+# Laod all card numbers
+def load_all_card_numbers():
+    all_users = load_all_cards()
     all_card_numbers = []
     for user_id, cards in all_users.items():
         for card_number, card_data in cards.items():
