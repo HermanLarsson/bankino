@@ -52,7 +52,6 @@ def toggle_lock(user_id, account_id):
     users_accounts = db_queries.get_all_account_data(user_id)
     if not users_accounts[account_id]["is_locked"]:
         savings_window.load_window(account_id, bank_account, user_id)
-        db_queries.toggle_locked_account(user_id, account_id)
     else:
         # implement fine
         answer = messagebox.askquestion('Are you sure?', f'''Account {account_id} is already Locked.
@@ -65,6 +64,7 @@ def toggle_lock(user_id, account_id):
             messagebox.showinfo("Message", f'''Account {account_id} is unlocked
                                 
                                 100 SEK fine processed.''')
+            db_queries.toggle_locked_account(user_id, account_id)
     return
 
     
