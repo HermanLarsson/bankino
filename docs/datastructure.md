@@ -39,6 +39,7 @@ The data for bank-accounts is stored seperately in ./data/bank_accounts. Also th
             account_id : string,
             account_type : string,
             is_locked: boolean,
+            locked_until_date: string
             account_name : string,
             balance : float,
             currency : string,
