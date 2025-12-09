@@ -13,7 +13,9 @@ def generate_card_number():
     existing_card_numbers = db_queries.load_all_cards()
 
     numbers = "0123456789"
-    generated_card_number = "1213" + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers)
+    generated_card_number = "1213"
+    for _ in range(12):
+        generated_card_number += random.choice(numbers)
 
     # Check if same card number does not exist
     if generated_card_number in existing_card_numbers:
