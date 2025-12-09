@@ -247,3 +247,14 @@ def toggle_locked_account(user_id, account_id):
     write_to_accounts_json(all_accounts)
     print(f"Is locked status: {chosen_account['is_locked']}")
     return chosen_account['is_locked']
+
+
+def fine_user(user_id, account_id):
+    all_accounts = load_all_bank_accounts()
+    chosen_account = all_accounts[user_id][account_id]
+    # Amount to be fined = 100kr
+    FINE = 100
+    chosen_account['balance'] -= FINE
+    write_to_accounts_json(all_accounts)
+
+    print(f"Account {account_id} has been fined 100 SEK")

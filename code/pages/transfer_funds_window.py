@@ -60,6 +60,18 @@ def process_transfer(from_account, to_account, amount):
     amount_input = amount.get()
     user_accounts = db_queries.get_all_account_data(current_user_id)
 
+    if user_accounts[from_acc_input]['is_locked']: 
+        answer = messagebox.askquestion("Locked Account", f'''Account {from_acc_input} is locked.
+                                        
+                               Continuing with this transfer will incur a 100 SEK fine.
+                                        
+                               Would you like to continue with the transfer?''')
+        
+        if answer == "no":
+            return
+        else: 
+            db_queries.fine_user(current_user_id, from_acc_input)
+
     # Checks if user selected option on the radiobutton
     if from_acc_input == "":
         messagebox.showinfo("Error", "Select an account to transfer from")  
@@ -100,10 +112,6 @@ def process_transfer(from_account, to_account, amount):
 
             if not has_sufficient_funds:
                 messagebox.showinfo("Error", f"Account {from_acc_input} does not has suffiecient funds for this transfer")  
-                return
-            
-            if user_accounts[from_acc_input]["is_locked"]:
-                messagebox.showinfo("Error", "Cannot transfer funds from a locked account.")
                 return
 
             # Calls the backend logic to transfer funds         
