@@ -3,7 +3,7 @@ import tkinter.font as tkFont
 from tkinter import ttk
 import backend.db_queries as db_queries
 import pages.create_bank_account_window as create_bank_account_window
-import pages.bank_account as bank_account
+import pages.bank_account_window as bank_account_window
 import pages.deposit_funds_window as deposit_funds_window
 import pages.transfer_funds_window as transfer_funds_window
 from datetime import date
@@ -49,7 +49,7 @@ def list_accounts(user_id):
 
 def OnButtonClick(user_id, clicked_id):
     landing_page.withdraw()
-    bank_account.load_window(user_id, clicked_id, landing_page)
+    bank_account_window.load_window(user_id, clicked_id, landing_page)
 
 # Checking if locked savings account date has passed.
 def check_date(user_id):
@@ -65,7 +65,6 @@ def check_date(user_id):
                 db_queries.toggle_locked_account(user_id, account)
             else:
                 pass
-                # Dominics stuff
 
 def convert_dates(date_string):
     year = date_string[0:4]

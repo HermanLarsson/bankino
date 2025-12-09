@@ -71,10 +71,6 @@ def process_transfer(from_account, to_account, amount):
             return
         else: 
             db_queries.fine_user(current_user_id, from_acc_input)
-            messagebox.showinfo("Success", f'''Transaction Details:
-                                {amount_input} SEK transfered to {to_acc_input}
-
-                                {from_acc_input} fined 100 SEK''')
 
     # Checks if user selected option on the radiobutton
     if from_acc_input == "":
