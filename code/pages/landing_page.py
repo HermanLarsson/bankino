@@ -126,7 +126,7 @@ def load_window(user_id, login_window):
     transfer_funds_button.grid(column = 17, row = 0, sticky = "nsew")
         
     refresh_button = tk.Button(landing_page, text="Refresh", command=lambda: refresh_accounts(user_id))
-    refresh_button.grid(column = 12, row = 0, sticky = "nsew")
+    refresh_button.grid(column = 15, row = 0, sticky = "nsew")
 
     # Account management button
     account_management_button = tk.Button(landing_page, text="Account", command=lambda: account_management_window.load_window(landing_page, user_id))
