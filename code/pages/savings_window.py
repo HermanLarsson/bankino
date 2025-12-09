@@ -23,17 +23,21 @@ def set_locked_period(savings_input, account_id, user_id):
     # Getting dates to write to database.
     todays_date = datetime.now()
     days_locked = int(savings_input)
-    locked_until_date = str(todays_date + timedelta(days=days_locked))
-    locked_until_date = locked_until_date[:10] # Slicing at 10 to save only year, month, day.
 
-    #Dumping the locked date to database
-    all_accounts = db_queries.load_all_bank_accounts()
-    all_accounts[user_id][account_id]["locked_until_date"] = locked_until_date
-    db_queries.write_to_accounts_json(all_accounts)
-    db_queries.toggle_locked_account(user_id, account_id)
-    messagebox.showinfo("Success", f"Account locked until {locked_until_date}")
-    
-    savings_window.destroy()
+    if days_locked <= 0:
+        messagebox.showinfo("Error", f"Days inputted must be more than 0.")
+    else: 
+        locked_until_date = str(todays_date + timedelta(days=days_locked))
+        locked_until_date = locked_until_date[:10] # Slicing at 10 to save only year, month, day.
+
+        #Dumping the locked date to database
+        all_accounts = db_queries.load_all_bank_accounts()
+        all_accounts[user_id][account_id]["locked_until_date"] = locked_until_date
+        db_queries.write_to_accounts_json(all_accounts)
+        db_queries.toggle_locked_account(user_id, account_id)
+        messagebox.showinfo("Success", f"Account locked until {locked_until_date}")
+        
+        savings_window.destroy()
 
 
 
