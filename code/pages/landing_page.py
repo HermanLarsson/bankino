@@ -7,7 +7,7 @@ import pages.bank_account as bank_account
 import pages.deposit_funds_window as deposit_funds_window
 import pages.transfer_funds_window as transfer_funds_window
 from datetime import date
-
+import pages.account_management_window as account_management_window
 
 account_headers = []
 account_amounts = []
@@ -119,12 +119,17 @@ def load_window(user_id, login_window):
 
     # Deposit funds button
     deposit_funds_button = tk.Button(landing_page, text="Deposit Funds", command=lambda: deposit_funds_window.load_window(landing_page, user_id))
-    deposit_funds_button.grid(column = 17, row = 0, sticky = "nswe")
+    deposit_funds_button.grid(column = 18, row = 0, sticky = "nswe")
 
     # Transfer funds button
     transfer_funds_button = tk.Button(landing_page, text="Transfer Funds", command=lambda: transfer_funds_window.load_window(landing_page, user_id))
-    transfer_funds_button.grid(column = 15, row = 0, sticky = "nsew")
+    transfer_funds_button.grid(column = 17, row = 0, sticky = "nsew")
         
     refresh_button = tk.Button(landing_page, text="Refresh", command=lambda: refresh_accounts(user_id))
     refresh_button.grid(column = 12, row = 0, sticky = "nsew")
+
+    # Account management button
+    account_management_button = tk.Button(landing_page, text="Account", command=lambda: account_management_window.load_window(landing_page, user_id))
+    account_management_button.grid(column= 16, row=0, sticky="nswe")
+
     list_accounts(user_id)
