@@ -39,6 +39,7 @@ def add_new_account_to_accounts(account_id, today_date, user_id, account_name):
     all_accounts[user_id][account_id]["account_id"] = account_id
     all_accounts[user_id][account_id]["account_type"] = account_id[:3]
     all_accounts[user_id][account_id]["is_locked"] = False
+    all_accounts[user_id][account_id]["locked_until_date"] = ""
     all_accounts[user_id][account_id]["account_name"] = account_name
     all_accounts[user_id][account_id]["balance"] = 0.0
     all_accounts[user_id][account_id]["currency"] = "SEK"

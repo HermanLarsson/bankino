@@ -6,6 +6,7 @@ import pages.create_bank_account_window as create_bank_account_window
 import pages.bank_account as bank_account
 import pages.deposit_funds_window as deposit_funds_window
 import pages.transfer_funds_window as transfer_funds_window
+from datetime import date
 import pages.account_management_window as account_management_window
 
 account_headers = []
@@ -50,10 +51,35 @@ def OnButtonClick(user_id, clicked_id):
     landing_page.withdraw()
     bank_account.load_window(user_id, clicked_id, landing_page)
 
+# Checking if locked savings account date has passed.
+def check_date(user_id):
+    todays_date = str(date.today())
+    all_accounts = db_queries.load_all_bank_accounts()
+    users_accounts = all_accounts[user_id]
+
+    for account, data in users_accounts.items():
+        if data["is_locked"]:
+            locked_until_date = data["locked_until_date"]
+            if convert_dates(todays_date) > convert_dates(locked_until_date):
+                print("Checking date function")
+                db_queries.toggle_locked_account(user_id, account)
+            else:
+                pass
+                # Dominics stuff
+
+def convert_dates(date_string):
+    year = date_string[0:4]
+    month = date_string [5:7]
+    day = date_string [8:10]
+    return date(int(year), int(month), int(day))
+
+        
+
+
 #Program starts here
 #Main functions which runs the program
 def load_window(user_id, login_window):
-
+    check_date(user_id)
     global landing_page 
     # uses Toplevel instead of Tk since it is a 'child' window
     landing_page = tk.Toplevel(login_window) #Creates the window
