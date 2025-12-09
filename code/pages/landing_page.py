@@ -103,7 +103,7 @@ def load_window(user_id, login_window):
     refresh_button.grid(column = 15, row = 0, sticky = "nsew")
 
     # Account management button
-    account_management_button = tk.Button(landing_page, text="Account Management", command=lambda: account_management_window.load_window(landing_page))
+    account_management_button = tk.Button(landing_page, text="Account Management", command=lambda: account_management_window.load_window(landing_page, user_id))
     account_management_button.grid(column= 16, row=0, sticky="nswe")
 
     list_accounts(user_id)
