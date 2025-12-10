@@ -10,10 +10,14 @@ def get_date():
 # Generate random 16-digit number starting with 1213
 def generate_card_number():
     # Load all card numbers
-    existing_card_numbers = db_queries.load_all_cards()
+    existing_card_numbers = db_queries.load_all_card_numbers()
 
+    # first 4 digits for Bankino cards
+    bankino_special_numbers = "1213"
     numbers = "0123456789"
-    generated_card_number = "1213" + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers) + random.choice(numbers)
+    generated_card_number = bankino_special_numbers
+    for _ in range(12):
+        generated_card_number += random.choice(numbers)
 
     # Check if same card number does not exist
     if generated_card_number in existing_card_numbers:
