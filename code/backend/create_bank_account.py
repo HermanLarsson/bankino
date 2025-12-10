@@ -1,6 +1,7 @@
 from datetime import date
 import string, random, json, os
 import backend.db_queries as db_queries
+import backend.generate_card as generate_card
 
 CHARACTERS = list(string.ascii_uppercase + string.digits)
 
@@ -30,7 +31,7 @@ def get_date():
     return todays_date
 
 
-def create_new_account(account_type, account_name): #The personal number should be saved in a variable when logging in and the account_type and account_name should be inputs.
+def create_new_account(account_type, account_name, card): #The personal number should be saved in a variable when logging in and the account_type and account_name should be inputs.
 
     user_id = db_queries.get_user_id()
     user_info = db_queries.get_user_info(user_id)
@@ -41,4 +42,8 @@ def create_new_account(account_type, account_name): #The personal number should 
     db_queries.write_to_accounts_json(updated_accounts)
     updated_users = db_queries.add_new_account_to_users(user_id, account_id)
     db_queries.write_to_users_json(updated_users)
-    return account_id
+    if card == True:
+        generate_card.generate_card
+        return account_id
+    else:
+        return account_id
