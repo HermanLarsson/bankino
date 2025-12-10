@@ -36,14 +36,14 @@ def list_accounts(user_id):
     current_row = 5
     bank_accounts = db_queries.load_bank_accounts(user_id)
     for account in bank_accounts.items():
-        account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = fonts.body_font, fg="#333333", anchor = "w", bg="#F5F5F0", padx = 20))
-        account_headers[account_counter].grid(column = 0, row = current_row, sticky = "w")
+        account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = fonts.body_font, fg="#333333", anchor = "w", bg="#F5F5F0"))
+        account_headers[account_counter].grid(column = 1, row = current_row, sticky = "w")
         
-        account_amounts.append(tk.Label(landing_page,  text = (str(account[1]["balance"]) + " SEK"), font = fonts.value_font, fg="#333333", bg="#F5F5F0", padx = 20))
+        account_amounts.append(tk.Label(landing_page,  text = (str(account[1]["balance"]) + " SEK"), font = fonts.value_font, fg="#333333", bg="#F5F5F0"))
         account_amounts[account_counter].grid(column = 4, row = current_row, sticky ="w")
 
-        account_buttons.append(tk.Button(landing_page, text="View Account Details", bg="#F5F5F0",font = fonts.button_font, fg="#333333", bd = 0, highlightbackground = "#F5F5F0", command=lambda clicked_id = account[0] : OnButtonClick(user_id ,clicked_id), padx = 20))
-        account_buttons[account_counter].grid(row = current_row + 1, column = 0, sticky = "NW")
+        account_buttons.append(tk.Button(landing_page, text="View Account Details", bg="#F5F5F0",font = fonts.button_font, fg="#333333", bd = 0, highlightbackground = "#F5F5F0", command=lambda clicked_id = account[0] : OnButtonClick(user_id ,clicked_id)))
+        account_buttons[account_counter].grid(row = current_row + 1, column = 1, sticky = "NW")
 
         current_row += 2
         account_counter += 1
@@ -108,23 +108,23 @@ def load_window(user_id, login_window):
     separator.place(relx=0, y=124, relwidth=1, relheight=0,)
 
     #Account Management Button
-    account_management_button = tk.Button(landing_page, text="Account", fg="#F5F5F0", bg="#5D866C", font = fonts.nav_font, bd = 0, highlightbackground = "#5D866C", command=lambda: account_management_window.load_window(landing_page, user_id))
+    account_management_button = tk.Button(landing_page, text="Account", fg="#333333", bg="#FFFFFF", font = fonts.nav_font, command=lambda: account_management_window.load_window(landing_page, user_id))
     account_management_button.place(x = 347, y = 30)
 
     #Refresh Button
-    refresh_button = tk.Button(landing_page, text="Refresh", bg="#5D866C", fg="#F5F5F0", font = fonts.nav_font, bd = 0, highlightbackground = "#5D866C", command=lambda: refresh_accounts(user_id))
+    refresh_button = tk.Button(landing_page, text="Refresh", fg="#333333", bg="#FFFFFF", font = fonts.nav_font, command=lambda: refresh_accounts(user_id))
     refresh_button.place(x = 461, y = 30)
 
     # Transfer funds button
-    transfer_funds_button = tk.Button(landing_page, text="Transfer", fg="#F5F5F0", bg="#5D866C", font = fonts.nav_font, bd = 0, highlightbackground = "#5D866C", command=lambda: transfer_funds_window.load_window(landing_page, user_id))
+    transfer_funds_button = tk.Button(landing_page, text="Transfer", fg="#333333", bg="#FFFFFF", font = fonts.nav_font, command=lambda: transfer_funds_window.load_window(landing_page, user_id))
     transfer_funds_button.place(x = 571, y = 30)
 
     # Deposit funds button
-    deposit_funds_button = tk.Button(landing_page, text="Deposit", fg="#F5F5F0", bg="#5D866C", font = fonts.nav_font, bd = 0, highlightbackground = "#5D866C", command=lambda: deposit_funds_window.load_window(landing_page, user_id))
+    deposit_funds_button = tk.Button(landing_page, text="Deposit", fg="#333333", bg="#FFFFFF", font = fonts.nav_font, command=lambda: deposit_funds_window.load_window(landing_page, user_id))
     deposit_funds_button.place(x = 690, y = 30)
 
     #Creates create new bank account button
-    create_bank_account_button = tk.Button(landing_page, text="Create Account", fg="#F5F5F0", bg="#5D866C", font = fonts.nav_font, bd = 0, highlightbackground = "#5D866C", command=lambda: create_bank_account_window.load_window(landing_page, user_id))
+    create_bank_account_button = tk.Button(landing_page, text="Create Account", fg="#333333", bg="#FFFFFF", font = fonts.nav_font, command=lambda: create_bank_account_window.load_window(landing_page, user_id))
     create_bank_account_button.place(x = 800, y = 30)
 
     
