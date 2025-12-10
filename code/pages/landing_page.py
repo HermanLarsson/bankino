@@ -72,8 +72,9 @@ def convert_dates(date_string):
     day = date_string [8:10]
     return date(int(year), int(month), int(day))
 
-        
-
+# called when the user closes the landing page to destroy mainloop in login window to terminate program
+def close_landing_page(login_window):
+    login_window.destroy()
 
 #Program starts here
 #Main functions which runs the program
@@ -132,3 +133,6 @@ def load_window(user_id, login_window):
     account_management_button.grid(column= 16, row=0, sticky="nswe")
 
     list_accounts(user_id)
+
+    # calls the function to terminate the program when the user closes the landing page
+    landing_page.protocol("WM_DELETE_WINDOW", lambda: close_landing_page(login_window))
