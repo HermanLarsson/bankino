@@ -6,7 +6,7 @@ from datetime import date
 BASE_DIR = os.path.dirname(__file__)
 USERS_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "data", "users", "users.json"))
 BANK_ACCOUNT_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "data", "bank_accounts", "accounts.json"))
-
+CARDS_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "data", "account_cards", "cards.json"))
 
 # Create bankaccount
 
@@ -39,6 +39,7 @@ def add_new_account_to_accounts(account_id, today_date, user_id, account_name):
     all_accounts[user_id][account_id]["account_id"] = account_id
     all_accounts[user_id][account_id]["account_type"] = account_id[:3]
     all_accounts[user_id][account_id]["is_locked"] = False
+    all_accounts[user_id][account_id]["locked_until_date"] = ""
     all_accounts[user_id][account_id]["account_name"] = account_name
     all_accounts[user_id][account_id]["balance"] = 0.0
     all_accounts[user_id][account_id]["currency"] = "SEK"
@@ -246,3 +247,32 @@ def toggle_locked_account(user_id, account_id):
     write_to_accounts_json(all_accounts)
     print(f"Is locked status: {chosen_account['is_locked']}")
     return chosen_account['is_locked']
+
+
+# Load all users
+def load_all_cards():
+    with open(CARDS_PATH, "r", encoding="UTF-8") as cards:
+        all_cards = json.load(cards)
+    return all_cards
+
+
+# Laod all cards
+def load_all_cards():
+    all_cards = load_all_cards()
+    all_card_numbers = []
+    for user_id, cards in all_cards.items():
+        for card_number, card_data in cards.items():
+            all_card_numbers.append(card_data["card_number"])
+    return all_card_numbers
+
+
+
+def fine_user(user_id, account_id):
+    all_accounts = load_all_bank_accounts()
+    chosen_account = all_accounts[user_id][account_id]
+    # Amount to be fined = 100kr
+    FINE = 100
+    chosen_account['balance'] -= FINE
+    write_to_accounts_json(all_accounts)
+
+    print(f"Account {account_id} has been fined 100 SEK")

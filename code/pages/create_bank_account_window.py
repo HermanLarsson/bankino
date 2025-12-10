@@ -2,6 +2,7 @@ import tkinter as tk
 from tkinter import *
 import tkinter.font as tkFont
 import backend.create_bank_account as create_bank_account
+import pages.landing_page as landing_page
 
 
 #Creates and displays a label, a entry box for account name, a radio button menu for account types and a button.
@@ -33,23 +34,36 @@ def display_create_bank_account():
         curr = Radiobutton(create_bank_account_window, text=lang, variable=account_type, value=lang, bg="#B6B6B6")
         curr.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
+    # Initialize needs_card as False by default
+    global needs_card
+    needs_card = BooleanVar(create_bank_account_window, False)
+
+    # Generate card checkbox
+    generate_card_checkbox = tk.Checkbutton(create_bank_account_window, text="Order Card", variable=needs_card, bg="#B6B6B6")
+    generate_card_checkbox.grid(column=1, row=7, pady=10, sticky="w")
+
     #"Create new bank account" buttom
     create_button = tk.Button(create_bank_account_window, text="Create New Bank Account", command=run_create_new_account)
-    create_button.grid(column=1, row=7, pady=10, sticky="w")
+    create_button.grid(column=1, row=8, pady=10, sticky="w")
+
 
 #Calls the function that creates and stores a new bank account in data/bank_accounts/accounts.json
 #Need the run_create_new_account() to be able to pass parameters to create_new_account()
 def run_create_new_account():
     chosen_type = account_type.get()
     chosen_name = account_name.get()
+    card_needed = needs_card.get()
     try:
-        create_bank_account.create_new_account(chosen_type[:3] , chosen_name)
+        account_id = create_bank_account.create_new_account(chosen_type[:3] , chosen_name , card_needed)
         create_bank_account_window.destroy()
+       
+
 
     except KeyError:
         print("KeyError in create_new_account")
         print(chosen_type[:3])
         print(chosen_name)
+    landing_page.display_specific_account(account_id)
 
 def load_window(parent, user_id):
     global curr_user_id
