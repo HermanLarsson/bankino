@@ -5,11 +5,15 @@
     "middle_name": "Sebastian Valentino",
     "personal_number": 199802100538,
     "join_date": "2025-11-18",
-    "email" : "kimjoviken@hotmail.com",
-    "address" : "Gymnasiegatan 40, 43450 Kungsbacka",
-    "phone" : "0722649674",
+    "email": "kimjoviken@hotmail.com",
+    "address": "Gymnasiegatan 40, 43450 Kungsbacka",
+    "phone": "0722649674",
     "user_id": "4XJ38",
-    "bank_accounts": ["ISK99TT", "SAV92DS"],
+    "bank_accounts": [
+      "ISK99TT",
+      "SAV92DS",
+      "SAVFCVS"
+    ],
     "password": "2cf24dba5fb0a30e26e83b2ac5b9e29e1b161e5c1fa7425e73043362938b9824"
   },
   "A7P91": {
@@ -18,11 +22,14 @@
     "middle_name": "Paul",
     "personal_number": 199903117530,
     "join_date": "2024-03-02",
-    "email" : "dom.wooldridge11@gmail.com",
-    "address" : "Herkulesgatan 7B, 41704 Göteborg",
-    "phone" : "0737754962",
+    "email": "dom.wooldridge11@gmail.com",
+    "address": "Herkulesgatan 7B, 41704 G\u00f6teborg",
+    "phone": "0737754962",
     "user_id": "A7P91",
-    "bank_accounts": ["CHK12AB", "SAV77LK"],
+    "bank_accounts": [
+      "CHK12AB",
+      "SAV77LK"
+    ],
     "password": "5e884898da28047151d0e56f8dc6292773603d0d6aabbdd62a11ef721d1542d8"
   }
 }

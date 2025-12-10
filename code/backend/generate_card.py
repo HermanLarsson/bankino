@@ -33,6 +33,40 @@ def generate_security_code():
     return security_code
 
 
+# Save a new card to the JSON files
+def save_card(user_id, account_id, card_number, expiration_date, security_code, first_name, last_name, middle_name):
+  
+    # Load existing cards
+    all_cards = db_queries.load_all_cards()
+    user_id = str(user_id)
+
+    # Create new card data
+    new_card = {
+        "account_id": str(account_id),
+        "card_number": str(card_number),
+        "cardholder_first_name": str(first_name),
+        "cardholder_last_name": str(last_name),
+        "cardholder_middle_name": str(middle_name),
+        "expiration_date": str(expiration_date),
+        "security_code": str(security_code)
+    }
+    # Check if user already exists in the file
+    if user_id not in all_cards:
+        all_cards[user_id] = {}
+    all_cards[user_id][card_number] = new_card
+
+    # Load existing accounts
+    all_accounts = db_queries.load_all_bank_accounts()
+    
+    # Update the account with card information
+    all_accounts[user_id][account_id]["card_connected"] = True
+    all_accounts[user_id][account_id]["card_number"] = card_number
+    
+    # Write to both files
+    db_queries.add_card_to_cards_file(all_cards)
+    db_queries.write_accounts_to_file(all_accounts)
+
+
 # Create a new card with generated card number, expiration date, and security code
 def create_card(user_id, account_id, first_name, last_name, middle_name):
     
@@ -43,7 +77,10 @@ def create_card(user_id, account_id, first_name, last_name, middle_name):
     # Generate expiration date (5 years from now)
     today = get_date()
     expiration_year = today.year + 5
-    expiration_date = f"{str(expiration_year)[2:]}{today.month:02d}"
+    expiration_date = f"{str(expiration_year)[2:]}-{today.month:02d}"
     
     # Generate random 3-digit security code
     security_code = generate_security_code()
+    
+    save_card(user_id, account_id, card_number, expiration_date, security_code, first_name, last_name, middle_name)
+

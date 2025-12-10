@@ -57,6 +57,19 @@
       ],
       "card_connected": false,
       "card_number": ""
+    },
+    "SAVFCVS": {
+      "account_id": "SAVFCVS",
+      "account_type": "SAV",
+      "is_locked": false,
+      "account_name": "DEPART.A.MENTAL",
+      "balance": 0.0,
+      "currency": "SEK",
+      "date_created": "2025-12-10",
+      "user_id": "4XJ38",
+      "transactions": [],
+      "card_connected": true,
+      "card_number": "1213404670515753"
     }
   },
   "A7P91": {
@@ -116,7 +129,7 @@
         }
       ],
       "card_connected": false,
-      "card_number": ""     
+      "card_number": ""
     }
   }
 }

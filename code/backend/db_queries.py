@@ -263,3 +263,27 @@ def load_all_card_numbers():
         for card_number, card_data in cards.items():
             all_card_numbers.append(card_data["card_number"])
     return all_card_numbers
+
+
+# Write the cards data to the cards.json
+def add_card_to_cards_file(all_cards):
+    with open(CARDS_PATH, "w", encoding="UTF-8") as cards_file:
+        json.dump(all_cards, cards_file, indent=2)
+
+
+# Write the acount data to the accounts.json
+def write_accounts_to_file(all_accounts):
+    with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as accounts_file:
+        json.dump(all_accounts, accounts_file, indent=2)
+
+
+# Returns the first name, middle name, and last name of a user
+def get_name(user_id):
+    with open(USERS_PATH, "r", encoding="UTF-8") as jsonfile:
+        all_users = json.load(jsonfile)
+    user = all_users[user_id]
+    return {
+        "first_name": user["first_name"],
+        "middle_name": user["middle_name"],
+        "last_name": user["last_name"]
+    }
