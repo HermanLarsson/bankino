@@ -1,6 +1,7 @@
 import pages.login_window
 import pages.landing_page
 import os
+import fonts.bankino_fonts as fonts
 
 
 def reset_cache():
@@ -19,6 +20,7 @@ def main():
     reset_cache()
 
     login_window = pages.login_window.load_window()
+    fonts.initialize_fonts()
     login_window.mainloop()
 
     # Based on the info inputted in the login window, we try to login the user and navigate to their landing page. 

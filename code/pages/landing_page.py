@@ -33,16 +33,16 @@ def refresh_accounts(user_id):
 #Creates labels for each accounts id, name and amount as well as button
 def list_accounts(user_id):
     account_counter = 0
-    current_row = 4
+    current_row = 5
     bank_accounts = db_queries.load_bank_accounts(user_id)
     for account in bank_accounts.items():
-        account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = body_font, fg="#333333", anchor = "w", bg="#F5F5F0"))
+        account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = fonts.body_font, fg="#333333", anchor = "w", bg="#F5F5F0", padx = 20))
         account_headers[account_counter].grid(column = 0, row = current_row, sticky = "w")
         
-        account_amounts.append(tk.Label(landing_page,  text = (str(account[1]["balance"]) + " SEK"), font = value_font, fg="#333333", bg="#F5F5F0"))
+        account_amounts.append(tk.Label(landing_page,  text = (str(account[1]["balance"]) + " SEK"), font = fonts.value_font, fg="#333333", bg="#F5F5F0", padx = 20))
         account_amounts[account_counter].grid(column = 4, row = current_row, sticky ="w")
 
-        account_buttons.append(tk.Button(landing_page, text="View Account Details", bg="#F5F5F0",font = button_font, fg="#333333", bd = 0, highlightbackground = "#F5F5F0", command=lambda clicked_id = account[0] : OnButtonClick(user_id ,clicked_id)))
+        account_buttons.append(tk.Button(landing_page, text="View Account Details", bg="#F5F5F0",font = fonts.button_font, fg="#333333", bd = 0, highlightbackground = "#F5F5F0", command=lambda clicked_id = account[0] : OnButtonClick(user_id ,clicked_id), padx = 20))
         account_buttons[account_counter].grid(row = current_row + 1, column = 0, sticky = "NW")
 
         current_row += 2
