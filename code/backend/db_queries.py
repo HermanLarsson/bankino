@@ -276,3 +276,19 @@ def fine_user(user_id, account_id):
     write_to_accounts_json(all_accounts)
 
     print(f"Account {account_id} has been fined 100 SEK")
+
+
+def update_user_info(user_id, new_info):
+    
+    try:
+        ####REPLACE WITH ALL USERS FUNCTION
+        with open(USERS_PATH, "r") as old_info:
+            all_users = json.load(old_info)
+
+        for entry in new_info.keys():
+            all_users[user_id][entry] = new_info[entry]
+
+        write_to_users_json(all_users)
+        return True
+    except:
+        return False

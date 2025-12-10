@@ -3,6 +3,7 @@ import tkinter.font as tkFont
 import backend.db_queries as db_queries
 import tkinter.messagebox as messagebox
 import re
+import backend.password_checker as password_checker
 from datetime import date
 
 
@@ -41,24 +42,7 @@ def sign_up_user():
         messagebox.showerror("Error", "Personal number must be 10 or 12 digits.") 
         return
     # Password must contain at least 8 characters.
-    if not re.fullmatch(r"^.{8,}$", password_input):
-        messagebox.showerror("Error", "Password must contain at least 8 characters.")
-        return
-    # Password must contain at least one capital letters.
-    if not re.fullmatch(r".*[A-Z].*", password_input):
-        messagebox.showerror("Error", "Password must contain at least one capital letters.")
-        return
-    # Password must contain at least one lowercase letters.
-    if not re.fullmatch(r".*[a-z].*", password_input):
-        messagebox.showerror("Error", "Password must contain at least one lowercase letters.")
-        return
-    # Password must contain at least one digit.
-    if not re.fullmatch(r".*\d.*", password_input):
-        messagebox.showerror("Error", "Password must contain at least one digit.")
-        return
-    # Password must contain at least one special character.
-    if not re.fullmatch(r"(?=.*[!#$%&'()*+,./:;<=>?@\[\]^_`{|}~]).+", password_input):
-        messagebox.showerror("Error", "Password must contain at least one special character.")
+    if not password_checker.password_vailidity_check(password_input):
         return
 
 
