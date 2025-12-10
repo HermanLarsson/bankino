@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 import json
-import pages.bank_account as bank_account
+import pages.bank_account_window as bank_account_window
 
 
 # Fetches all account data based on user_id
