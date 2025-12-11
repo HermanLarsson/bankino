@@ -4,7 +4,7 @@ import tkinter.font as tkFont
 import backend.password_checker as password_checker
 import backend.db_queries as db_queries
 
-
+#Gets all the information from
 def update_account_info(user_id, first_name, middle_name, last_name, phone, email, address, curr_pass, new_pass, confirm_pass):
     
     new_info = {}
@@ -14,17 +14,15 @@ def update_account_info(user_id, first_name, middle_name, last_name, phone, emai
     new_info['phone'] = phone
     new_info['email'] = email
     new_info['address'] = address
-    #new_info['curr_pass'] = password_checker.hash_password(curr_pass)
     new_info['new_pass'] = password_checker.hash_password(new_pass)
-    #new_info['confirm_pass'] = password_checker.hash_password(confirm_pass)
 
     curr_pass = password_checker.hash_password(curr_pass)
     confirm_pass = password_checker.hash_password(confirm_pass)
 
+    current_user_info = db_queries.get_user_info(user_id)
+
     errors = []
     error_message = ""
-
-    current_user_info = db_queries.get_user_info(user_id)
     
     if db_queries.verify_user(current_user_info['personal_number'], curr_pass) == user_id:
         if new_info['first_name'] == '':
@@ -48,7 +46,6 @@ def update_account_info(user_id, first_name, middle_name, last_name, phone, emai
         else:
             messagebox.showerror("Error", "An error occured while saving the account information. Please panic.")
             return False
-
 
 
 def display_account_management(user_id):
