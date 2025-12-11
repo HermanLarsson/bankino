@@ -257,7 +257,7 @@ def load_all_cards():
 
 
 # Laod all cards
-def load_all_cards():
+def load_all_cards_numbers():
     all_cards = load_all_cards()
     all_card_numbers = []
     for user_id, cards in all_cards.items():

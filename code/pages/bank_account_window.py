@@ -4,6 +4,7 @@ from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
 import pages.transaction_history as transaction_history
 import pages.savings_window as savings_window
+import pages.show_card_window as show_card_window
 
 # Then take a Bank ID to access the specific bank account details. 
 def show_account_data(user_id, account_id):
@@ -34,15 +35,30 @@ def show_account_data(user_id, account_id):
     view_transactions_button = tk.Button(bank_account, text="View Transaction History", command=lambda: open_transaction_window(user_id, account_id))
     view_transactions_button.grid(column = 0, row = 9, sticky = 'w')
 
+    if account_data['card_connected']:
+        view_card_button = tk.Button(bank_account, text="View card", command=lambda: show_card_window.load_window(bank_account, user_id, account_data["card_number"]))
+        view_card_button.grid(column = 0, row = 10, sticky = "w")
+    else:
+        order_card_button = tk.Button(bank_account, text="Order card", command=lambda: order_card())
+        order_card_button.grid(column = 0, row = 10, sticky = "w")
+
     if account_data['account_type'] == "SAV":
         lock_account_button = tk.Button(bank_account, text="Lock Account", command=lambda: toggle_lock(user_id, account_id))
-        lock_account_button.grid(column = 0, row = 10, sticky = 'w')
+        lock_account_button.grid(column = 0, row = 11, sticky = 'w')
 
         back_to_landing_page_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
-        back_to_landing_page_button.grid(column = 0, row = 11, sticky = 'w')
+        back_to_landing_page_button.grid(column = 0, row = 12, sticky = 'w')
     else:
         back_to_landing_page_button = tk.Button(bank_account, text="Back to Landing Page", command=back_to_landing_page)
-        back_to_landing_page_button.grid(column = 0, row = 10, sticky = 'w')
+        back_to_landing_page_button.grid(column = 0, row = 11, sticky = 'w')
+
+
+def order_card():
+    pass
+    #DON'T WANT TO FINISH THIS
+    #CAN TAKE FARZAMS STUFF TO DO THIS ONE
+    #PROB WON'T BE HERE EITHER
+
 
 def open_transaction_window(user_id, account_id):
     bank_account.withdraw() #hides the accounts window
