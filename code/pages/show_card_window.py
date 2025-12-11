@@ -53,7 +53,7 @@ def load_window(parent, user_id, card_number):
     come_up_with_name = Label(show_card_window, text="Valid thru:", bg="#15150e", fg="#FFDD43", font=smallerFont)
     come_up_with_name.grid(column=6, row=12, sticky="ne", padx=5, pady=5)
 
-    expiration_date_label = Label(show_card_window, text=curr_acccount_card["expiration_date"][2:], bg="#15150e", fg="#FFDD43", font=smallFont)
+    expiration_date_label = Label(show_card_window, text=curr_acccount_card["expiration_date"], bg="#15150e", fg="#FFDD43", font=smallFont)
     expiration_date_label.grid(column=7, row=12, sticky="nw")
 
     come_up_with_name2 = Label(show_card_window, text="CVC:", bg="#15150e", fg="#FFDD43", font=smallerFont)
