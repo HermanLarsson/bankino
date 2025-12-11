@@ -103,8 +103,12 @@ def display_signup():
 
 
 def back_to_login():
-    sign_up_window.withdraw()   # destroys/closes the sign up window
+    sign_up_window.destroy()   # destroys/closes the sign up window
     login_window.deiconify()
+
+# takes user back to login window when closing the sign up window
+def close_sign_up():
+    back_to_login()
 
 def load_window(previous_window):
 
@@ -128,3 +132,6 @@ def load_window(previous_window):
     header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
      
     display_signup()
+
+    # calls the function to take the user back to login window when closing sign up window
+    sign_up_window.protocol("WM_DELETE_WINDOW", close_sign_up)

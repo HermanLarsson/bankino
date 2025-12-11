@@ -57,6 +57,10 @@ def open_signup_window():
     login_window.withdraw() # hides the login window
     sign_up_window.load_window(login_window) # opens the sign up window
 
+# closes the window when the user exists the program
+def close_program():
+    login_window.destroy()
+
 def load_window():
    
     global login_window
@@ -84,4 +88,5 @@ def load_window():
     signup_button.grid(column=0, row=3, pady=20)
 
     display_login()
+    login_window.protocol("WM_DELETE_WINDOW", close_program)
     return login_window # returns created tk.TK() window, which is used to start gui from main
