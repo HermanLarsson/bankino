@@ -44,7 +44,7 @@ def create_new_account(account_type, account_name, card): #The personal number s
     db_queries.write_to_users_json(updated_users)
     if card == True:
         first_name, middle_name, last_name = db_queries.get_name(user_id)
-        generate_card.create_card(user_id, account_id, first_name, last_name, middle_name)
+        generate_card.create_card(user_id, account_id, first_name, middle_name, last_name)
 
         return account_id
     else:

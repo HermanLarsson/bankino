@@ -282,8 +282,4 @@ def get_name(user_id):
     with open(USERS_PATH, "r", encoding="UTF-8") as jsonfile:
         all_users = json.load(jsonfile)
     user = all_users[user_id]
-    return {
-        "first_name": user["first_name"],
-        "middle_name": user["middle_name"],
-        "last_name": user["last_name"]
-    }
+    return user["first_name"], user["middle_name"], user["last_name"]

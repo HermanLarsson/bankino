@@ -70,6 +70,19 @@
       "transactions": [],
       "card_connected": true,
       "card_number": "1213404670515753"
+    },
+    "SAVP50T": {
+      "account_id": "SAVP50T",
+      "account_type": "SAV",
+      "is_locked": false,
+      "account_name": "saving 1",
+      "balance": 0.0,
+      "currency": "SEK",
+      "date_created": "2025-12-11",
+      "user_id": "4XJ38",
+      "transactions": [],
+      "card_connected": true,
+      "card_number": "1213399159561632"
     }
   },
   "A7P91": {
