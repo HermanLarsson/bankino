@@ -311,3 +311,9 @@ def update_user_info(user_id, new_info):
         return True
     except:
         return False
+    
+def delete_bank_account(user_id, account_id):
+    all_accounts = load_all_bank_accounts()
+    all_accounts[user_id].pop(account_id)
+    write_to_accounts_json(all_accounts)
+    
