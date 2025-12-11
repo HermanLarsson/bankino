@@ -15,7 +15,7 @@ def update_account_info(user_id, first_name, middle_name, last_name, phone, emai
     new_info['email'] = email
     new_info['address'] = address
     #new_info['curr_pass'] = password_checker.hash_password(curr_pass)
-    new_info['new_pass'] = password_checker.hash_password(new_pass)
+    new_info['password'] = password_checker.hash_password(new_pass)
     #new_info['confirm_pass'] = password_checker.hash_password(confirm_pass)
 
     curr_pass = password_checker.hash_password(curr_pass)
@@ -31,7 +31,7 @@ def update_account_info(user_id, first_name, middle_name, last_name, phone, emai
             errors.append("You must have a first name!")
         if new_info['last_name'] == '':
             errors.append("You must have a last name!")
-        if new_info['new_pass'] != confirm_pass:
+        if new_info['password'] != confirm_pass:
             errors.append("Passwords don't match!")
     else:
         errors.append("You have entered an incorrect password!")
