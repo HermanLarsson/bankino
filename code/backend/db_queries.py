@@ -228,7 +228,6 @@ def check_account_exists(account_id):
 
     for user in all_accounts:
         if account_id in all_accounts[user]:
-            print("DB_QUERIES REFACTOR CHECK")
             return True
 
 
@@ -262,9 +261,7 @@ def load_all_card_numbers():
 
 # Returns the first name, middle name, and last name of a user
 def get_name(user_id):
-    with open(USERS_PATH, "r", encoding="UTF-8") as jsonfile:
-        all_users = json.load(jsonfile)
-    user = all_users[user_id]
+    user = get_user_info(user_id)
     return user["first_name"], user["middle_name"], user["last_name"]
 
 
