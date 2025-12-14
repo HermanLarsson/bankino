@@ -265,31 +265,33 @@ def get_name(user_id):
     return user["first_name"], user["middle_name"], user["last_name"]
 
 
+# Reduces the balance of a chosen account by 100. Writes changes to Database
 def fine_user(user_id, account_id):
     all_accounts = get_bank_accounts()
     chosen_account = all_accounts[user_id][account_id]
-    # Amount to be fined = 100kr
+    # Constant amount to be fined = 100kr
     FINE = 100
     chosen_account['balance'] -= FINE
     write_to_accounts_json(all_accounts)
 
-    print(f"Account {account_id} has been fined 100 SEK")
 
-
+# Takes a user and a dictionary of user information and overwrites the data for that user. 
+# Returns True if update is successful, otherwise false.
 def update_user_info(user_id, new_info):
-    
-    try:
-        ####REPLACE WITH ALL USERS FUNCTION
-        with open(USERS_PATH, "r") as old_info:
-            all_users = json.load(old_info)
+    output = False
+    all_users = get_users()
 
-        for entry in new_info.keys():
-            all_users[user_id][entry] = new_info[entry]
-
+    try: 
+        for input in new_info.keys():
+            all_users[user_id][input] = new_info[input]
+        
         write_to_users_json(all_users)
-        return True
-    except:
-        return False
+        output = True
+    except KeyError:
+        print(f"User {user_id} does not exist in the Database")
+
+    return output
+
     
 def delete_bank_account(user_id, account_id):
     all_accounts = get_bank_accounts()
