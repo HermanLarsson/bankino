@@ -18,6 +18,7 @@ def get_bank_accounts():
     
     return data
 
+
 # Fetches whole users.json file
 def get_users():
     try: 
@@ -27,6 +28,14 @@ def get_users():
         print("File not found")
 
     return all_users
+
+
+# Fetch while cards.json file
+def load_all_cards():
+    with open(CARDS_PATH, "r", encoding="UTF-8") as cards:
+        all_cards = json.load(cards)
+    return all_cards
+
 
 # Fetches the accounts of a specific user
 def get_user_bank_accounts(user_id):
@@ -202,24 +211,20 @@ def deposit_funds(user_id, account_id, amount):
         print("Amount must be an integer value")
         return
 
-    #  Write updated data to the database
+    # Write updated data to the database
     write_to_accounts_json(all_accounts)
 
 
-# Checks if receiving account exist in database 
+# Checks if receiving account exist in database
 def check_account_exists(account_id):
-    try: 
-        with open("./data/bank_accounts/accounts.json", "r") as file:
-            all_accounts = json.load(file)
-    except FileNotFoundError:
-        print("Database file not found")
-        return
+    all_accounts = get_bank_accounts()
 
     for user in all_accounts:
         if account_id in all_accounts[user]:
+            print("DB_QUERIES REFACTOR CHECK")
             return True
-        
 
+# Toggles the value of 'is_locked' between true and false
 def toggle_locked_account(user_id, account_id):
     all_accounts = get_bank_accounts()
     chosen_account = all_accounts[user_id][account_id]
@@ -233,12 +238,6 @@ def toggle_locked_account(user_id, account_id):
     print(f"Is locked status: {chosen_account['is_locked']}")
     return chosen_account['is_locked']
 
-
-# Load all users
-def load_all_cards():
-    with open(CARDS_PATH, "r", encoding="UTF-8") as cards:
-        all_cards = json.load(cards)
-    return all_cards
 
 
 # Laod all cards
