@@ -56,7 +56,7 @@ def save_card(user_id, account_id, card_number, expiration_date, security_code, 
     all_cards[user_id][card_number] = new_card
 
     # Load existing accounts
-    all_accounts = db_queries.load_all_bank_accounts()
+    all_accounts = db_queries.get_bank_accounts()
     
     # Update the account with card information
     all_accounts[user_id][account_id]["card_connected"] = True

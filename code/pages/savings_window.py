@@ -31,7 +31,7 @@ def set_locked_period(savings_input, account_id, user_id):
         locked_until_date = locked_until_date[:10] # Slicing at 10 to save only year, month, day.
 
         #Dumping the locked date to database
-        all_accounts = db_queries.load_all_bank_accounts()
+        all_accounts = db_queries.get_bank_accounts()
         all_accounts[user_id][account_id]["locked_until_date"] = locked_until_date
         db_queries.write_to_accounts_json(all_accounts)
         db_queries.toggle_locked_account(user_id, account_id)

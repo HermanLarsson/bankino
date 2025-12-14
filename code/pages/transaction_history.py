@@ -2,23 +2,12 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk
 import json
-import pages.bank_account_window as bank_account_window
-
-
-# Fetches all account data based on user_id
-def get_all_account_data(user_id):
-    try: 
-        with open ("./data/bank_accounts/accounts.json", "r") as file: 
-            accounts = json.load(file)
-    except FileNotFoundError:
-            print("Error: Accounts database file not found.")
-
-    user_data = accounts[user_id]
-    return user_data
+# import pages.bank_account_window as bank_account_window
+import backend.db_queries as db_queries
 
 # Fetches all the transactions of a specific account
 def get_transactions(user_id, account_id):
-    all_accounts = get_all_account_data(user_id)
+    all_accounts = db_queries.get_bank_accounts_by_user(user_id)
     transaction_history = all_accounts[account_id]['transactions']
 
     return transaction_history

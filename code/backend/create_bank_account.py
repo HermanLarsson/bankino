@@ -25,7 +25,7 @@ def create_account_id(bank_accounts, account_type, CHARACTERS):
     return account_id
 
 
-#Gets todays date
+# Gets todays date
 def get_date():
     todays_date = date.today()
     return todays_date
@@ -33,12 +33,12 @@ def get_date():
 
 def create_new_account(account_type, account_name, card): #The personal number should be saved in a variable when logging in and the account_type and account_name should be inputs.
 
-    user_id = db_queries.get_user_id()
+    user_id = db_queries.get_logged_in_user()
     user_info = db_queries.get_user_info(user_id)
     account_id = create_account_id(user_info["bank_accounts"], account_type, CHARACTERS) 
     today_date = get_date() 
 
-    updated_accounts = db_queries.add_new_account_to_accounts(account_id, today_date, user_info["user_id"], account_name)
+    updated_accounts = db_queries.update_accounts_dict(account_id, today_date, user_info["user_id"], account_name)
     db_queries.write_to_accounts_json(updated_accounts)
     updated_users = db_queries.add_new_account_to_users(user_id, account_id)
     db_queries.write_to_users_json(updated_users)

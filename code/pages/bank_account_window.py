@@ -10,7 +10,7 @@ import fonts.bankino_fonts as fonts
 def delete_account(user_id, account_id):
     
     if messagebox.askquestion("Are you sure?", "Do you really want to remove the account" + account_id + "?", type="yesno") == "yes":
-        all_accounts = db_queries.get_all_account_data(user_id)
+        all_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
         if all_accounts[account_id]['balance'] > 0.0:
             messagebox.showinfo("Error", "Cannot remove an account with balance!")
@@ -32,7 +32,7 @@ def delete_account(user_id, account_id):
 
 # Then take a Bank ID to access the specific bank account details. 
 def show_account_data(user_id, account_id):
-    all_accounts = db_queries.get_all_account_data(user_id)
+    all_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
     # data for the individual account the user wants to display
     account_data = all_accounts[account_id]
@@ -92,7 +92,7 @@ def open_transaction_window(user_id, account_id):
     transaction_history.load_window(user_id, account_id, bank_account_window) #opens transaction history window
 
 def toggle_lock(user_id, account_id):
-    users_accounts = db_queries.get_all_account_data(user_id)
+    users_accounts = db_queries.get_bank_accounts_by_user(user_id)
     if not users_accounts[account_id]["is_locked"]:
         savings_window.load_window(account_id, bank_account_window, user_id)
     else:

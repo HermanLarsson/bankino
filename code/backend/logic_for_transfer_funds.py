@@ -1,5 +1,5 @@
 from datetime import date
-from backend.db_queries import load_all_bank_accounts, write_to_accounts_json
+from backend.db_queries import get_bank_accounts, write_to_accounts_json
 
 # Returns a the path to reach the specific bank account
 def validate_receiving_account(all_accounts, user_accounts, to_account_id):
@@ -27,8 +27,7 @@ def add_transaction_to_history(from_account, to_account, amount, transaction_dat
 
 def transfer_money(user_id, from_account_id, to_account_id, amount):
     # Transfer money between two bank accounts
-    
-    all_accounts = load_all_bank_accounts()
+    all_accounts = get_bank_accounts()
     user_accounts = all_accounts[user_id]
     
     from_account = user_accounts[from_account_id]
