@@ -293,8 +293,14 @@ def update_user_info(user_id, new_info):
     return output
 
     
+# Takes a user_id and an account_id and removes bank account from accounts.json 
 def delete_bank_account(user_id, account_id):
+    # Remove from accounts.json
     all_accounts = get_bank_accounts()
     all_accounts[user_id].pop(account_id)
     write_to_accounts_json(all_accounts)
     
+    # Remove from users.json
+    all_users = get_users()
+    all_users[user_id]["bank_accounts"].remove(account_id)
+    write_to_users_json(all_users)
