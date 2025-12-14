@@ -63,8 +63,8 @@ def save_card(user_id, account_id, card_number, expiration_date, security_code, 
     all_accounts[user_id][account_id]["card_number"] = card_number
     
     # Write to both files
-    db_queries.add_card_to_cards_file(all_cards)
-    db_queries.write_accounts_to_file(all_accounts)
+    db_queries.write_to_cards_json(all_cards)
+    db_queries.write_to_accounts_json(all_accounts)
 
 
 # Create a new card with generated card number, expiration date, and security code

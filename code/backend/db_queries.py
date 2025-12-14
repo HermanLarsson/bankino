@@ -129,6 +129,13 @@ def write_to_users_json(updated_data):
         json.dump(updated_data, jsonfile, indent = 2)
 
 
+# Write the cards data to the cards.json
+def write_to_cards_json(all_cards):
+    with open(CARDS_PATH, "w", encoding="UTF-8") as cards_file:
+        json.dump(all_cards, cards_file, indent=2)
+
+
+
 # Creates and returns a unique user_id. 
 def generate_user_id():
     all_users = get_users()
@@ -251,17 +258,6 @@ def load_all_card_numbers():
             all_card_numbers.append(card_number)
     return all_card_numbers
 
-
-# Write the cards data to the cards.json
-def add_card_to_cards_file(all_cards):
-    with open(CARDS_PATH, "w", encoding="UTF-8") as cards_file:
-        json.dump(all_cards, cards_file, indent=2)
-
-
-# Write the acount data to the accounts.json
-def write_accounts_to_file(all_accounts):
-    with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as accounts_file:
-        json.dump(all_accounts, accounts_file, indent=2)
 
 
 # Returns the first name, middle name, and last name of a user
