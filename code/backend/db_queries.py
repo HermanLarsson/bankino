@@ -185,7 +185,7 @@ def sign_up(first_name, last_name, middle_name, personal_number, join_date, pass
             "join_date": join_date,
             "user_id": new_id,
             "bank_accounts": [],
-            "password": password_checker.hash_password(password),
+            "password": password,
         }
 
         all_users = get_users()
@@ -216,9 +216,6 @@ def deposit_funds(user_id, account_id, amount):
     
     if user_id not in all_accounts:
         print(f'User "{user_id}" not found in database')
-        return False
-    if account_id not in all_accounts[user_id]:
-        print(f'User "{user_id}" does not have an account "{account_id}" in the database')
         return False
 
     # Access the account to be updated and update the balance
