@@ -12,29 +12,30 @@ CARDS_PATH = os.path.abspath(os.path.join(BASE_DIR, "..", "..", "data", "account
 def get_bank_accounts():
     try:
         with open(BANK_ACCOUNT_PATH, "r", encoding="UTF-8") as file:
-            data = json.load(file)
+            return json.load(file)
     except FileNotFoundError:
         print("File not found")
-    
-    return data
+        return {}
 
 
 # Fetches whole users.json file
 def get_users():
     try: 
         with open(USERS_PATH, "r", encoding="UTF-8") as file:
-            all_users = json.load(file)
+            return json.load(file)
     except FileExistsError:
         print("File not found")
-
-    return all_users
+        return {}
 
 
 # Fetch while cards.json file
 def load_all_cards():
-    with open(CARDS_PATH, "r", encoding="UTF-8") as cards:
-        all_cards = json.load(cards)
-    return all_cards
+    try:
+        with open(CARDS_PATH, "r", encoding="UTF-8") as cards:
+            return json.load(cards)
+    except FileExistsError:
+        print("File not found")
+        return {}
 
 
 # Fetches the accounts of a specific user
@@ -50,20 +51,19 @@ def get_user_bank_accounts(user_id):
 def get_user_info(user_id):
     all_users = get_users()
     try:
-        user_data = all_users[user_id]
-        return user_data
+        return all_users[user_id]
     except KeyError:
         print(f"User_id {user_id} does not exist in the database")
+        return {}
 
 # Take a user id and returns a dictionary with all of their specific bank account details
 def get_bank_accounts_by_user(user_id):
     all_accounts = get_bank_accounts()
     try:
-        user_data = all_accounts[user_id]
+        return all_accounts[user_id]
     except KeyError:
         print(f"User {user_id}'s bank account data does not exist in the database")
-
-    return user_data
+        return {}
 
 
 # Return the user_id of the user currntly logged in. 
@@ -111,28 +111,37 @@ def add_new_account_to_users(user_id, new_bank_account):
     all_users = get_users()
     try: 
         all_users[user_id]['bank_accounts'].append(new_bank_account)
+        return all_users
     except KeyError:
         print(f"User {user_id} does not exist in database")
-
-    return all_users
+        return {}
     
 
 # Takes an updated accounts dictionary and writes it to the accounts.json file, overriding the existing data.
 def write_to_accounts_json(updated_data):
-    with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as jsonfile:
-        json.dump(updated_data, jsonfile, indent = 4)
+    try: 
+        with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as jsonfile:
+            json.dump(updated_data, jsonfile, indent = 4)
+    except FileExistsError:
+        print("File not found")
 
 
 # Takes an updated users dictionary and writes it to the users.json file, overriding the existing data.
 def write_to_users_json(updated_data):
-    with open(USERS_PATH, "w", encoding="UTF-8") as jsonfile:
-        json.dump(updated_data, jsonfile, indent = 2)
+    try: 
+        with open(USERS_PATH, "w", encoding="UTF-8") as jsonfile:
+            json.dump(updated_data, jsonfile, indent = 2)
+    except FileNotFoundError: 
+        print("File not found")
 
 
 # Write the cards data to the cards.json
 def write_to_cards_json(all_cards):
-    with open(CARDS_PATH, "w", encoding="UTF-8") as cards_file:
-        json.dump(all_cards, cards_file, indent=2)
+    try: 
+        with open(CARDS_PATH, "w", encoding="UTF-8") as cards_file:
+            json.dump(all_cards, cards_file, indent=2)
+    except FileNotFoundError:
+        print("File not found")
 
 
 
@@ -148,7 +157,7 @@ def generate_user_id():
 
     # Check if same id does not already exist
     if generated_id in existing_ids:
-        return generate_user_id()
+        generate_user_id()
     else:
         return generated_id
     
