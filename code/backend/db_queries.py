@@ -15,7 +15,7 @@ def get_bank_accounts():
             return json.load(file)
     except FileNotFoundError:
         print("File not found")
-        return {}
+    return {}
 
 
 # Fetches whole users.json file
@@ -25,7 +25,7 @@ def get_users():
             return json.load(file)
     except FileExistsError:
         print("File not found")
-        return {}
+    return {}
 
 
 # Fetch while cards.json file
@@ -35,7 +35,7 @@ def load_all_cards():
             return json.load(cards)
     except FileExistsError:
         print("File not found")
-        return {}
+    return {}
 
 
 # Fetches the accounts of a specific user
@@ -45,6 +45,7 @@ def get_user_bank_accounts(user_id):
         return all_accounts[user_id]
     except KeyError:
         print(f"User {user_id} not in Database")
+    return {}
 
 
 # Takes a user id and returns dictionary with their account information
@@ -54,7 +55,7 @@ def get_user_info(user_id):
         return all_users[user_id]
     except KeyError:
         print(f"User_id {user_id} does not exist in the database")
-        return {}
+    return {}
 
 # Take a user id and returns a dictionary with all of their specific bank account details
 def get_bank_accounts_by_user(user_id):
@@ -63,7 +64,7 @@ def get_bank_accounts_by_user(user_id):
         return all_accounts[user_id]
     except KeyError:
         print(f"User {user_id}'s bank account data does not exist in the database")
-        return {}
+    return {}
 
 
 # Return the user_id of the user currntly logged in. 
@@ -73,11 +74,13 @@ def get_logged_in_user():
             logged_in_user = file.read()
             if logged_in_user == "":
                 print("No users logged in")
+                return ""
             else:
                 print(f"Logged in user: {logged_in_user}")
                 return logged_in_user
     except FileNotFoundError:
             print("Main could not find cachefile")
+    return ""
 
 
 # Takes account_id, todays date (Formatted: YYYY-MM-DD), user_id, and account name given by user.
@@ -114,7 +117,7 @@ def add_new_account_to_users(user_id, new_bank_account):
         return all_users
     except KeyError:
         print(f"User {user_id} does not exist in database")
-        return {}
+    return {}
     
 
 # Takes an updated accounts dictionary and writes it to the accounts.json file, overriding the existing data.
@@ -122,8 +125,10 @@ def write_to_accounts_json(updated_data):
     try: 
         with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as jsonfile:
             json.dump(updated_data, jsonfile, indent = 4)
+        return True
     except FileExistsError:
         print("File not found")
+    return False
 
 
 # Takes an updated users dictionary and writes it to the users.json file, overriding the existing data.
@@ -131,8 +136,10 @@ def write_to_users_json(updated_data):
     try: 
         with open(USERS_PATH, "w", encoding="UTF-8") as jsonfile:
             json.dump(updated_data, jsonfile, indent = 2)
+        return True
     except FileNotFoundError: 
         print("File not found")
+    return False
 
 
 # Write the cards data to the cards.json
@@ -140,8 +147,10 @@ def write_to_cards_json(all_cards):
     try: 
         with open(CARDS_PATH, "w", encoding="UTF-8") as cards_file:
             json.dump(all_cards, cards_file, indent=2)
+        return True
     except FileNotFoundError:
         print("File not found")
+    return False
 
 
 
@@ -165,22 +174,27 @@ def generate_user_id():
 # Creates a dictionary of user data and writes the updated data to the database.
 # TODO: we should change join date in future
 def sign_up(first_name, last_name, middle_name, personal_number, join_date, password):
-    new_id = generate_user_id()
+    try:
+        new_id = generate_user_id()
 
-    user_data = {
-        "first_name": first_name,
-        "last_name": last_name,
-        "middle_name": middle_name,
-        "personal_number": int(personal_number),
-        "join_date": join_date,
-        "user_id": new_id,
-        "bank_accounts": [],
-        "password": password_checker.hash_password(password),
-    }
+        user_data = {
+            "first_name": first_name,
+            "last_name": last_name,
+            "middle_name": middle_name,
+            "personal_number": int(personal_number),
+            "join_date": join_date,
+            "user_id": new_id,
+            "bank_accounts": [],
+            "password": password_checker.hash_password(password),
+        }
 
-    all_users = get_users()
-    all_users[new_id] = user_data
-    write_to_users_json(all_users)
+        all_users = get_users()
+        all_users[new_id] = user_data
+        write_to_users_json(all_users)
+        return True
+    except:
+        print("Error occured while signing up user")
+    return False
 
 
 # Checks the inputted personal number and password against the users database
@@ -202,16 +216,17 @@ def deposit_funds(user_id, account_id, amount):
     
     if user_id not in all_accounts:
         print(f'User "{user_id}" not found in database')
-        return
+        return False
     if account_id not in all_accounts[user_id]:
         print(f'User "{user_id}" does not have an account "{account_id}" in the database')
-        return
+        return False
 
     # Access the account to be updated and update the balance
     try:
         all_accounts[user_id][account_id]['balance'] += amount
     except KeyError:
         print(f"User {user_id} does not have the account {account_id}")
+        return False
 
     try:
         # Create the transaction data
@@ -225,20 +240,24 @@ def deposit_funds(user_id, account_id, amount):
         all_accounts[user_id][account_id]["transactions"].append(transaction)
     except TypeError:
         print("Amount must be an integer value")
-        return
+        return False
 
     # Write updated data to the database
     write_to_accounts_json(all_accounts)
+    return True
 
 
 # Checks if receiving account exist in database
 def check_account_exists(account_id):
-    all_accounts = get_bank_accounts()
+    try: 
+        all_accounts = get_bank_accounts()
 
-    for user in all_accounts:
-        if account_id in all_accounts[user]:
-            return True
-
+        for user in all_accounts:
+            if account_id in all_accounts[user]:
+                return True
+    except:
+        print("Error occured while checking if account exists")
+    return False
 
 # Toggles the value of 'is_locked' between true and false
 def toggle_locked_account(user_id, account_id):
@@ -276,40 +295,51 @@ def get_name(user_id):
 
 # Reduces the balance of a chosen account by 100. Writes changes to Database
 def fine_user(user_id, account_id):
-    all_accounts = get_bank_accounts()
-    chosen_account = all_accounts[user_id][account_id]
-    # Constant amount to be fined = 100kr
-    FINE = 100
-    chosen_account['balance'] -= FINE
-    write_to_accounts_json(all_accounts)
+    try: 
+        all_accounts = get_bank_accounts()
+        chosen_account = all_accounts[user_id][account_id]
+        # Constant amount to be fined = 100kr
+        FINE = 100
+        chosen_account['balance'] -= FINE
+        write_to_accounts_json(all_accounts)
+        return True
+    except:
+        print("Error occured while processing fine")
+    return False
 
 
 # Takes a user and a dictionary of user information and overwrites the data for that user. 
 # Returns True if update is successful, otherwise false.
 def update_user_info(user_id, new_info):
-    output = False
-    all_users = get_users()
-
     try: 
+        all_users = get_users()
         for input in new_info.keys():
             all_users[user_id][input] = new_info[input]
         
         write_to_users_json(all_users)
-        output = True
+        return True
     except KeyError:
         print(f"User {user_id} does not exist in the Database")
 
-    return output
+    return False
 
     
 # Takes a user_id and an account_id and removes bank account from accounts.json 
 def delete_bank_account(user_id, account_id):
-    # Remove from accounts.json
-    all_accounts = get_bank_accounts()
-    all_accounts[user_id].pop(account_id)
-    write_to_accounts_json(all_accounts)
-    
-    # Remove from users.json
-    all_users = get_users()
-    all_users[user_id]["bank_accounts"].remove(account_id)
-    write_to_users_json(all_users)
+    try:
+        # Remove from accounts.json
+        all_accounts = get_bank_accounts()
+        all_accounts[user_id].pop(account_id)
+        write_to_accounts_json(all_accounts)
+    except:
+        print("Error while removing bank account from accounts.json")
+        
+    try:
+        # Remove from users.json
+        all_users = get_users()
+        all_users[user_id]["bank_accounts"].remove(account_id)
+        write_to_users_json(all_users)
+        return True
+    except:
+        print("Error while removing bank account from users.json")
+    return False
