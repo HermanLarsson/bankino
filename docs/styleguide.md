@@ -35,6 +35,11 @@ Buttons shall have the follow variables applied:
  - font = button\_font
  - bg = "#FFFFFF"
  - fg = "#333333"
+ - bd = 0
+ - highlightbackground = "#F5F5F0"
+## 4.1 Buttons in separator
+Buttons in the separator should have everything stated above, as well as
+- highlightbackground = "#5D866C"
  
 ## 5. Placement
 Any titles, headers and navigation bars are placed by pixel-value while the data / text / input fields being displayed are assigned through the grid.
