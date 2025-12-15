@@ -1,10 +1,54 @@
 import tkinter as tk
 from tkinter import messagebox
 import tkinter.font as tkFont
+import backend.password_checker as password_checker
 import backend.db_queries as db_queries
 
-account_management_window = None 
-current_user_id = None
+#Gets all the information from
+def update_account_info(user_id, first_name, middle_name, last_name, phone, email, address, curr_pass, new_pass, confirm_pass):
+    
+    new_info = {}
+    new_info['first_name'] = first_name
+    new_info['middle_name'] = middle_name
+    new_info['last_name'] = last_name
+    new_info['phone'] = phone
+    new_info['email'] = email
+    new_info['address'] = address
+    #new_info['curr_pass'] = password_checker.hash_password(curr_pass)
+    new_info['password'] = password_checker.hash_password(new_pass)
+    #new_info['confirm_pass'] = password_checker.hash_password(confirm_pass)
+
+    curr_pass = password_checker.hash_password(curr_pass)
+    confirm_pass = password_checker.hash_password(confirm_pass)
+
+    current_user_info = db_queries.get_user_info(user_id)
+
+    errors = []
+    error_message = ""
+    
+    if db_queries.verify_user(current_user_info['personal_number'], curr_pass) == user_id:
+        if new_info['first_name'] == '':
+            errors.append("You must have a first name!")
+        if new_info['last_name'] == '':
+            errors.append("You must have a last name!")
+        if new_info['password'] != confirm_pass:
+            errors.append("Passwords don't match!")
+    else:
+        errors.append("You have entered an incorrect password!")
+
+    if len(errors) > 0:
+        for error in errors:
+            error_message += (error + '\n')
+        messagebox.showerror("Error", error_message)
+        return False
+    else:
+        if db_queries.update_user_info(user_id, new_info):
+            messagebox.showinfo("Success!", "Your account has been updated!")
+            return True
+        else:
+            messagebox.showerror("Error", "An error occured while saving the account information. Please panic.")
+            return False
+
 
 def display_account_management(user_id):
     # loads the user data from database
@@ -50,7 +94,7 @@ def display_account_management(user_id):
     # current password 
     current_password_label = tk.Label(account_management_window, text="Current Password:", bg="#B6B6B6")
     current_password_label.grid(column=0, row=7, padx=10, pady=10, sticky="e")
-    current_password_entry = tk.Entry(account_management_window,show="*")
+    current_password_entry = tk.Entry(account_management_window, show="*")
     current_password_entry.grid(column=1, row=7, padx=10, pady=10, sticky="w")
    
     # new password 
@@ -89,7 +133,7 @@ def display_account_management(user_id):
         address_entry.insert(0, "")
 
     # save button 
-    save_button = tk.Button(account_management_window, text="Save", command=lambda: print("Logic here"))
+    save_button = tk.Button(account_management_window, text="Save", command=lambda: update_account_info(user_id, first_name_entry.get(), middle_name_entry.get(), last_name_entry.get(), phone_entry.get(), email_entry.get(), address_entry.get(), current_password_entry.get(), new_password_entry.get(), confirm_password_entry.get()))
     save_button.grid(column=1, row=10, pady=20, sticky="w")
 
 def load_window(parent, user_id):
@@ -97,7 +141,7 @@ def load_window(parent, user_id):
 
     account_management_window = tk.Toplevel(parent)
     account_management_window.title("Account Management")
-    account_management_window.geometry("600x500")
+    account_management_window.geometry("600x600")
     account_management_window.configure(bg="#B6B6B6")
 
     # configure the grid

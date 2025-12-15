@@ -257,7 +257,7 @@ def load_all_cards():
 
 
 # Laod all cards
-def load_all_cards():
+def load_all_cards_numbers():
     all_cards = load_all_cards()
     all_card_numbers = []
     for user_id, cards in all_cards.items():
@@ -265,6 +265,25 @@ def load_all_cards():
             all_card_numbers.append(card_data["card_number"])
     return all_card_numbers
 
+
+# Write the cards data to the cards.json
+def add_card_to_cards_file(all_cards):
+    with open(CARDS_PATH, "w", encoding="UTF-8") as cards_file:
+        json.dump(all_cards, cards_file, indent=2)
+
+
+# Write the acount data to the accounts.json
+def write_accounts_to_file(all_accounts):
+    with open(BANK_ACCOUNT_PATH, "w", encoding="UTF-8") as accounts_file:
+        json.dump(all_accounts, accounts_file, indent=2)
+
+
+# Returns the first name, middle name, and last name of a user
+def get_name(user_id):
+    with open(USERS_PATH, "r", encoding="UTF-8") as jsonfile:
+        all_users = json.load(jsonfile)
+    user = all_users[user_id]
+    return user["first_name"], user["middle_name"], user["last_name"]
 
 
 def fine_user(user_id, account_id):
@@ -276,3 +295,25 @@ def fine_user(user_id, account_id):
     write_to_accounts_json(all_accounts)
 
     print(f"Account {account_id} has been fined 100 SEK")
+
+
+def update_user_info(user_id, new_info):
+    
+    try:
+        ####REPLACE WITH ALL USERS FUNCTION
+        with open(USERS_PATH, "r") as old_info:
+            all_users = json.load(old_info)
+
+        for entry in new_info.keys():
+            all_users[user_id][entry] = new_info[entry]
+
+        write_to_users_json(all_users)
+        return True
+    except:
+        return False
+    
+def delete_bank_account(user_id, account_id):
+    all_accounts = load_all_bank_accounts()
+    all_accounts[user_id].pop(account_id)
+    write_to_accounts_json(all_accounts)
+    
