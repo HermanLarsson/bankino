@@ -63,7 +63,8 @@ def run_create_new_account():
         print("KeyError in create_new_account")
         print(chosen_type[:3])
         print(chosen_name)
-    landing_page.display_specific_account(account_id)
+    # TODO: DOUBLE CHECK THIS!
+    # landing_page.display_specific_account(account_id)
 
 def load_window(parent, user_id):
     global curr_user_id

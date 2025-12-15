@@ -10,7 +10,7 @@ def get_date():
 # Generate random 16-digit number starting with 1213
 def generate_card_number():
     # Load all card numbers
-    existing_card_numbers = db_queries.load_all_cards_numbers()
+    existing_card_numbers = db_queries.load_all_card_numbers()
 
     # first 4 digits for Bankino cards
     bankino_special_numbers = "1213"
@@ -37,7 +37,7 @@ def generate_security_code():
 def save_card(user_id, account_id, card_number, expiration_date, security_code, first_name, last_name, middle_name):
   
     # Load existing cards
-    all_cards = db_queries.load_all_cards()
+    all_cards = db_queries.get_cards()
     user_id = str(user_id)
 
     # Create new card data
@@ -56,15 +56,15 @@ def save_card(user_id, account_id, card_number, expiration_date, security_code, 
     all_cards[user_id][card_number] = new_card
 
     # Load existing accounts
-    all_accounts = db_queries.load_all_bank_accounts()
+    all_accounts = db_queries.get_bank_accounts()
     
     # Update the account with card information
     all_accounts[user_id][account_id]["card_connected"] = True
     all_accounts[user_id][account_id]["card_number"] = card_number
     
     # Write to both files
-    db_queries.add_card_to_cards_file(all_cards)
-    db_queries.write_accounts_to_file(all_accounts)
+    db_queries.write_to_cards_json(all_cards)
+    db_queries.write_to_accounts_json(all_accounts)
 
 
 # Create a new card with generated card number, expiration date, and security code

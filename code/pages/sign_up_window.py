@@ -48,7 +48,7 @@ def sign_up_user():
 
     # Call the sign up function
     db_queries.sign_up(first_name_input, last_name_input, middle_name_input,
-                    personal_number_input, join_date, password_input)
+                    personal_number_input, join_date, password_checker.hash_password(password_input))
     # Show massage user account created successfully!
     messagebox.showinfo("Success", "User account created successfully!")
 

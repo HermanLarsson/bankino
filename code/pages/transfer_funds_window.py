@@ -16,7 +16,7 @@ def display_transfer_funds():
     from_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
     
     # Get the user bank accounts
-    accounts = db_queries.get_all_account_data(current_user_id)
+    accounts = db_queries.get_bank_accounts_by_user(current_user_id)
 
     # Store which account the transfer is from
     from_account = tk.StringVar(transfer_funds_window)
@@ -58,7 +58,7 @@ def process_transfer(from_account, to_account, amount):
     from_acc_input = from_account.get()
     to_acc_input = to_account.get()
     amount_input = amount.get()
-    user_accounts = db_queries.get_all_account_data(current_user_id)
+    user_accounts = db_queries.get_bank_accounts_by_user(current_user_id)
 
     if user_accounts[from_acc_input]['is_locked']: 
         answer = messagebox.askquestion("Locked Account", f'''Account {from_acc_input} is locked.

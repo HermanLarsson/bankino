@@ -34,7 +34,7 @@ def refresh_accounts(user_id):
 def list_accounts(user_id):
     account_counter = 0
     current_row = 5
-    bank_accounts = db_queries.load_bank_accounts(user_id)
+    bank_accounts = db_queries.get_user_bank_accounts(user_id)
     for account in bank_accounts.items():
         account_headers.append(tk.Label(landing_page, text = (account[0] + "  " + account[1]["account_name"]), font = fonts.body_font, fg="#333333", anchor = "w", bg="#F5F5F0"))
         account_headers[account_counter].grid(column = 1, row = current_row, sticky = "w")
@@ -55,9 +55,7 @@ def OnButtonClick(user_id, clicked_id):
 # Checking if locked savings account date has passed.
 def check_date(user_id):
     todays_date = str(date.today())
-    all_accounts = db_queries.load_all_bank_accounts()
-    users_accounts = all_accounts[user_id]
-
+    users_accounts = db_queries.get_user_bank_accounts(user_id)
     for account, data in users_accounts.items():
         if data["is_locked"]:
             locked_until_date = data["locked_until_date"]
@@ -127,14 +125,6 @@ def load_window(user_id, login_window):
     #Creates create new bank account button
     create_bank_account_button = tk.Button(landing_page, text="Create Account", fg="#333333", bd=0, highlightbackground = "#5D866C", bg="#FFFFFF", font = fonts.nav_font, command=lambda: create_bank_account_window.load_window(landing_page, user_id))
     create_bank_account_button.place(x = 800, y = 30)
-
-    
-
-    
-        
-    
-
-    
 
     list_accounts(user_id)
 

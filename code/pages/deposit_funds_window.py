@@ -44,7 +44,7 @@ def process_deposit(user_id, account_id, amount):
         tk.messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
     
 def load_window(parent, user_id):
-    avail_accounts = db_queries.get_all_account_data(user_id)
+    avail_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
     global deposit_funds_window
     # uses Toplevel instead of Tk since it is a 'child' window
