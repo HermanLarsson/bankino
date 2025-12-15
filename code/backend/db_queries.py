@@ -276,7 +276,7 @@ def toggle_locked_account(user_id, account_id):
 def load_all_card_numbers():
     all_cards = load_all_cards()
     all_card_numbers = []
-    for users, cards in all_cards.items():
+    for cards in all_cards.values():
         for card_number in cards.keys():
             all_card_numbers.append(card_number)
     return all_card_numbers
