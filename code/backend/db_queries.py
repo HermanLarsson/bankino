@@ -38,6 +38,22 @@ def get_cards():
     return {}
 
 
+# Return the user_id of the user currntly logged in. 
+def get_logged_in_user():
+    try:
+        with open ("./data/cache/logged_in_user.cache", "r") as file:
+            logged_in_user = file.read()
+            if logged_in_user == "":
+                print("No users logged in")
+                return ""
+            else:
+                print(f"Logged in user: {logged_in_user}")
+                return logged_in_user
+    except FileNotFoundError:
+            print("Main could not find cachefile")
+    return ""
+
+
 # Fetches the accounts of a specific user
 def get_user_bank_accounts(user_id):
     all_accounts = get_bank_accounts()
@@ -65,22 +81,6 @@ def get_bank_accounts_by_user(user_id):
     except KeyError:
         print(f"User {user_id}'s bank account data does not exist in the database")
     return {}
-
-
-# Return the user_id of the user currntly logged in. 
-def get_logged_in_user():
-    try:
-        with open ("./data/cache/logged_in_user.cache", "r") as file:
-            logged_in_user = file.read()
-            if logged_in_user == "":
-                print("No users logged in")
-                return ""
-            else:
-                print(f"Logged in user: {logged_in_user}")
-                return logged_in_user
-    except FileNotFoundError:
-            print("Main could not find cachefile")
-    return ""
 
 
 # Takes account_id, todays date (Formatted: YYYY-MM-DD), user_id, and account name given by user.
@@ -152,6 +152,13 @@ def write_to_cards_json(all_cards):
         print("File not found")
     return False
 
+
+def write_to_cache(user_id):
+    try:
+        with open ("./data/cache/logged_in_user.cache", "w") as file:
+            file.write(user_id)
+    except FileNotFoundError:
+        print("Cache file not found")
 
 
 # Creates and returns a unique user_id. 

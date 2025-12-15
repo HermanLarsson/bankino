@@ -9,46 +9,48 @@ import pages.sign_up_window as sign_up_window
 # If login fails, nothing will happen
 def login_user():
     saved_info = dict()
-    saved_info['personal_number'] = personal_number.get()
-    saved_info['password'] = user_password.get()
-    print(saved_info)
+    saved_info['personal_number'] = login_window.personal_number.get()
+    saved_info['password'] = login_window.user_password.get()
 
     hashed_password = password_checker.hash_password(saved_info["password"])
 
-    login_check = db_queries.verify_user(int(saved_info["personal_number"]), hashed_password)
-    if login_check == "":
+    try: 
+        personal_number = int(saved_info["personal_number"])
+    except TypeError:
+        print("Personal number must be digits only")
+        return ""
+    
+    # user_id is returned as a string, which is what gets passed through each window of the program to load user data
+    logged_in_user = db_queries.verify_user(personal_number, hashed_password)
+    if logged_in_user == "":
         print("Invalid credentials.")
-        try:
-            with open ("./data/cache/logged_in_user.cache", "w") as file:
-                file.write(login_check)
-        except FileNotFoundError:
-            print("Cache not found")
+        return logged_in_user
     else:
-        print("Login successful.")
         try:
-            with open ("./data/cache/logged_in_user.cache", "w") as file:
-                file.write(login_check)
+            db_queries.write_to_cache(logged_in_user)
+            print("Login successful.")
+            login_window.withdraw() # hides the login window
+
+            # opens the landing page, passing the user_id of the logged in user and the login_window (as the parent)
+            landing_page.load_window(logged_in_user, login_window)
+            return logged_in_user
         except FileNotFoundError:
             print("Cache not found")
-        login_window.withdraw() # hides the login window
-        landing_page.load_window(login_check, login_window) # opens the landing page
+            return ""
         
 def display_login():
     personal_number_label = tk.Label(login_window, text="Personal Number:", bg="#B6B6B6")
     personal_number_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
 
-    global personal_number
-    global user_password
-
-    personal_number = tk.Entry(login_window)
-    personal_number.grid(column=1, row=1, padx=10, pady=10, sticky="w")
+    login_window.personal_number = tk.Entry(login_window)
+    login_window.personal_number.grid(column=1, row=1, padx=10, pady=10, sticky="w")
 
     # Password
     password_label = tk.Label(login_window, text="Password:", bg="#B6B6B6")
     password_label.grid(column=0, row=2, padx=10, pady=10, sticky="e")
 
-    user_password = tk.Entry(login_window, show="*")
-    user_password.grid(column=1, row=2, padx=10, pady=10, sticky="w")
+    login_window.user_password = tk.Entry(login_window, show="*")
+    login_window.user_password.grid(column=1, row=2, padx=10, pady=10, sticky="w")
 
     login_button = tk.Button(login_window, text="Login", command =login_user)
     login_button.grid(column=1, row=3, pady=20)
