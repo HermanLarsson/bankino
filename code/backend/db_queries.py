@@ -254,17 +254,20 @@ def check_account_exists(account_id):
 
 # Toggles the value of 'is_locked' between true and false
 def toggle_locked_account(user_id, account_id):
-    all_accounts = get_bank_accounts()
-    chosen_account = all_accounts[user_id][account_id]
+    try: 
+        all_accounts = get_bank_accounts()
+        chosen_account = all_accounts[user_id][account_id]
 
-    if chosen_account['is_locked'] == True:
-        chosen_account['is_locked'] = False
+        chosen_account['is_locked'] = not chosen_account['is_locked']
+    except KeyError:
+        print("Account not in Database")
+        return "Toggle Unsuccessful"
+
+    if write_to_accounts_json(all_accounts):
+        print(f"Is locked status: {chosen_account['is_locked']}")
+        return "Toggle Successful"
     else:
-        chosen_account['is_locked'] = True
-
-    write_to_accounts_json(all_accounts)
-    print(f"Is locked status: {chosen_account['is_locked']}")
-    return chosen_account['is_locked']
+        return "Toggle Unseccessful"
 
 
 
