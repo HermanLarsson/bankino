@@ -225,19 +225,15 @@ def deposit_funds(user_id, account_id, amount):
         print(f"User {user_id} does not have the account {account_id}")
         return False
 
-    try:
-        # Create the transaction data
-        transaction = {
-            "amount": amount,
-            "date": str(date.today()),
-            "from_acc": "DEPOSIT",
-            "to_acc": account_id
-        }
+    # Create the transaction data
+    transaction = {
+        "amount": amount,
+        "date": str(date.today()),
+        "from_acc": "DEPOSIT",
+        "to_acc": account_id
+    }
 
-        all_accounts[user_id][account_id]["transactions"].append(transaction)
-    except TypeError:
-        print("Amount must be an integer value")
-        return False
+    all_accounts[user_id][account_id]["transactions"].append(transaction)
 
     # Write updated data to the database
     write_to_accounts_json(all_accounts)
