@@ -37,7 +37,7 @@ def generate_security_code():
 def save_card(user_id, account_id, card_number, expiration_date, security_code, first_name, last_name, middle_name):
   
     # Load existing cards
-    all_cards = db_queries.load_all_cards()
+    all_cards = db_queries.get_cards()
     user_id = str(user_id)
 
     # Create new card data

@@ -29,7 +29,7 @@ def get_users():
 
 
 # Fetch while cards.json file
-def load_all_cards():
+def get_cards():
     try:
         with open(CARDS_PATH, "r", encoding="UTF-8") as cards:
             return json.load(cards)
@@ -274,7 +274,7 @@ def toggle_locked_account(user_id, account_id):
 # Iterates through whole cards.json and returns a list of all card numbers for all users. 
 # Used to check that newly generated cards numbers don't already exist. 
 def load_all_card_numbers():
-    all_cards = load_all_cards()
+    all_cards = get_cards()
     all_card_numbers = []
     for cards in all_cards.values():
         for card_number in cards.keys():
@@ -323,19 +323,26 @@ def update_user_info(user_id, new_info):
 # Takes a user_id and an account_id and removes bank account from accounts.json 
 def delete_bank_account(user_id, account_id):
     try:
+        all_bank_accounts = get_bank_accounts()
+
+        # Remove from cards.json
+        if all_bank_accounts[user_id][account_id]["card_connected"]:
+            card_number = all_bank_accounts[user_id][account_id]["card_number"]
+
+            all_cards = get_cards()
+            all_cards[user_id].pop(card_number)
+            write_to_cards_json(all_cards)
+
         # Remove from accounts.json
-        all_accounts = get_bank_accounts()
-        all_accounts[user_id].pop(account_id)
-        write_to_accounts_json(all_accounts)
-    except:
-        print("Error while removing bank account from accounts.json")
-        
-    try:
+        all_bank_accounts[user_id].pop(account_id)
+        write_to_accounts_json(all_bank_accounts)
+
         # Remove from users.json
         all_users = get_users()
         all_users[user_id]["bank_accounts"].remove(account_id)
         write_to_users_json(all_users)
         return True
     except:
-        print("Error while removing bank account from users.json")
+        print("Error while removing bank account from accounts.json")
     return False
+        

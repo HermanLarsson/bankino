@@ -30,7 +30,7 @@ def load_window(parent, user_id, card_number):
     for i in range(ROWS):
         show_card_window.rowconfigure(i, weight=1)
 
-    all_cards = db_queries.load_all_cards()
+    all_cards = db_queries.get_cards()
     curr_acccount_card  = all_cards[user_id][card_number]
     formatted_car_num = format_card_num(card_number)
 
