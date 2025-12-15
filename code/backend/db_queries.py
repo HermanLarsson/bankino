@@ -166,7 +166,7 @@ def generate_user_id():
 
     # Check if same id does not already exist
     if generated_id in existing_ids:
-        generate_user_id()
+        return generate_user_id()
     else:
         return generated_id
     
