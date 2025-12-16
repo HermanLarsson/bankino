@@ -161,6 +161,16 @@ def write_to_cache(user_id):
         print("Cache file not found")
 
 
+def reset_cache():
+    try:
+        with open ("./data/cache/logged_in_user.cache", "w") as file:
+            file.write("")
+    except:
+        os.makedirs("./data/cache")
+        with open ("./data/cache/logged_in_user.cache", "w") as file:
+            file.write("")
+            
+
 # Creates and returns a unique user_id. 
 def generate_user_id():
     all_users = get_users()
