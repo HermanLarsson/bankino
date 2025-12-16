@@ -346,3 +346,24 @@ def delete_bank_account(user_id, account_id):
         print("Error while removing bank account from accounts.json")
     return False
         
+def check_acc_saving_goal(user_id, account_id):
+    all_accounts = get_bank_accounts()
+    if all_accounts[user_id][account_id]['savings_goal'] == 0:
+        return False
+    else:
+        return True
+    
+def add_savings_goal_to_account(user_id, account_id, amount):
+    all_accounts = get_bank_accounts()
+    all_accounts[user_id][account_id]['savings_goal'] = amount
+    try:
+        write_to_accounts_json(all_accounts)
+        return True
+    except:
+        print("Error when adding savings goal")
+    return False
+
+def check_account_type(user_id, account_id):
+    all_accounts = get_bank_accounts()
+    account_type = all_accounts[user_id][account_id]['account_type']
+    return account_type

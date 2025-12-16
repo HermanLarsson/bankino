@@ -6,6 +6,7 @@ import pages.transaction_history as transaction_history
 import pages.savings_window as savings_window
 import pages.show_card_window as show_card_window
 import fonts.bankino_fonts as fonts
+from tkinter.simpledialog import askstring
 
 def delete_account(user_id, account_id):
     
@@ -34,26 +35,35 @@ def delete_account(user_id, account_id):
 def show_account_data(user_id, account_id):
     all_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
+    
     # data for the individual account the user wants to display
     account_data = all_accounts[account_id]
 
+    if db_queries.check_acc_saving_goal(user_id, account_id):
+        current_amount = account_data['balance']
+        savings_goal = account_data['savings_goal']
+        goal_percent = 100*(current_amount / savings_goal)
+        savings_goal_title = tk.Label(bank_account_window, text=f"Savings Goal: " + str(goal_percent) + "%", font= fonts.header2_font)
+        savings_goal_title.place(x=100, y=900)
+
+
     # all of the labels holding acocunt data to be shown on the page
-    title = tk.Label(bank_account_window, text = f"Account: {account_id}", font = header2_font)
+    title = tk.Label(bank_account_window, text = f"Account: {account_id}", font = fonts.header2_font)
     title.grid (column = 0, row = 1, sticky='w')
 
-    account_balance = tk.Label(bank_account_window, text = (f"Balance: "), font = header2_font, anchor = "w")
+    account_balance = tk.Label(bank_account_window, text = (f"Balance: "), font = fonts.header2_font, anchor = "w")
     account_balance.grid(column = 0, row = 3, sticky = 'w')
 
-    account_balance_value = tk.Label(bank_account_window, text = (f"{account_data['balance']} {account_data['currency']}"), font = value_font, anchor = "w")
+    account_balance_value = tk.Label(bank_account_window, text = (f"{account_data['balance']} {account_data['currency']}"), font = fonts.value_font, anchor = "w")
     account_balance_value.grid(column = 0, row = 4, sticky = 'w')
 
-    account_name = tk.Label(bank_account_window, text = (f"Account Name: {account_data['account_name']}"), font = header3_font, anchor = "w")
+    account_name = tk.Label(bank_account_window, text = (f"Account Name: {account_data['account_name']}"), font = fonts.body_font, anchor = "w")
     account_name.grid(column = 0, row = 6, sticky = 'w')
 
-    account_type = tk.Label(bank_account_window, text = (f"Account Type: {account_data['account_type']}"), font = header3_font, anchor = "w")
+    account_type = tk.Label(bank_account_window, text = (f"Account Type: {account_data['account_type']}"), font = fonts.body_font, anchor = "w")
     account_type.grid(column = 0, row = 7, sticky = 'w')
 
-    account_currency = tk.Label(bank_account_window, text = (f"Currency: {account_data['currency']}"), font = header3_font, anchor = "w")
+    account_currency = tk.Label(bank_account_window, text = (f"Currency: {account_data['currency']}"), font = fonts.body_font, anchor = "w")
     account_currency.grid(column = 0, row = 8, sticky = 'w')
 
     view_transactions_button = tk.Button(bank_account_window, text="View Transaction History", command=lambda: open_transaction_window(user_id, account_id))
@@ -77,7 +87,7 @@ def show_account_data(user_id, account_id):
         back_to_landing_page_button.grid(column = 0, row = 12, sticky = 'w')
     else:
         back_to_landing_page_button = tk.Button(bank_account_window, text="Back to Landing Page", command=back_to_landing_page)
-        back_to_landing_page_button.grid(column = 0, row = 11, sticky = 'w')
+        back_to_landing_page_button.grid(column = 0, row = 14, sticky = 'w')
 
 
 def order_card():
@@ -110,6 +120,18 @@ def toggle_lock(user_id, account_id):
             db_queries.toggle_locked_account(user_id, account_id)
     return
 
+def create_savings_goal(user_id, account_id):
+    save_value = askstring('Goal', 'How much would you like to save?')
+    try:    
+        save_value = int(save_value)
+    except:
+        messagebox.showerror("Error", "You must enter a number!")
+        return False
+    if save_value < 0 or save_value > 1000000000:
+        messagebox.showerror("Error", "You can not save that amount of money, what the helly!=")
+    else:
+        db_queries.add_savings_goal_to_account(user_id, account_id, save_value)
+        return True
     
 def back_to_landing_page():
     bank_account_window.withdraw()
@@ -133,22 +155,17 @@ def load_window(user_id, account_id, previous_window):
     for i in range(ROWS):
         bank_account_window.rowconfigure(i, weight = 1)
 
-    # Different fonts/formatting for labels
-    global header2_font
-    global header_font
-    global value_font
-    global header3_font
 
-    header_font = tkFont.Font(family = "Calibri", size = 30, weight = "bold")
-    header2_font = tkFont.Font(family = "Calibri", size = 20, weight = "bold")
-    value_font = tkFont.Font(family = "Courier", size = 30, weight = "normal")
-    header3_font = tkFont.Font(family = "Calibri", size = 20, weight = "normal")
-
-
-    header = tk.Label(bank_account_window, text = "Bankino", font = header_font)
+    header = tk.Label(bank_account_window, text = "Bankino", font = fonts.header_font)
     header.grid(column = 0, row = 0, sticky = tk.NSEW)
     separator = ttk.Separator(bank_account_window, orient = "horizontal")
     separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
+
+    if db_queries.check_account_type(user_id, account_id) == "SAV" and not db_queries.check_acc_saving_goal(user_id, account_id):
+        print("Savings Goal Found!")
+        create_goal_button = tk.Button(bank_account_window, text="Create Savings Goal", font=fonts.button_font, bg="#FFFFFF", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not create_savings_goal(user_id, account_id) else show_account_data(user_id, account_id))
+        create_goal_button.grid(column = 5, row = 13, sticky = 'w')
+
 
     show_account_data(user_id, account_id)
     
