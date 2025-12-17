@@ -2,8 +2,8 @@ import tkinter as tk
 import tkinter.font as tkFont
 import backend.password_checker as password_checker
 import backend.db_queries as db_queries
-from pages.landing_page import landing_page_window
-import pages.sign_up_window as sign_up_window
+from pages.landing_page import LandingPageWindow
+from pages.sign_up_window import SignUpWindow
 import fonts.bankino_fonts as fonts
 
 
@@ -103,7 +103,7 @@ class LoginWindow(tk.Tk):
                 self.withdraw() # hides the login window
 
                 # opens the landing page, passing the user_id of the logged in user and the login_window (as the parent)
-                landing_page_window(logged_in_user, self)
+                LandingPageWindow(logged_in_user, self)
                 return logged_in_user
             except FileNotFoundError:
                 print("Cache not found")
@@ -111,7 +111,7 @@ class LoginWindow(tk.Tk):
             
     def open_signup_window(self):
         self.withdraw() # hides the login window
-        sign_up_window.load_window(self) # opens the sign up window
+        SignUpWindow(self) # opens the sign up window
 
     # closes the window when the user exists the program
     def close_program(self):
