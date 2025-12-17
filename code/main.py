@@ -17,9 +17,8 @@ def reset_cache():
 
 def main():
     reset_cache()
-
+    
     login_window = pages.login_window.load_window()
-    fonts.initialize_fonts()
     login_window.mainloop()
 
 if __name__ == "__main__":
