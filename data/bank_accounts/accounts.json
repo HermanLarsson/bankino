@@ -31,7 +31,8 @@
                 }
             ],
             "card_connected": true,
-            "card_number": "1213111111111111"
+            "card_number": "1213111111111111",
+            "savings_goal": 0
         },
         "SAV92DS": {
             "account_id": "SAV92DS",
@@ -39,7 +40,7 @@
             "is_locked": false,
             "locked_until_date": "",
             "account_name": "Savings",
-            "balance": 52665.5,
+            "balance": 2026.0,
             "currency": "SEK",
             "date_created": "2025-05-03",
             "user_id": "4XJ38",
@@ -58,7 +59,8 @@
                 }
             ],
             "card_connected": false,
-            "card_number": ""
+            "card_number": "",
+            "savings_goal": 0
         }
     },
     "A7P91": {
@@ -93,7 +95,8 @@
                 }
             ],
             "card_connected": true,
-            "card_number": "1213111111111112"
+            "card_number": "1213111111111112",
+            "savings_goal": 0
         },
         "SAV77LK": {
             "account_id": "SAV77LK",
@@ -120,7 +123,8 @@
                 }
             ],
             "card_connected": false,
-            "card_number": ""
+            "card_number": "",
+            "savings_goal": 0
         }
     }
 }
