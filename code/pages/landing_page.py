@@ -2,7 +2,7 @@ import tkinter as tk
 from tkinter import ttk
 import backend.db_queries as db_queries
 import pages.create_bank_account_window as create_bank_account_window
-import pages.bank_account_window as bank_account_window
+from pages.bank_account_window import BankAccountWindow
 import pages.deposit_funds_window as deposit_funds_window
 import pages.transfer_funds_window as transfer_funds_window
 from datetime import date
@@ -119,7 +119,7 @@ class landing_page_window(tk.Toplevel):
 
     def on_button_click(self, user_id, clicked_id):
         self.withdraw()
-        bank_account_window.load_window(user_id, clicked_id, self)
+        BankAccountWindow(user_id, clicked_id, self)
 
     # Checking if locked savings account date has passed.
     def verify_locked_account_date(self, user_id):
