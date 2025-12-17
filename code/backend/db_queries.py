@@ -85,7 +85,7 @@ def get_bank_accounts_by_user(user_id):
 
 # Takes account_id, todays date (Formatted: YYYY-MM-DD), user_id, and account name given by user.
 # Returns the whole accounts file with the new account added.  
-def update_accounts_dict(account_id, today_date, user_id, account_name):
+def update_accounts_dict(account_id, user_id, account_name):
     all_accounts = get_bank_accounts()
         
     #Checks if user already exist in file
@@ -101,7 +101,7 @@ def update_accounts_dict(account_id, today_date, user_id, account_name):
     all_accounts[user_id][account_id]["account_name"] = account_name
     all_accounts[user_id][account_id]["balance"] = 0.0
     all_accounts[user_id][account_id]["currency"] = "SEK"
-    all_accounts[user_id][account_id]["date_created"] = str(today_date)  
+    all_accounts[user_id][account_id]["date_created"] = str(date.today()) 
     all_accounts[user_id][account_id]["user_id"] = user_id
     all_accounts[user_id][account_id]["transactions"] = []
     all_accounts[user_id][account_id]["card_connected"] = False
