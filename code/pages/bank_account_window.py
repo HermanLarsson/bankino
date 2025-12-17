@@ -132,8 +132,8 @@ def order_card():
 
 def open_transaction_window(user_id, account_id):
     bank_account_window.withdraw() #hides the accounts window
-    transaction_history.load_window(user_id, account_id, bank_account_window) #opens transaction history window
-
+    transaction_history.TransactionHistory(bank_account_window, user_id, account_id) #opens transaction history window
+     
 def toggle_lock(user_id, account_id):
     users_accounts = db_queries.get_bank_accounts_by_user(user_id)
     if not users_accounts[account_id]["is_locked"]:

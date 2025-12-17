@@ -1,5 +1,4 @@
 import hashlib
-
 import re
 import tkinter.messagebox as messagebox
 
