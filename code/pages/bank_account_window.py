@@ -1,5 +1,4 @@
 import tkinter as tk
-import tkinter.font as tkFont
 from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
 import pages.transaction_history as transaction_history
