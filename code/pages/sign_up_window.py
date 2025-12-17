@@ -66,46 +66,46 @@ def display_signup():
     
     # First Name
     first_name_entry = tk.Entry(sign_up_window)
-    first_name_entry.grid(column=1, row=2, padx=10, pady=10, sticky="w")
+    first_name_entry.grid(column=1, row=3, padx=10, pady=10, sticky="w")
     first_name_label = tk.Label(sign_up_window, text="First Name:", font=fonts.body_font, bg="#F5F5F0")
-    first_name_label.grid(column=0, row=2, padx=10, pady=10, sticky="e")
+    first_name_label.grid(column=0, row=3, padx=10, pady=10, sticky="e")
     first_name_label.config(fg="#333333")
 
     # Last Name
     last_name_entry = tk.Entry(sign_up_window)
-    last_name_entry.grid(column=1, row=3, padx=10, pady=10, sticky="w")
+    last_name_entry.grid(column=1, row=4, padx=10, pady=10, sticky="w")
     last_name_label = tk.Label(sign_up_window, text="Last Name:", font=fonts.body_font, bg="#F5F5F0")
-    last_name_label.grid(column=0, row=3, padx=10, pady=10, sticky="e")
+    last_name_label.grid(column=0, row=4, padx=10, pady=10, sticky="e")
     last_name_label.config(fg="#333333")
 
     # Middle Name
     middle_name_entry = tk.Entry(sign_up_window)
-    middle_name_entry.grid(column=1, row=4, padx=10, pady=10, sticky="w")
+    middle_name_entry.grid(column=1, row=5, padx=10, pady=10, sticky="w")
     middle_name_label = tk.Label(sign_up_window, text="Middle Name:", font=fonts.body_font, bg="#F5F5F0")
-    middle_name_label.grid(column=0, row=4, padx=10, pady=10, sticky="e")
+    middle_name_label.grid(column=0, row=5, padx=10, pady=10, sticky="e")
     middle_name_label.config(fg="#333333")
 
     # Personal Number
     personal_number_entry = tk.Entry(sign_up_window) 
-    personal_number_entry.grid(column=1, row=5, padx=10, pady=10, sticky="w")
+    personal_number_entry.grid(column=1, row=6, padx=10, pady=10, sticky="w")
     personal_number_label = tk.Label(sign_up_window, text="Personal Number:", font=fonts.body_font, bg="#F5F5F0")
-    personal_number_label.grid(column=0, row=5, padx=10, pady=10, sticky="e")
+    personal_number_label.grid(column=0, row=6, padx=10, pady=10, sticky="e")
     personal_number_label.config(fg="#333333")
 
     # Password
     user_password_entry = tk.Entry(sign_up_window, show="*")
-    user_password_entry.grid(column=1, row=6, padx=10, pady=10, sticky="w")
+    user_password_entry.grid(column=1, row=7, padx=10, pady=10, sticky="w")
     password_label = tk.Label(sign_up_window, text="Password:", font=fonts.body_font, bg="#F5F5F0")
-    password_label.grid(column=0, row=6, padx=10, pady=10, sticky="e")
+    password_label.grid(column=0, row=7, padx=10, pady=10, sticky="e")
     password_label.config(fg="#333333")
 
     # Sign Up button
     signup_button = tk.Button(sign_up_window, text="Sign Up", font=fonts.body_font, command=sign_up_user, fg="#333333")
-    signup_button.grid(column=1, row=7, pady=20)
+    signup_button.grid(column=1, row=8, pady=20)
 
     # back to login button
     back_button = tk.Button(sign_up_window, text= "Back to Login", font=fonts.body_font, command = back_to_login)
-    back_button.grid(column=0, row=7, pady=20)
+    back_button.grid(column=0, row=8, pady=20)
 
 
 def back_to_login():
@@ -124,7 +124,7 @@ def load_window(previous_window):
     sign_up_window = tk.Toplevel(login_window) # Creates the sign up window on top of the login window
 
     sign_up_window.title('Bankino')
-    sign_up_window.geometry('1000x1000')
+    sign_up_window.geometry('600x600')
     sign_up_window.configure(bg="#F5F5F0")
 
     nav_bar = tk.Frame(sign_up_window, bg = "#5D866C", width = 1000, height = 124)
