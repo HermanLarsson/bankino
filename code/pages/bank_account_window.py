@@ -4,7 +4,7 @@ from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
 import pages.transaction_history as transaction_history
 import pages.savings_window as savings_window
-import pages.show_card_window as show_card_window
+from pages.show_card_window import ShowCardWindow
 import fonts.bankino_fonts as fonts
 from tkinter.simpledialog import askstring
 
@@ -106,7 +106,7 @@ def show_account_data(user_id, account_id):
     delete_button.grid(column=17, row=3, sticky='w')
 
     if account_data['card_connected']:
-        view_card_button = tk.Button(bank_account_window, text="View card", command=lambda: show_card_window.load_window(bank_account_window, user_id, account_data["card_number"]))
+        view_card_button = tk.Button(bank_account_window, text="View card", command=lambda: ShowCardWindow(bank_account_window, user_id, account_data["card_number"]))
         view_card_button.grid(column = 0, row = 10, sticky = "w")
     else:
         order_card_button = tk.Button(bank_account_window, text="Order card", command=lambda: order_card())
