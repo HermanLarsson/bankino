@@ -40,7 +40,7 @@
             "is_locked": false,
             "locked_until_date": "",
             "account_name": "Savings",
-            "balance": 26.0,
+            "balance": 2026.0,
             "currency": "SEK",
             "date_created": "2025-05-03",
             "user_id": "4XJ38",
@@ -60,7 +60,7 @@
             ],
             "card_connected": false,
             "card_number": "",
-            "savings_goal": 100
+            "savings_goal": 0
         }
     },
     "A7P91": {

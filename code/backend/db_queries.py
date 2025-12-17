@@ -367,3 +367,9 @@ def check_account_type(user_id, account_id):
     all_accounts = get_bank_accounts()
     account_type = all_accounts[user_id][account_id]['account_type']
     return account_type
+
+def delete_savings_goal(user_id, account_id):
+    all_accounts = get_bank_accounts()
+    all_accounts[user_id][account_id]['savings_goal'] = 0
+    print(all_accounts[user_id][account_id])
+    write_to_accounts_json(all_accounts)

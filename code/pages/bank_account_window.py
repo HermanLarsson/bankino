@@ -10,7 +10,7 @@ from tkinter.simpledialog import askstring
 
 def delete_account(user_id, account_id):
     
-    if messagebox.askquestion("Are you sure?", "Do you really want to remove the account" + account_id + "?", type="yesno") == "yes":
+    if messagebox.askquestion("Are you sure?", "Do you really want to remove the account " + account_id + "?", type="yesno") == "yes":
         all_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
         if all_accounts[account_id]['balance'] > 0.0:
@@ -30,21 +30,54 @@ def delete_account(user_id, account_id):
     else:
         return
     
+def clear_window():
+    for widget in bank_account_window.winfo_children():
+            widget.destroy()
+    
+
+def show_nav_bar():
+        header = tk.Label(bank_account_window, text = "Bankino", font = fonts.header_font)
+        header.grid(column = 0, row = 0, sticky = tk.NSEW)
+        separator = ttk.Separator(bank_account_window, orient = "horizontal")
+        separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
+
 
 # Then take a Bank ID to access the specific bank account details. 
 def show_account_data(user_id, account_id):
+
+    clear_window()
     all_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
-    
+    show_nav_bar()
     # data for the individual account the user wants to display
     account_data = all_accounts[account_id]
 
-    if db_queries.check_acc_saving_goal(user_id, account_id):
-        current_amount = account_data['balance']
-        savings_goal = account_data['savings_goal']
-        goal_percent = 100*(current_amount / savings_goal)
-        savings_goal_title = tk.Label(bank_account_window, text=f"Savings Goal: " + str(goal_percent) + "%", font= fonts.header2_font)
-        savings_goal_title.place(x=100, y=900)
+    if account_data['account_type'] == "SAV":
+        
+        if account_data['savings_goal'] == 0:
+            print("Creating Butoné")
+            create_goal_button = tk.Button(bank_account_window, text="Create Savings Goal", font=fonts.button_font, bg="#FFFFFF", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not create_savings_goal(user_id, account_id, account_data['balance']) else show_account_data(user_id, account_id))
+            create_goal_button.place(x=130, y=680)
+        
+        elif account_data['savings_goal'] > 0:
+            current_amount = account_data['balance']
+            savings_goal = account_data['savings_goal']
+            goal_percent = 100*(current_amount / savings_goal)
+            
+            savings_goal_title = tk.Label(bank_account_window, text=f"Savings Goal: " + str(round(goal_percent, 2)) + "%", font= fonts.header2_font)
+            savings_goal_title.place(x=100, y=730)
+
+            savings_goal_bar_bg = tk.Frame(bank_account_window, bg="#bbc4bd", width = 800, height = 60)
+            savings_goal_bar_bg.place(x=100, y=800)
+
+            savings_goal_bar_fg = tk.Frame(bank_account_window, bg="#5D866C", width=(goal_percent*10), height= 60)
+            savings_goal_bar_fg.place(x=100, y=800)
+
+            delete_savings_goal_button = tk.Button(bank_account_window, text="Delete Savings Goal", bg="#FFFFFF", fg="red", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not delete_savings_goal(user_id, account_id) else show_account_data(user_id, account_id))
+            delete_savings_goal_button.place(x = 100, y = 900)
+
+            savings_goal_bar_text = tk.Label(bank_account_window, text=f"{current_amount}SEK / {savings_goal}SEK", font=fonts.value_font)
+            savings_goal_bar_text.place(x= 900, y= 870, anchor="ne")
 
 
     # all of the labels holding acocunt data to be shown on the page
@@ -66,8 +99,8 @@ def show_account_data(user_id, account_id):
     account_currency = tk.Label(bank_account_window, text = (f"Currency: {account_data['currency']}"), font = fonts.body_font, anchor = "w")
     account_currency.grid(column = 0, row = 8, sticky = 'w')
 
-    view_transactions_button = tk.Button(bank_account_window, text="View Transaction History", command=lambda: open_transaction_window(user_id, account_id))
-    view_transactions_button.grid(column = 0, row = 13, sticky = 'w')
+    view_transactions_button = tk.Button(bank_account_window, text="Transaction History", command=lambda: open_transaction_window(user_id, account_id))
+    view_transactions_button.grid(column = 2, row = 10, sticky = 'w')
 
     delete_button = tk.Button(bank_account_window, text = "Delete account", fg="red", bg="#FFFFFF", font=fonts.button_font, command=lambda:  True if not delete_account(user_id, account_id) else  back_to_landing_page())
     delete_button.grid(column=17, row=3, sticky='w')
@@ -81,13 +114,13 @@ def show_account_data(user_id, account_id):
 
     if account_data['account_type'] == "SAV":
         lock_account_button = tk.Button(bank_account_window, text="Lock Account", command=lambda: toggle_lock(user_id, account_id))
-        lock_account_button.grid(column = 0, row = 11, sticky = 'w')
+        lock_account_button.grid(column = 3, row = 10, sticky = 'w')
 
         back_to_landing_page_button = tk.Button(bank_account_window, text="Back to Landing Page", command=back_to_landing_page)
-        back_to_landing_page_button.grid(column = 0, row = 12, sticky = 'w')
+        back_to_landing_page_button.grid(column = 6, row = 10, sticky = 'w')
     else:
         back_to_landing_page_button = tk.Button(bank_account_window, text="Back to Landing Page", command=back_to_landing_page)
-        back_to_landing_page_button.grid(column = 0, row = 14, sticky = 'w')
+        back_to_landing_page_button.grid(column = 8, row = 10, sticky = 'w')
 
 
 def order_card():
@@ -120,7 +153,7 @@ def toggle_lock(user_id, account_id):
             db_queries.toggle_locked_account(user_id, account_id)
     return
 
-def create_savings_goal(user_id, account_id):
+def create_savings_goal(user_id, account_id, balance):
     save_value = askstring('Goal', 'How much would you like to save?')
     try:    
         save_value = int(save_value)
@@ -128,11 +161,25 @@ def create_savings_goal(user_id, account_id):
         messagebox.showerror("Error", "You must enter a number!")
         return False
     if save_value < 0 or save_value > 1000000000:
-        messagebox.showerror("Error", "You can not save that amount of money, what the helly!=")
+        messagebox.showerror("Error", "You can not save that amount of money, what the helly!?")
+        return False
+    elif save_value < balance:
+        messagebox.showerror("Error", "You already have that much money.")
+        return False
     else:
         db_queries.add_savings_goal_to_account(user_id, account_id, save_value)
         return True
-    
+
+def delete_savings_goal(user_id, account_id):
+   print("del savings goal called")
+   try:
+       print("Trying to delete goal...")
+       db_queries.delete_savings_goal(user_id, account_id)
+       #clear_window()
+       return True
+   except:
+       return False
+
 def back_to_landing_page():
     bank_account_window.withdraw()
     back_window.deiconify() #Brings back the landing page.
@@ -154,18 +201,6 @@ def load_window(user_id, account_id, previous_window):
         bank_account_window.columnconfigure(i, weight = 1)
     for i in range(ROWS):
         bank_account_window.rowconfigure(i, weight = 1)
-
-
-    header = tk.Label(bank_account_window, text = "Bankino", font = fonts.header_font)
-    header.grid(column = 0, row = 0, sticky = tk.NSEW)
-    separator = ttk.Separator(bank_account_window, orient = "horizontal")
-    separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
-
-    if db_queries.check_account_type(user_id, account_id) == "SAV" and not db_queries.check_acc_saving_goal(user_id, account_id):
-        print("Savings Goal Found!")
-        create_goal_button = tk.Button(bank_account_window, text="Create Savings Goal", font=fonts.button_font, bg="#FFFFFF", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not create_savings_goal(user_id, account_id) else show_account_data(user_id, account_id))
-        create_goal_button.grid(column = 5, row = 13, sticky = 'w')
-
 
     show_account_data(user_id, account_id)
     
