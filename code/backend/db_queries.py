@@ -106,6 +106,7 @@ def update_accounts_dict(account_id, user_id, account_name):
     all_accounts[user_id][account_id]["transactions"] = []
     all_accounts[user_id][account_id]["card_connected"] = False
     all_accounts[user_id][account_id]["card_number"] = ""
+    all_accounts[user_id][account_id]["savings_goal"] = 0
 
     return all_accounts
 
@@ -362,4 +363,19 @@ def delete_bank_account(user_id, account_id):
     except:
         print("Error while removing bank account from accounts.json")
     return False
-        
+    
+def add_savings_goal_to_account(user_id, account_id, amount):
+    all_accounts = get_bank_accounts()
+    all_accounts[user_id][account_id]['savings_goal'] = amount
+    try:
+        write_to_accounts_json(all_accounts)
+        return True
+    except:
+        print("Error when adding savings goal")
+    return False
+
+def delete_savings_goal(user_id, account_id):
+    all_accounts = get_bank_accounts()
+    all_accounts[user_id][account_id]['savings_goal'] = 0
+    print(all_accounts[user_id][account_id])
+    write_to_accounts_json(all_accounts)
