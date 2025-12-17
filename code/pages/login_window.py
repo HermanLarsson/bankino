@@ -51,25 +51,29 @@ class LoginWindow(tk.Tk):
 
 
     def display_login(self):
-        personal_number_label = tk.Label(self, text="Personal Number:", bg="#F5F5F0")
-        personal_number_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+        personal_number_label = tk.Label(self, text="Personal Number:", bg="#F5F5F0", font= fonts.body_font)
+        personal_number_label.grid(column=0, row=2, padx=10, pady=10, sticky="e")
+        personal_number_label.config(fg="#333333")
 
         self.personal_number = tk.Entry(self)
-        self.personal_number.grid(column=1, row=1, padx=10, pady=10, sticky="w")
+        self.personal_number.grid(column=1, row=2, padx=10, pady=10, sticky="w")
 
-        password_label = tk.Label(self, text="Password:", bg="#F5F5F0")
-        password_label.grid(column=0, row=2, padx=10, pady=10, sticky="e")
+        password_label = tk.Label(self, text="Password:", bg="#F5F5F0", font= fonts.body_font)
+        password_label.grid(column=0, row=3, padx=10, pady=10, sticky="e")
+        password_label.config(fg="#333333")
 
         self.user_password = tk.Entry(self, show="*")
-        self.user_password.grid(column=1, row=2, padx=10, pady=10, sticky="w")
+        self.user_password.grid(column=1, row=3, padx=10, pady=10, sticky="w")
 
-        login_button = tk.Button(self, text="Login", command =self.login_user)
-        login_button.grid(column=1, row=3, pady=20)
+        login_button = tk.Button(self, text="Login", command =self.login_user, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
+        login_button.grid(column=1, row=4, pady=10)
+        login_button.config(fg="#333333")
+
 
         # Sign up button
         # pressing the button will call the function to open sign up page and hide the login window
         signup_button = tk.Button(self, text="Sign up", command = self.open_signup_window, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0",) 
-        signup_button.grid(column=0, row=3, padx=5, sticky="e")
+        signup_button.grid(column=0, row=4, pady=10, sticky="e")
         signup_button.config(fg="#333333")
 
 
