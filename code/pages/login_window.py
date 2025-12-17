@@ -4,6 +4,7 @@ import backend.password_checker as password_checker
 import backend.db_queries as db_queries
 import pages.landing_page as landing_page
 import pages.sign_up_window as sign_up_window
+import fonts.bankino_fonts as fonts
 
 
 # This class is the root window, should only create one instance
@@ -19,7 +20,11 @@ class LoginWindow(tk.Tk):
         # Root window setup
         self.title("Bankino")
         self.geometry("600x400")
-        self.configure(bg="#B6B6B6")
+        self.configure(bg="#F5F5F0")
+        fonts.initialize_fonts()
+
+        nav_bar = tk.Frame(self, bg = "#5D866C", width = 1000, height = 124)
+        nav_bar.place(x = 0, y = 0)
 
         # Methods that are called upon instantiation
         self.grid_layout()
@@ -41,31 +46,35 @@ class LoginWindow(tk.Tk):
 
 
     def create_header(self):
-        header_font = tkFont.Font(family="Times", size=25, weight="bold")
-        header = tk.Label(self, text="Bankino", bg="#B6B6B6", font=header_font)
-        header.grid(column=1, row=0, sticky=tk.NSEW, pady=10)
+        header = tk.Label(self, text="Bankino", font = fonts.header_font, fg="#F5F5F0", bg="#5D866C")
+        header.place(x = 20, y = 16)
 
 
     def display_login(self):
-        personal_number_label = tk.Label(self, text="Personal Number:", bg="#B6B6B6")
-        personal_number_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+        personal_number_label = tk.Label(self, text="Personal Number:", bg="#F5F5F0", font= fonts.body_font)
+        personal_number_label.grid(column=0, row=2, padx=10, pady=10, sticky="e")
+        personal_number_label.config(fg="#333333")
 
         self.personal_number = tk.Entry(self)
-        self.personal_number.grid(column=1, row=1, padx=10, pady=10, sticky="w")
+        self.personal_number.grid(column=1, row=2, padx=10, pady=10, sticky="w")
 
-        password_label = tk.Label(self, text="Password:", bg="#B6B6B6")
-        password_label.grid(column=0, row=2, padx=10, pady=10, sticky="e")
+        password_label = tk.Label(self, text="Password:", bg="#F5F5F0", font= fonts.body_font)
+        password_label.grid(column=0, row=3, padx=10, pady=10, sticky="e")
+        password_label.config(fg="#333333")
 
         self.user_password = tk.Entry(self, show="*")
-        self.user_password.grid(column=1, row=2, padx=10, pady=10, sticky="w")
+        self.user_password.grid(column=1, row=3, padx=10, pady=10, sticky="w")
 
-        login_button = tk.Button(self, text="Login", command =self.login_user)
-        login_button.grid(column=1, row=3, pady=20)
+        login_button = tk.Button(self, text="Login", command =self.login_user, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
+        login_button.grid(column=1, row=4, pady=10)
+        login_button.config(fg="#333333")
+
 
         # Sign up button
         # pressing the button will call the function to open sign up page and hide the login window
-        signup_button = tk.Button(self, text="Sign up", command = self.open_signup_window) 
-        signup_button.grid(column=0, row=3, pady=20)
+        signup_button = tk.Button(self, text="Sign up", command = self.open_signup_window, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0",) 
+        signup_button.grid(column=0, row=4, pady=10, sticky="e")
+        signup_button.config(fg="#333333")
 
 
 
