@@ -100,12 +100,14 @@ def display_signup():
     password_label.config(fg="#333333")
 
     # Sign Up button
-    signup_button = tk.Button(sign_up_window, text="Sign Up", font=fonts.body_font, command=sign_up_user, fg="#333333")
+    signup_button = tk.Button(sign_up_window, text="Sign Up", command=sign_up_user, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
     signup_button.grid(column=1, row=8, pady=20)
+    signup_button.config(fg="#333333")
 
     # back to login button
-    back_button = tk.Button(sign_up_window, text= "Back to Login", font=fonts.body_font, command = back_to_login)
+    back_button = tk.Button(sign_up_window, text= "Back to Login", command = back_to_login, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
     back_button.grid(column=0, row=8, pady=20)
+    back_button.config(fg="#333333")
 
 
 def back_to_login():
