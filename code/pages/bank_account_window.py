@@ -71,7 +71,7 @@ def show_account_data(user_id, account_id):
             savings_goal_bar_bg.place(relx=0.1, rely=0.8, relwidth=0.8)
 
             savings_goal_bar_fg = tk.Frame(bank_account_window, bg="#5D866C", height= 60)
-            savings_goal_bar_fg.place(relx=0.1, rely=0.8, relwidth=((goal_percent)/100)-0.1)
+            savings_goal_bar_fg.place(relx=0.1, rely=0.8, relwidth=(0.8*(goal_percent)/100))
 
             delete_savings_goal_button = tk.Button(bank_account_window, text="Delete Savings Goal", bg="#FFFFFF", fg="red", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not delete_savings_goal(user_id, account_id) else show_account_data(user_id, account_id))
             delete_savings_goal_button.place(relx = 0.1, rely = 0.9)
