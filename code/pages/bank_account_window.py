@@ -57,7 +57,7 @@ def show_account_data(user_id, account_id):
         if account_data['savings_goal'] == 0:
             print("Creating Butoné")
             create_goal_button = tk.Button(bank_account_window, text="Create Savings Goal", font=fonts.button_font, bg="#FFFFFF", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not create_savings_goal(user_id, account_id, account_data['balance']) else show_account_data(user_id, account_id))
-            create_goal_button.place(x=130, y=680)
+            create_goal_button.place(relx=0.13, rely=0.68)
         
         elif account_data['savings_goal'] > 0:
             current_amount = account_data['balance']
@@ -65,19 +65,19 @@ def show_account_data(user_id, account_id):
             goal_percent = 100*(current_amount / savings_goal)
             
             savings_goal_title = tk.Label(bank_account_window, text=f"Savings Goal: " + str(round(goal_percent, 2)) + "%", font= fonts.header2_font)
-            savings_goal_title.place(x=100, y=730)
+            savings_goal_title.place(relx=0.1, rely=0.73)
 
             savings_goal_bar_bg = tk.Frame(bank_account_window, bg="#bbc4bd", width = 800, height = 60)
-            savings_goal_bar_bg.place(x=100, y=800)
+            savings_goal_bar_bg.place(relx=0.1, rely=0.8)
 
             savings_goal_bar_fg = tk.Frame(bank_account_window, bg="#5D866C", width=(goal_percent*10), height= 60)
-            savings_goal_bar_fg.place(x=100, y=800)
+            savings_goal_bar_fg.place(relx=0.1, rely=0.8)
 
             delete_savings_goal_button = tk.Button(bank_account_window, text="Delete Savings Goal", bg="#FFFFFF", fg="red", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not delete_savings_goal(user_id, account_id) else show_account_data(user_id, account_id))
-            delete_savings_goal_button.place(x = 100, y = 900)
+            delete_savings_goal_button.place(relx = 0.1, rely = 0.9)
 
             savings_goal_bar_text = tk.Label(bank_account_window, text=f"{current_amount}SEK / {savings_goal}SEK", font=fonts.value_font)
-            savings_goal_bar_text.place(x= 900, y= 870, anchor="ne")
+            savings_goal_bar_text.place(relx= 0.9, rely= 0.87, anchor="ne")
 
 
     # all of the labels holding acocunt data to be shown on the page
