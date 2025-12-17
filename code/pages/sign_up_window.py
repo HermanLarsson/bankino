@@ -135,12 +135,12 @@ class SignUpWindow(tk.Toplevel):
         password_label.config(fg="#333333")
 
         # Sign Up button
-        signup_button = tk.Button(self, text="Sign Up", font=fonts.body_font, command=sign_up_user, fg="#333333")
+        signup_button = tk.Button(self, text="Sign Up", font=fonts.body_font, command=self.sign_up_user, fg="#333333")
         signup_button.grid(column=1, row=8, pady=20)
         signup_button.config(fg="#333333")
 
         # back to login button
-        back_button = tk.Button(self, text= "Back to Login", font=fonts.body_font, command = back_to_login)
+        back_button = tk.Button(self, text= "Back to Login", font=fonts.body_font, command = self.back_to_login)
         back_button.grid(column=0, row=8, pady=20)
         back_button.config(fg="#333333")
 
