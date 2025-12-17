@@ -9,6 +9,7 @@ import pages.transfer_funds_window as transfer_funds_window
 from datetime import date
 import pages.account_management_window as account_management_window
 import fonts.bankino_fonts as fonts
+from pages.account_management_window import AccountManagementWindow
 
 account_headers = []
 account_amounts = []
@@ -107,7 +108,7 @@ def load_window(user_id, login_window):
     separator.place(relx=0, y=124, relwidth=1, relheight=0,)
 
     #Account Management Button
-    account_management_button = tk.Button(landing_page, text="Account", bd=0, highlightbackground = "#5D866C", fg="#333333", bg="#FFFFFF", font = fonts.nav_font, command=lambda: account_management_window.load_window(landing_page, user_id))
+    account_management_button = tk.Button(landing_page, text="Account", bd=0, highlightbackground = "#5D866C", fg="#333333", bg="#FFFFFF", font = fonts.nav_font, command=lambda: AccountManagementWindow(landing_page, user_id))
     account_management_button.place(x = 347, y = 30)
 
     #Refresh Button
