@@ -1,15 +1,21 @@
 import fonts.bankino_fonts as fonts
 import backend.db_queries as db_queries
 from pages.login_window import LoginWindow
-
-#call pages.window_name.load_window() for each window you want to load. REMEMBER that you CAN pass variables to your load_window()-function if needed
+from pages.landing_page import LandingPageWindow
 
 def main():
     db_queries.reset_cache()
-
-    app = LoginWindow()
-    fonts.initialize_fonts()
-    app.mainloop()
+    program_state = "logged_out"
+    while(program_state != 'closed'):
+        program_state = db_queries.check_program_state()
+        app = None
+        if program_state == 'logged_out':
+            app = LoginWindow()
+            fonts.initialize_fonts()
+            app.mainloop()
+        elif program_state == 'logged_in':
+            app = LandingPageWindow(db_queries.get_logged_in_user())
+            app.mainloop()
 
 if __name__ == "__main__":
     main()
