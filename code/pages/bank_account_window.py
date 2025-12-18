@@ -110,7 +110,7 @@ class BankAccountWindow(tk.Toplevel):
     
         if account_data['card_connected']:
             view_card_button = tk.Button(self, text="View card", command=lambda: ShowCardWindow(self, user_id, account_data["card_number"]), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-            view_card_button.grid(column=5, row=8, sticky='e')
+            view_card_button.place(relx=0.98, rely=0.45, anchor = "e")
             view_card_button.configure(fg="#333333")
         else:
             order_card_button = tk.Button(self, text="Order card", command=lambda: generate_card.create_card(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
@@ -122,8 +122,8 @@ class BankAccountWindow(tk.Toplevel):
                 lock_account_button.place(relx=0.98, rely=0.40, anchor = "e")
                 lock_account_button.configure(fg="#333333")
             else:
-                lock_account_button = tk.Button(self, text="Unlock Account", command=lambda: self.toggle_lock(user_id, account_id))
-                lock_account_button.grid(column=5, row=6, sticky='e')
+                lock_account_button = tk.Button(self, text="Unlock Account", command=lambda: self.toggle_lock(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
+                lock_account_button.place(relx=0.98, rely=0.40, anchor = "e")
     
             back_to_landing_page_button = tk.Button(self, text="Back to Landing Page", command=lambda: self.back_to_landing_page(self.parent), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
             back_to_landing_page_button.place(relx=0.98, rely=0.60, anchor = "e")
