@@ -2,7 +2,7 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
-import pages.transaction_history as transaction_history
+import pages.transaction_history_window as transaction_history_window
 import pages.savings_window as savings_window
 import pages.show_card_window as show_card_window
 import fonts.bankino_fonts as fonts
@@ -132,7 +132,7 @@ def order_card():
 
 def open_transaction_window(user_id, account_id):
     bank_account_window.withdraw() #hides the accounts window
-    transaction_history.TransactionHistory(bank_account_window, user_id, account_id) #opens transaction history window
+    transaction_history_window.TransactionHistory(bank_account_window, user_id, account_id) #opens transaction history window
      
 def toggle_lock(user_id, account_id):
     users_accounts = db_queries.get_bank_accounts_by_user(user_id)
