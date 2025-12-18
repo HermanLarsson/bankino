@@ -106,6 +106,7 @@ def update_accounts_dict(account_id, user_id, account_name):
     all_accounts[user_id][account_id]["transactions"] = []
     all_accounts[user_id][account_id]["card_connected"] = False
     all_accounts[user_id][account_id]["card_number"] = ""
+    all_accounts[user_id][account_id]["savings_goal"] = 0
 
     return all_accounts
 
