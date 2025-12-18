@@ -2,9 +2,9 @@ import tkinter as tk
 import tkinter.font as tkFont
 from tkinter import ttk, messagebox
 import backend.db_queries as db_queries
-import pages.transaction_history as transaction_history
+import pages.transaction_history_window as transaction_history_window
 import pages.savings_window as savings_window
-import pages.show_card_window as show_card_window
+from pages.show_card_window import ShowCardWindow
 import fonts.bankino_fonts as fonts
 from tkinter.simpledialog import askstring
 
@@ -120,7 +120,7 @@ def show_account_data(user_id, account_id):
     delete_button.configure(fg="red")
 
     if account_data['card_connected']:
-        view_card_button = tk.Button(bank_account_window, text="View card", command=lambda: show_card_window.load_window(bank_account_window, user_id, account_data["card_number"]), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
+        view_card_button = tk.Button(bank_account_window, text="View card", command=lambda: ShowCardWindow(bank_account_window, user_id, account_data["card_number"]))
         view_card_button.grid(column = 15, row = 12, sticky = "w")
         view_card_button.configure(fg="#333333")
     else:
@@ -151,8 +151,8 @@ def order_card():
 
 def open_transaction_window(user_id, account_id):
     bank_account_window.withdraw() #hides the accounts window
-    transaction_history.load_window(user_id, account_id, bank_account_window) #opens transaction history window
-
+    transaction_history_window.TransactionHistory(bank_account_window, user_id, account_id) #opens transaction history window
+     
 def toggle_lock(user_id, account_id):
     users_accounts = db_queries.get_bank_accounts_by_user(user_id)
     if not users_accounts[account_id]["is_locked"]:
