@@ -1,5 +1,3 @@
-import pages.login_window
-import os
 import fonts.bankino_fonts as fonts
 import backend.db_queries as db_queries
 from pages.login_window import LoginWindow

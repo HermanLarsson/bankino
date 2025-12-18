@@ -13,7 +13,7 @@ import fonts.bankino_fonts as fonts
 
 #Program starts here
 #Main functions which runs the program
-class landing_page_window(tk.Toplevel):
+class LandingPageWindow(tk.Toplevel):
 
     def __init__(self, user_id, parent):
         super().__init__(parent)
