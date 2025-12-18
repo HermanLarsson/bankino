@@ -94,7 +94,7 @@ class BankAccountWindow(tk.Toplevel):
         account_type.grid(column = 0, row = 9, sticky = 'w')
         account_type.configure(fg="#333333")
     
-        account_currency_label = tk.Label(self, text = (f"Currency: {account_data['currency']}"), font = fonts.body_font, bg="#F5F5F0" anchor = "w")
+        account_currency_label = tk.Label(self, text = (f"Currency: {account_data['currency']}"), font = fonts.body_font, bg="#F5F5F0", anchor = "w")
         account_currency_label.grid(column = 0, row = 10, sticky = 'w')
         account_currency_label.configure(fg="#333333")
     
@@ -102,7 +102,7 @@ class BankAccountWindow(tk.Toplevel):
         view_transactions_button.place(rely=0.65, relx=0.0)
         view_transactions_button.configure(fg="#333333")
     
-        delete_button = tk.Button(self, text = "Delete account", bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0", command=lambda:  True if not delete_account(user_id, account_id) else  back_to_landing_page())
+        delete_button = tk.Button(self, text = "Delete account", bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0", command=lambda:  True if not self.delete_account(user_id, account_id) else  self.back_to_landing_page())
         delete_button.grid(column=17, row=5, sticky='w')
         delete_button.configure(fg="red")
     
