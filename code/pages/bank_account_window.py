@@ -121,11 +121,11 @@ def show_account_data(user_id, account_id):
 
     if account_data['card_connected']:
         view_card_button = tk.Button(bank_account_window, text="View card", command=lambda: show_card_window.load_window(bank_account_window, user_id, account_data["card_number"]), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-        view_card_button.grid(column = 0, row = 12, sticky = "w")
+        view_card_button.grid(column = 15, row = 12, sticky = "w")
         view_card_button.configure(fg="#333333")
     else:
         order_card_button = tk.Button(bank_account_window, text="Order card", command=lambda: order_card(), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-        order_card_button.grid(column = 0, row = 12, sticky = "w")
+        order_card_button.grid(column = 15, row = 12, sticky = "w")
         order_card_button.configure(fg="#333333")
 
     if account_data['account_type'] == "SAV":
