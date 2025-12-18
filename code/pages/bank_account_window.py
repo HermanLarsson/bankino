@@ -35,19 +35,18 @@ class BankAccountWindow(tk.Toplevel):
     def show_account_data(self, user_id, account_id):
     
         self.clear_window()
-        all_accounts = db_queries.get_bank_accounts_by_user(user_id)
-    
         self.show_nav_bar()
+
+        all_accounts = db_queries.get_bank_accounts_by_user(user_id)
         # Data for the specific account the user entered
         account_data = all_accounts[account_id]
     
+        account_buttons = []
+
         if account_data['account_type'] == "SAV":
             
             if account_data['savings_goal'] == 0:
-                print("Creating Butoné")
-                create_goal_button = tk.Button(self, text="Create Savings Goal", font=fonts.button_font, bg="#F5F5F0", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not self.create_savings_goal(user_id, account_id, account_data['balance']) else self.show_account_data(user_id, account_id))
-                create_goal_button.place(relx=0.98, rely=0.50, anchor = "e")
-                create_goal_button.configure(fg="#333333")
+                account_buttons.append(tk.Button(self, text="Create Savings Goal", font=fonts.button_font, bg="#F5F5F0", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not self.create_savings_goal(user_id, account_id, account_data['balance']) else self.show_account_data(user_id, account_id)))
             
             elif account_data['savings_goal'] > 0:
                 current_amount = account_data['balance']
@@ -64,9 +63,7 @@ class BankAccountWindow(tk.Toplevel):
                 savings_goal_bar_fg = tk.Frame(self, bg="#5D866C", height= 60)
                 savings_goal_bar_fg.place(relx=0.1, rely=0.8, relwidth=(0.8*(goal_percent)/100))
     
-                delete_savings_goal_button = tk.Button(self, text="Delete Savings Goal", bg="#F5F5F0", fg="red", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not self.delete_savings_goal(user_id, account_id) else self.show_account_data(user_id, account_id))
-                delete_savings_goal_button.place(relx=0.98, rely=0.50, anchor = "e")
-                delete_savings_goal_button.configure(fg="#333333")
+                account_buttons.append(tk.Button(self, text="Delete Savings Goal", bg="#F5F5F0", fg="red", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not self.delete_savings_goal(user_id, account_id) else self.show_account_data(user_id, account_id)))
     
                 savings_goal_bar_text = tk.Label(self, text=f"{current_amount}SEK / {savings_goal}SEK", font=fonts.value_font, bg="#F5F5F0")
                 savings_goal_bar_text.place(relx= 0.9, rely= 0.9, anchor="ne")
@@ -88,7 +85,7 @@ class BankAccountWindow(tk.Toplevel):
         account_balance_value.grid(column = 0, row = 6, sticky = 'w')
         account_balance_value.configure(fg="#333333")
     
-        account_name = tk.Label(text = (f"Account Name: {account_data['account_name']}"), font=fonts.body_font, bg="#F5F5F0", anchor = "w")
+        account_name = tk.Label(self, text = (f"Account Name: {account_data['account_name']}"), font=fonts.body_font, bg="#F5F5F0", anchor = "w", )
         account_name.grid(column = 0, row = 7, sticky = 'w')
         account_name.configure(fg="#333333")
     
@@ -100,40 +97,35 @@ class BankAccountWindow(tk.Toplevel):
         account_currency_label.grid(column = 0, row = 10, sticky = 'w')
         account_currency_label.configure(fg="#333333")
     
-        view_transactions_button = tk.Button(self, text="Transaction History", command=lambda: self.open_transaction_window(user_id, account_id),  bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-        view_transactions_button.place(relx=0.98, rely=0.55, anchor = "e")
-        view_transactions_button.configure(fg="#333333")
+        account_buttons.append(tk.Button(self, text="Transaction History", command=lambda: self.open_transaction_window(user_id, account_id),  bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0"))
     
         delete_button = tk.Button(self, text = "Delete account", bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0", command=lambda:  True if not self.delete_account(user_id, account_id) else  self.back_to_landing_page())
-        delete_button.place(relx=0.98, rely=0.35, anchor = "e")
+        delete_button.place(relx=0.98, rely=0.25, anchor = "e")
         delete_button.configure(fg="red")
     
         if account_data['card_connected']:
-            view_card_button = tk.Button(self, text="View card", command=lambda: ShowCardWindow(self, user_id, account_data["card_number"]), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-            view_card_button.place(relx=0.98, rely=0.45, anchor = "e")
-            view_card_button.configure(fg="#333333")
+            account_buttons.append(tk.Button(self, text="View card", command=lambda: ShowCardWindow(self, user_id, account_data["card_number"]), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0"))
+
         else:
-            order_card_button = tk.Button(self, text="Order card", command=lambda: generate_card.create_card(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-            order_card_button.place(relx=0.98, rely=0.45, anchor = "e")
-            order_card_button.configure(fg="#333333")
+            account_buttons.append(tk.Button(self, text="Order card", command=lambda: generate_card.create_card(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0"))
+
         if account_data['account_type'] == "SAV":
             if account_data['is_locked'] == False:
-                lock_account_button = tk.Button(self, text="Lock Account", command=lambda: self.toggle_lock(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-                lock_account_button.place(relx=0.98, rely=0.40, anchor = "e")
-                lock_account_button.configure(fg="#333333")
-            else:
-                lock_account_button = tk.Button(self, text="Unlock Account", command=lambda: self.toggle_lock(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-                lock_account_button.place(relx=0.98, rely=0.40, anchor = "e")
-    
-            back_to_landing_page_button = tk.Button(self, text="Back to Landing Page", command=lambda: self.back_to_landing_page(self.parent), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-            back_to_landing_page_button.place(relx=0.98, rely=0.60, anchor = "e")
-            back_to_landing_page_button.configure(fg="#333333")
-        else:
-            back_to_landing_page_button = tk.Button(self, text="Back to Landing Page", command=lambda: self.back_to_landing_page(self.parent), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-            back_to_landing_page_button.place(relx=0.98, rely=0.60, anchor = "e")
-            back_to_landing_page_button.configure(fg="#333333")
+                account_buttons.append(tk.Button(self, text="Lock Account", command=lambda: self.toggle_lock(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0"))
 
-        print(delete_button.winfo_rootx())
+            else:
+                account_buttons.append(tk.Button(self, text="Unlock Account", command=lambda: self.toggle_lock(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0"))
+    
+            account_buttons.append(tk.Button(self, text="Back to Landing Page", command=lambda: self.back_to_landing_page(self.parent), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0"))
+
+        else:
+            account_buttons.append(tk.Button(self, text="Back to Landing Page", command=lambda: self.back_to_landing_page(self.parent), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0"))
+
+        rel_y_pos = 0.35
+        for button in account_buttons:
+            button.place(relx = 0.98, rely = rel_y_pos, anchor="e")
+            button.configure(fg="#333333")
+            rel_y_pos += 0.05
     
     def delete_account(self, user_id, account_id):
     
