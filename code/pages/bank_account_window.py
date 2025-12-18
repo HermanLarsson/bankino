@@ -58,7 +58,7 @@ def show_account_data(user_id, account_id):
         if account_data['savings_goal'] == 0:
             print("Creating Butoné")
             create_goal_button = tk.Button(bank_account_window, text="Create Savings Goal", font=fonts.button_font, bg="#FFFFFF", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not create_savings_goal(user_id, account_id, account_data['balance']) else show_account_data(user_id, account_id))
-            create_goal_button.grid(row=12, column=1, sticky="w")
+            create_goal_button.place(rely=0.65, relx=0.49)
             create_goal_button.configure(fg="#333333")
         
         elif account_data['savings_goal'] > 0:
@@ -66,7 +66,7 @@ def show_account_data(user_id, account_id):
             savings_goal = account_data['savings_goal']
             goal_percent = round(100*(current_amount / savings_goal), 2)
             
-            savings_goal_title = tk.Label(bank_account_window, text=f"Savings Goal: " + str(goal_percent) + "%", font= fonts.header2_font)
+            savings_goal_title = tk.Label(bank_account_window, text=f"Savings Goal: " + str(goal_percent) + "%", font= fonts.header2_font, bg="#F5F5F0")
             savings_goal_title.place(relx=0.1, rely=0.73)
             savings_goal_title.configure(fg="#333333")
 
@@ -80,8 +80,8 @@ def show_account_data(user_id, account_id):
             delete_savings_goal_button.place(relx = 0.1, rely = 0.9)
             delete_savings_goal_button.configure(fg="#333333")
 
-            savings_goal_bar_text = tk.Label(bank_account_window, text=f"{current_amount}SEK / {savings_goal}SEK", font=fonts.value_font)
-            savings_goal_bar_text.place(relx= 0.9, rely= 0.87, anchor="ne")
+            savings_goal_bar_text = tk.Label(bank_account_window, text=f"{current_amount}SEK / {savings_goal}SEK", font=fonts.value_font, bg="#F5F5F0")
+            savings_goal_bar_text.place(relx= 0.9, rely= 0.9, anchor="ne")
             savings_goal_bar_text.configure(fg="#333333")
 
 
@@ -111,7 +111,7 @@ def show_account_data(user_id, account_id):
     account_currency.configure(fg="#333333")
 
     view_transactions_button = tk.Button(bank_account_window, text="Transaction History", command=lambda: open_transaction_window(user_id, account_id),  bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-    view_transactions_button.grid(column = 2, row = 12, sticky = 'w')
+    view_transactions_button.place(rely=0.65, relx=0.0)
     view_transactions_button.configure(fg="#333333")
 
 
@@ -120,25 +120,25 @@ def show_account_data(user_id, account_id):
     delete_button.configure(fg="red")
 
     if account_data['card_connected']:
-        view_card_button = tk.Button(bank_account_window, text="View card", command=lambda: ShowCardWindow(bank_account_window, user_id, account_data["card_number"]))
-        view_card_button.grid(column = 15, row = 12, sticky = "w")
+        view_card_button = tk.Button(bank_account_window, text="View card", command=lambda: ShowCardWindow(bank_account_window, user_id, account_data["card_number"]), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
+        view_card_button.place(rely=0.65, relx=0.29)
         view_card_button.configure(fg="#333333")
     else:
         order_card_button = tk.Button(bank_account_window, text="Order card", command=lambda: order_card(), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-        order_card_button.grid(column = 15, row = 12, sticky = "w")
+        order_card_button.place(rely=0.65, relx=0.29)
         order_card_button.configure(fg="#333333")
 
     if account_data['account_type'] == "SAV":
         lock_account_button = tk.Button(bank_account_window, text="Lock Account", command=lambda: toggle_lock(user_id, account_id), bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-        lock_account_button.grid(column = 3, row = 12, sticky = 'w')
+        lock_account_button.place(rely=0.65, relx=0.38)
         lock_account_button.configure(fg="#333333")
 
         back_to_landing_page_button = tk.Button(bank_account_window, text="Back to Landing Page", command=back_to_landing_page, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-        back_to_landing_page_button.grid(column = 4, row = 12, sticky = 'w')
+        back_to_landing_page_button.place(rely=0.65, relx=0.14)
         back_to_landing_page_button.configure(fg="#333333")
     else:
         back_to_landing_page_button = tk.Button(bank_account_window, text="Back to Landing Page", command=back_to_landing_page, bg="#F5F5F0",font = fonts.button_font, bd = 0, highlightbackground = "#F5F5F0")
-        back_to_landing_page_button.grid(column = 4, row = 12, sticky = 'w')
+        back_to_landing_page_button.place(rely=0.65, relx=0.14)
         back_to_landing_page_button.configure(fg="#333333")
 
 
