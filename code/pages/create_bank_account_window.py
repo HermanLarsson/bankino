@@ -45,7 +45,7 @@ def display_create_bank_account():
 
     #"Create new bank account" buttom
     create_button = tk.Button(create_bank_account_window, text="Create New Bank Account", command=run_create_new_account,
-                               font=tkFont.button_font, bg="#5D866C", fg="#F5F5F0", bd=0, highlightbackground="#F5F5F0")
+                               font=tkFont.button_font, bg="#F5F5F0", fg="#333333", bd=0, highlightbackground="#F5F5F0")
     create_button.grid(column=1, row=17, pady=10, sticky="w")
 
 
