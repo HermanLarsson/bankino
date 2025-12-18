@@ -1,19 +1,20 @@
 import tkinter as tk
 from tkinter import ttk
 import backend.db_queries as db_queries
-import pages.create_bank_account_window as create_bank_account_window
+
 from pages.bank_account_window import BankAccountWindow
 import pages.deposit_funds_window as deposit_funds_window
 import pages.transfer_funds_window as transfer_funds_window
 from datetime import date
 from pages.account_management_window import AccountManagementWindow
+from pages.create_bank_account_window import CreateBankAccount
 import fonts.bankino_fonts as fonts
 
 
 
 #Program starts here
 #Main functions which runs the program
-class landing_page_window(tk.Toplevel):
+class LandingPageWindow(tk.Toplevel):
 
     def __init__(self, user_id, parent):
         super().__init__(parent)
@@ -79,7 +80,7 @@ class landing_page_window(tk.Toplevel):
         deposit_funds_button.place(x = 690, y = 30)
 
         #Creates create new bank account button
-        create_bank_account_button = tk.Button(self, text="Create Account", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: create_bank_account_window.load_window(self, user_id))
+        create_bank_account_button = tk.Button(self, text="Create Account", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: CreateBankAccount(self))
         create_bank_account_button.place(x = 800, y = 30)
 
     #Creates labels for each accounts id, name and amount as well as button
