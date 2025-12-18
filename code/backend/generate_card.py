@@ -77,11 +77,11 @@ def generate_expiration_date():
 
     
 # Create a new card with generated card number, expiration date, and security code
-def create_card(user_id, account_id, first_name, last_name, middle_name):
-    
+def create_card(user_id, account_id):
+    first_name, middle_name, last_name = db_queries.get_name(user_id)
     card_number = generate_card_number()
     expiration_date = generate_expiration_date()
     security_code = generate_security_code()
     
-    update_cards_json(user_id, account_id, card_number, expiration_date, security_code, first_name, last_name, middle_name)
+    update_cards_json(user_id, account_id, card_number, expiration_date, security_code, first_name, middle_name, last_name)
     update_accounts_json(user_id, account_id, card_number)
