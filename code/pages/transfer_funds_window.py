@@ -63,8 +63,8 @@ class TransferFundsWindow(tk.Toplevel):
         to_label = tk.Label(self, text="Transfer to (account id):", bg="#F5F5F0", font=fonts.body_font, fg="#333333")
         to_label.grid(column=0, row=curr_row + 2, padx=10, pady=10, sticky="e")
 
-        to_account = tk.Entry(self)
-        to_account.grid(column=1, row=curr_row + 2, padx=10, pady=10, sticky="w")
+        self.to_account = tk.Entry(self)
+        self.to_account.grid(column=1, row=curr_row + 2, padx=10, pady=10, sticky="w")
 
         # Amount label
         amount_label = tk.Label(self, text="Amount:", bg="#F5F5F0", font=fonts.body_font, fg="#333333")
@@ -74,7 +74,7 @@ class TransferFundsWindow(tk.Toplevel):
         self.amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
         # confirm button
-        confirm_button = tk.Button(self,text="Confirm", font=fonts.button_font, bg="#F5F5F0", fg="#333333",bd=0,highlightbackground="#F5F5F0",command= self.process_transfer())
+        confirm_button = tk.Button(self,text="Confirm", font=fonts.button_font, bg="#F5F5F0", fg="#333333",bd=0,highlightbackground="#F5F5F0",command= lambda: self.process_transfer())
         confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
