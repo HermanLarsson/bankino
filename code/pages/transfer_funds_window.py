@@ -3,7 +3,7 @@ from tkinter import messagebox
 import re
 
 import backend.db_queries as db_queries
-import backend.logic_for_transfer_funds as transfer_funds
+import backend.transfer_funds as transfer_funds
 import fonts.bankino_fonts as fonts
 
 
