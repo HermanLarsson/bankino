@@ -1,7 +1,8 @@
 import backend.db_queries as db_queries
 import tkinter as tk
+import fonts.bankino_fonts as tkFont
+from tkinter import *
 import re
-import fonts.bankino_fonts as fonts
 
 class DepositFundsWindow(tk.Toplevel):
 
@@ -12,8 +13,9 @@ class DepositFundsWindow(tk.Toplevel):
         self.avail_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
         # Window setup
-        self.title("Bankino")
-        self.geometry("600x400")
+        self.geometry('600x600')
+        self.configure(bg="#F5F5F0")
+        self.resizable(width=False, height=False)
 
         # GUI setup
         ROWS = 20
@@ -22,41 +24,46 @@ class DepositFundsWindow(tk.Toplevel):
             self.columnconfigure(i, weight=1)
         for i in range(ROWS):
             self.rowconfigure(i, weight=1)
+        
+        # Nav bar
+        nav_bar = tk.Frame(self, bg="#5D866C", width=600, height=124)
+        nav_bar.place(x=0, y=0)
 
         # Header 
-        window_label = tk.Label(self, text="Deposit Funds", font=fonts.header2_font)
-        window_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+        window_label = tk.Label(self, text="Deposit Funds", bg="#5D866C", fg="#F5F5F0", font=tkFont.header_font)
+        window_label.place(x=20, y=16)
 
-        amount_label = tk.Label(self, text="Amount:")
-        amount_label.grid(column=0, row=4, padx=10, pady=10, sticky="e")
+        amount_label = tk.Label(self, text="Amount:", bg="#F5F5F0", fg="#333333", font=tkFont.body_font)
+        amount_label.grid(column=0, row=10, padx=10, pady=10, sticky="e")
 
-        self.amount_entry = tk.Entry(self)
-        self.amount_entry.grid(column=1, row=4, padx=10, pady=10, sticky="w")
+        self.amount_entry = tk.Entry(self, font=tkFont.body_font)
+        self.amount_entry.grid(column=1, row=10, padx=10, pady=10, sticky="w")
 
         # Selection of account 
-        self.create_account_choices()
+        last_row = self.create_account_choices()
         
         # Confirm button
-        confirm_button = tk.Button(self, text="Deposit", command=self.process_deposit)
-        confirm_button.grid(column=5, row=10, sticky="S")
+        confirm_button = tk.Button(self, text = "Deposit", command=lambda : self.process_deposit(), font=tkFont.button_font, bg="#F5F5F0", fg="#333333", bd=0, highlightbackground="#F5F5F0")
+        confirm_button.grid(column=1, row=last_row + 1, sticky="S")
 
    
     def create_account_choices(self):
         account_buttons = []
         account_counter = 0
-        current_row = 6
+        current_row = 11
 
         # Saves the account the user selected
         self.account_choice = tk.StringVar(self, next(iter(self.avail_accounts)))
 
-       # Loops through the users' accounts and creates the radiobutton the user can select which account to transfer from
+    #Loops through all the user's accounts and adds them to a list of the avail. choices.
+    #Then creates a button for the current account and stores the button in the list of buttons
         for account in self.avail_accounts.items():
-            account_buttons.append(
-                tk.Radiobutton(self, text=account[0] + " - " + account[1]["account_name"], value=account[0], variable=self.account_choice))
-            
-            account_buttons[account_counter].grid(column=0, row=current_row)
+            account_buttons.append(tk.Radiobutton(self, text = account[0] + " - " + account[1]['account_name'], value = account[0], variable = self.account_choice, bg="#F5F5F0", fg="#333333", font=tkFont.body_font))
+            account_buttons[account_counter].grid(column = 1, row = current_row)
             current_row += 1
             account_counter += 1
+
+        return current_row
 
     # Validation and processing of the deposit
     def process_deposit(self):
