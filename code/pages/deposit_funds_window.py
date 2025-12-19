@@ -1,79 +1,85 @@
 import backend.db_queries as db_queries
 import tkinter as tk
-import tkinter.font as tkFont
-from tkinter import *
 import re
+import fonts.bankino_fonts as fonts
 
-def create_account_choices(avail_accounts):
-    account_buttons = []
-    #Counter for the loop
-    account_counter = 0
-    #Starting at row 6 in the layout of the page
-    current_row = 6
+class DepositFundsWindow(tk.Toplevel):
 
-    global account_choice
-    account_choice = StringVar(deposit_funds_window, next(iter(avail_accounts)))
+    def __init__(self, parent, user_id):
+        super().__init__(parent)
 
-    #Loops through all the user's accounts and adds them to a list of the avail. choices.
-    #Then creates a button for the current account and stores the button in the list of buttons
-    for account in avail_accounts.items():
-        account_buttons.append(tk.Radiobutton(deposit_funds_window, text = account[0] + " - " + account[1]['account_name'], value = account[0], variable = account_choice))
-        account_buttons[account_counter].grid(column = 0, row = current_row)
-        current_row += 1
-        account_counter += 1
+        self.user_id = user_id
+        self.avail_accounts = db_queries.get_bank_accounts_by_user(user_id)
 
-def process_deposit(user_id, account_id, amount):
-    print("Processing")
-    valid_input = r'\d+([.,]\d{2})?'
-    if re.fullmatch(valid_input, amount):
-        try:
-            amount = re.sub(r',', r'.', amount)
-            amount = float(amount)
+        # Window setup
+        self.title("Bankino")
+        self.geometry("600x400")
 
-            if amount == 0:
-                tk.messagebox.showinfo("Error", "Input cannot be 0,00 SEK")
-            else:
-                db_queries.deposit_funds(user_id, account_id, amount)
-                print(f"{amount} succcessfully deposited to account {account_id}")
-                tk.messagebox.showinfo("Success", f"{amount:.2f} SEK succcessfully deposited to account {account_id}")
-                deposit_funds_window.destroy()
-        except TypeError: 
-            print("Invalid amount entered!")  
-    else:
-        print("Amount must be greater than 0")
-        tk.messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
-    
-def load_window(parent, user_id):
-    avail_accounts = db_queries.get_bank_accounts_by_user(user_id)
+        # GUI setup
+        ROWS = 20
+        COLUMNS = 20
+        for i in range(COLUMNS):
+            self.columnconfigure(i, weight=1)
+        for i in range(ROWS):
+            self.rowconfigure(i, weight=1)
 
-    global deposit_funds_window
-    # uses Toplevel instead of Tk since it is a 'child' window
-    deposit_funds_window = tk.Toplevel(parent) #Creates the window
-    deposit_funds_window.title('Bankino')
-    deposit_funds_window.geometry('600x400')
+        # Header 
+        window_label = tk.Label(self, text="Deposit Funds", font=fonts.header2_font)
+        window_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
 
-    #Configures the amount of columns and rows
-    ROWS = 20
-    COLUMNS = 20
-    for i in range(COLUMNS):
-        deposit_funds_window.columnconfigure(i, weight=1)
-    for i in range(ROWS):
-        deposit_funds_window.rowconfigure(i, weight=1)
+        amount_label = tk.Label(self, text="Amount:")
+        amount_label.grid(column=0, row=4, padx=10, pady=10, sticky="e")
 
-    global header2_font
-    header2_font = tkFont.Font(family="Calibri", size = 25, weight = "bold")
+        self.amount_entry = tk.Entry(self)
+        self.amount_entry.grid(column=1, row=4, padx=10, pady=10, sticky="w")
 
-    window_label = tk.Label(deposit_funds_window, text="Deposit Funds")
-    window_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+        # Selection of account 
+        self.create_account_choices()
+        
+        # Confirm button
+        confirm_button = tk.Button(self, text="Deposit", command=self.process_deposit)
+        confirm_button.grid(column=5, row=10, sticky="S")
 
-    amount_label = tk.Label(deposit_funds_window, text="Amount:")
-    amount_label.grid(column=0, row=4, padx=10, pady=10, sticky="e")
+   
+    def create_account_choices(self):
+        account_buttons = []
+        account_counter = 0
+        current_row = 6
 
-    amount_entry = tk.Entry(deposit_funds_window)
-    amount_entry.grid(column=1, row=4, padx=10, pady=10, sticky="w")
-    
-    create_account_choices(avail_accounts)
+        # Saves the account the user selected
+        self.account_choice = tk.StringVar(self, next(iter(self.avail_accounts)))
 
-    confirm_button = tk.Button(deposit_funds_window, text = "Deposit", command=lambda : process_deposit(user_id, account_choice.get(), amount_entry.get()))
-    confirm_button.grid(column=5, row=10, sticky="S")
+       # Loops through the users' accounts and creates the radiobutton the user can select which account to transfer from
+        for account in self.avail_accounts.items():
+            account_buttons.append(
+                tk.Radiobutton(self, text=account[0] + " - " + account[1]["account_name"], value=account[0], variable=self.account_choice))
+            
+            account_buttons[account_counter].grid(column=0, row=current_row)
+            current_row += 1
+            account_counter += 1
 
+    # Validation and processing of the deposit
+    def process_deposit(self):
+        print("Processing")
+
+        amount = self.amount_entry.get()
+        account_id = self.account_choice.get()
+
+        valid_input = r"\d+([.,]\d{2})?"
+        if re.fullmatch(valid_input, amount):
+            try:
+                amount = amount.replace(",", ".")
+                amount = float(amount)
+
+                if amount == 0:
+                    tk.messagebox.showinfo("Error", "Input cannot be 0,00 SEK")
+                else:
+                    db_queries.deposit_funds(self.user_id, account_id, amount)
+                    print(f"{amount} successfully deposited to account {account_id}")
+                    tk.messagebox.showinfo("Success", f"{amount:.2f} SEK successfully deposited to account {account_id}")
+                    self.destroy()
+            except TypeError:
+                print("Invalid amount entered!")
+        else:
+            print("Amount must be greater than 0")
+            tk.messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
