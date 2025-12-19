@@ -82,14 +82,13 @@ class TransferFundsWindow(tk.Toplevel):
         user_accounts = db_queries.get_bank_accounts_by_user(self.user_id)
 
         if user_accounts[from_acc_input]['is_locked']:
-            answer = messagebox.askquestion(
-                "Locked Account",
-                f"""Account {from_acc_input} is locked.
+            answer = messagebox.askquestion("Locked Account", 
+            f"""Account {from_acc_input} is locked.
 
-Continuing with this transfer will incur a 100 SEK fine.
+            Continuing with this transfer will incur a 100 SEK fine.
 
-Would you like to continue with the transfer?"""
-            )
+            Would you like to continue with the transfer?"""
+        )
 
             if answer == "no":
                 return
@@ -134,26 +133,13 @@ Would you like to continue with the transfer?"""
                     )
                     return
 
-                transfer_funds.transfer_money(
-                    self.user_id,
-                    from_acc_input,
-                    to_acc_input,
-                    amount_value
-                )
+                transfer_funds.transfer_money(self.user_id, from_acc_input, to_acc_input, amount_value)
 
-                messagebox.showinfo(
-                    "Success",
-                    f"{amount_value:.2f} SEK successfully transferred from "
-                    f"{from_acc_input} to {to_acc_input}"
-                )
-
+                messagebox.showinfo("Success", f"{amount_value:.2f} SEK successfully transferred from "f"{from_acc_input} to {to_acc_input}")
                 self.destroy()
 
             except ValueError:
                 messagebox.showinfo("Error", "Invalid amount entered")
         else:
-            messagebox.showinfo(
-                "Error",
-                "Input must be positive and have 0 or 2 decimal places"
-            )
+            messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
 
