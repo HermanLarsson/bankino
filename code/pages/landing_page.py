@@ -75,7 +75,7 @@ class landing_page_window(tk.Toplevel):
         transfer_funds_button.place(x = 571, y = 30)
 
         # Deposit funds button
-        deposit_funds_button = tk.Button(self, text="Deposit", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: deposit_funds_window.load_window(self, user_id))
+        deposit_funds_button = tk.Button(self, text="Deposit", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: deposit_funds_window.DepositFundsWindow(self, user_id))
         deposit_funds_button.place(x = 690, y = 30)
 
         #Creates create new bank account button
