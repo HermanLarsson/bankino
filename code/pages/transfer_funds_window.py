@@ -132,11 +132,13 @@ class TransferFundsWindow(tk.Toplevel):
                         f"Account {from_acc_input} does not have sufficient funds"
                     )
                     return
+                try:
+                    transfer_funds.transfer_money(self.user_id, from_acc_input, to_acc_input, amount_value)
 
-                transfer_funds.transfer_money(self.user_id, from_acc_input, to_acc_input, amount_value)
-
-                messagebox.showinfo("Success", f"{amount_value:.2f} SEK successfully transferred from "f"{from_acc_input} to {to_acc_input}")
-                self.destroy()
+                    messagebox.showinfo("Success", f"{amount_value:.2f} SEK successfully transferred from "f"{from_acc_input} to {to_acc_input}")
+                    self.destroy()
+                except Exception:
+                    messagebox.showinfo("Error", "Transfer failed, please try again")
 
             except ValueError:
                 messagebox.showinfo("Error", "Invalid amount entered")
