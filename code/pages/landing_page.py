@@ -72,7 +72,7 @@ class LandingPageWindow(tk.Toplevel):
         refresh_button.place(x = 461, y = 30)
 
         # Transfer funds button
-        transfer_funds_button = tk.Button(self, text="Transfer", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: transfer_funds_window.load_window(self, user_id))
+        transfer_funds_button = tk.Button(self, text="Transfer", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: transfer_funds_window.TransferFundsWindow(self, user_id))
         transfer_funds_button.place(x = 571, y = 30)
 
         # Deposit funds button
