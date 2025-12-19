@@ -1,6 +1,7 @@
 import tkinter as tk
 from tkinter import messagebox
 import re
+
 import backend.db_queries as db_queries
 import backend.logic_for_transfer_funds as transfer_funds
 import fonts.bankino_fonts as fonts
@@ -13,124 +14,146 @@ class TransferFundsWindow(tk.Toplevel):
 
         self.user_id = user_id
 
-        # Window setup
-        self.title("Bankino")
-        self.geometry("600x600")
-        self.configure(bg="#F5F5F0")
-        self.resizable(width=False, height=False)
+        # window setup
+        self.title("Bankino - Transfer Funds")
+        self.geometry("600x400")
+        self.configure(bg="#B6B6B6")
 
         # GUI setup
-        self.create_nav_bar()
-        self.grid_layout()
-        self.create_header()
-        self.display_transfer_funds()
-
-
-    def create_nav_bar(self):
-        nav_bar = tk.Frame(self, bg="#5D866C", width=1000, height=124)
-        nav_bar.place(x=0, y=0)
-
-    def grid_layout(self):
-    # Configures the amount of columns and rows
         ROWS = 20
         COLUMNS = 20
-
         for i in range(COLUMNS):
             self.columnconfigure(i, weight=1)
         for i in range(ROWS):
             self.rowconfigure(i, weight=1)
 
-    def create_header(self):
-        # Creates the header
-        header = tk.Label(self, text="Bankino", font=fonts.header_font, fg="#F5F5F0", bg="#5D866C")
-        header.place(x=20, y=16)
+        # Header 
+        header = tk.Label(self, text="Bankino", bg="#B6B6B6", font=fonts.header_font)
+        header.grid(column=1, row=0, sticky="w", pady=10)
+       
+        self.display_transfer_funds()
+
 
     def display_transfer_funds(self):
-        # Displays all labels
-        from_label = tk.Label(self, text="Choose account to transfer from:", font=fonts.body_font, bg="#F5F5F0", fg="#333333")
-        from_label.grid(column=0, row=3, padx=10, pady=10, sticky="e")
 
+       
+        from_label = tk.Label(self, text="Choose account to transfer from:", bg="#B6B6B6")
+        from_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+
+        # Get the user bank accounts
         accounts = db_queries.get_bank_accounts_by_user(self.user_id)
+
+        # Store the account the user transfers from
         self.from_account = tk.StringVar(self)
 
-        current_row = 3
-        
+        curr_row = 1
         for acc_id, acc_data in accounts.items():
-            current_row += 1
-            radiobutton = tk.Radiobutton(self, text=f"{acc_id} ({acc_data['account_name']})", variable=self.from_account, value=acc_id, font=fonts.body_font, bg="#F5F5F0", fg="#333333")
-            radiobutton.grid(column=1, row=current_row, sticky="w")
+            curr_row += 1
+            radiobutton = tk.Radiobutton(self, text=f"{acc_id} ({acc_data['account_name']})", variable=self.from_account, value=acc_id, bg="#B6B6B6")
+            radiobutton.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
-        to_label = tk.Label(self, text="Transfer to (account id):", font=fonts.body_font, bg="#F5F5F0", fg="#333333")
-        to_label.grid(column=0, row=current_row + 1, padx=10, pady=10, sticky="e")
+        # To account label
+        to_label = tk.Label(self, text="Transfer to (account id):", bg="#B6B6B6")
+        to_label.grid(column=0, row=curr_row + 2, padx=10, pady=10, sticky="e")
 
-        self.to_account_entry = tk.Entry(self)
-        self.to_account_entry.grid(column=1, row=current_row + 1, sticky="w")
+        self.to_account = tk.Entry(self)
+        self.to_account.grid(column=1, row=curr_row + 2, padx=10, pady=10, sticky="w")
 
-        amount_label = tk.Label(self, text="Amount:", font=fonts.body_font, bg="#F5F5F0", fg="#333333")
-        amount_label.grid(column=0, row=current_row + 2, padx=10, pady=10, sticky="e")
+        # Amount label
+        amount_label = tk.Label(self, text="Amount:", bg="#B6B6B6")
+        amount_label.grid(column=0, row=curr_row + 3, padx=10, pady=10, sticky="e")
 
-        self.amount_entry = tk.Entry(self)
-        self.amount_entry.grid(column=1, row=current_row + 2, sticky="w")
+        self.amount = tk.Entry(self)
+        self.amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
-        confirm_button = tk.Button(self, text="Confirm", font=fonts.button_font, bg="#F5F5F0", fg="#333333", bd=0, highlightbackground="#F5F5F0", command=self.process_transfer)
-        confirm_button.grid(column=1, row=current_row + 4, pady=20, sticky="w")
+        # Confirm button
+        confirm_button = tk.Button(self, text="Confirm", command=self.process_transfer)
+        confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
+
 
     def process_transfer(self):
-    # Validates and processes the transfer
-        from_acc = self.from_account.get()
-        to_acc = self.to_account_entry.get()
-        amount_input = self.amount_entry.get()
+        print("Processing")
+
+        # Varibles to save user input
+        from_acc_input = self.from_account.get()
+        to_acc_input = self.to_account.get()
+        amount_input = self.amount.get()
 
         user_accounts = db_queries.get_bank_accounts_by_user(self.user_id)
 
-        if from_acc == "":
-            messagebox.showinfo("Error", "Select an account to transfer from")
-            return
-
-        if user_accounts[from_acc]["is_locked"]:
+        if user_accounts[from_acc_input]['is_locked']:
             answer = messagebox.askquestion(
                 "Locked Account",
-                f"""Account {from_acc} is locked.
+                f"""Account {from_acc_input} is locked.
 
 Continuing with this transfer will incur a 100 SEK fine.
 
-Would you like to continue?"""
+Would you like to continue with the transfer?"""
             )
+
             if answer == "no":
                 return
-            db_queries.fine_user(self.user_id, from_acc)
+            else:
+                db_queries.fine_user(self.user_id, from_acc_input)
 
-        if to_acc == "":
+        if from_acc_input == "":
+            messagebox.showinfo("Error", "Select an account to transfer from")
+            return
+
+        if to_acc_input == "":
             messagebox.showinfo("Error", "Select an account to transfer to")
             return
 
-        if not db_queries.check_account_exists(to_acc):
-            messagebox.showinfo("Error", f"Account '{to_acc}' does not exist")
+        if amount_input == "":
+            messagebox.showinfo("Error", "Select an amount to transfer")
             return
 
-        if to_acc == from_acc:
+        if not db_queries.check_account_exists(to_acc_input):
+            messagebox.showinfo("Error", f"Account '{to_acc_input}' does not exist")
+            return
+
+        if to_acc_input == from_acc_input:
             messagebox.showinfo("Error", "Can't transfer to the same account")
             return
 
-        valid_amount = r"\d+([.,]\d{2})?"
-        if not re.fullmatch(valid_amount, amount_input):
-            messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimals")
-            return
+        valid_input = r'\d+([.,]\d{2})?'
+        if re.fullmatch(valid_input, amount_input):
+            try:
+                amount_input = amount_input.replace(",", ".")
+                amount_value = float(amount_input)
 
-        amount_value = float(amount_input.replace(",", "."))
-        if amount_value == 0:
-            messagebox.showinfo("Error", "Amount cannot be 0.00 SEK")
-            return
+                if amount_value == 0:
+                    messagebox.showinfo("Error", "Input cannot be 0.00 SEK")
+                    return
 
-        balance = user_accounts[from_acc]["balance"]
-        if not transfer_funds.check_sufficient_funds(balance, amount_value):
-            messagebox.showinfo("Error", "Insufficient funds")
-            return
+                current_balance = user_accounts[from_acc_input]['balance']
+                if not transfer_funds.check_sufficient_funds(current_balance, amount_value):
+                    messagebox.showinfo(
+                        "Error",
+                        f"Account {from_acc_input} does not have sufficient funds"
+                    )
+                    return
 
-        transfer_funds.transfer_money(self.user_id, from_acc, to_acc, amount_value)
+                transfer_funds.transfer_money(
+                    self.user_id,
+                    from_acc_input,
+                    to_acc_input,
+                    amount_value
+                )
 
-        messagebox.showinfo(
-            "Success",
-            f"{amount_value:.2f} SEK transferred from {from_acc} to {to_acc}"
-        )
-        self.destroy()
+                messagebox.showinfo(
+                    "Success",
+                    f"{amount_value:.2f} SEK successfully transferred from "
+                    f"{from_acc_input} to {to_acc_input}"
+                )
+
+                self.destroy()
+
+            except ValueError:
+                messagebox.showinfo("Error", "Invalid amount entered")
+        else:
+            messagebox.showinfo(
+                "Error",
+                "Input must be positive and have 0 or 2 decimal places"
+            )
+
