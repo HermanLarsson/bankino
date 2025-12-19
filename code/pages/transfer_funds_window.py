@@ -45,7 +45,7 @@ class TransferFundsWindow(tk.Toplevel):
 
        
         from_label = tk.Label(self, text="Transfer from account:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
-        from_label.grid(column=0, row=11, columnspan=2, padx=10, pady=10, sticky="w")
+        from_label.grid(column=0, row=13, columnspan=2, padx=10, pady=10, sticky="w")
 
         # Get the user bank accounts
         accounts = db_queries.get_bank_accounts_by_user(self.user_id)
@@ -53,7 +53,7 @@ class TransferFundsWindow(tk.Toplevel):
         # Store the account the user transfers from
         self.from_account = tk.StringVar(self)
 
-        curr_row = 10
+        curr_row = 12
         for acc_id, acc_data in accounts.items():
             curr_row += 1
             radiobutton = tk.Radiobutton(self,text=f"{acc_id} ({acc_data['account_name']})",variable=self.from_account,value=acc_id,bg="#F5F5F0", fg="#333333", font=fonts.body_font)
