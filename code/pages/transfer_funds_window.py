@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import messagebox
-import tkinter.font as tkFont 
+import fonts.bankino_fonts as tkFont 
 import re
 import backend.db_queries as db_queries 
 import backend.logic_for_transfer_funds as transfer_funds
@@ -12,8 +12,8 @@ transfer_funds_window = None
 def display_transfer_funds():
 
     # choose from accounts label    
-    from_label = tk.Label(transfer_funds_window, text="Choose account to transfer from:", bg="#B6B6B6")
-    from_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+    from_label = tk.Label(transfer_funds_window, text="Choose account to transfer from:", bg="#F5F5F0", fg="#333333", font=tkFont.body_font)
+    from_label.grid(column=0, row=10, columnspan=2, padx=10, pady=10, sticky="w")
     
     # Get the user bank accounts
     accounts = db_queries.get_bank_accounts_by_user(current_user_id)
@@ -21,34 +21,28 @@ def display_transfer_funds():
     # Store which account the transfer is from
     from_account = tk.StringVar(transfer_funds_window)
 
-    curr_row = 1
+    curr_row = 10
     for acc_id, acc_data in accounts.items():
         curr_row += 1
-        radiobutton = tk.Radiobutton(
-            transfer_funds_window,
-            text=f"{acc_id} ({acc_data['account_name']})",
-            variable=from_account,
-            value=acc_id,
-            bg="#B6B6B6"
-        )
+        radiobutton = tk.Radiobutton(transfer_funds_window,text=f"{acc_id} ({acc_data['account_name']})",variable=from_account,value=acc_id,bg="#F5F5F0", fg="#333333", font=tkFont.body_font)
         radiobutton.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
     # To account label
-    to_label = tk.Label(transfer_funds_window, text="Transfer to (account id):", bg="#B6B6B6")
+    to_label = tk.Label(transfer_funds_window, text="Transfer to (account id):", bg="#F5F5F0", font=tkFont.body_font, fg="#333333")
     to_label.grid(column=0, row=curr_row + 2, padx=10, pady=10, sticky="e")
 
-    to_account = tk.Entry(transfer_funds_window)
+    to_account = tk.Entry(transfer_funds_window, font=tkFont.body_font)
     to_account.grid(column=1, row=curr_row + 2, padx=10, pady=10, sticky="w")
 
     # Amount label
-    amount_label = tk.Label(transfer_funds_window, text="Amount:", bg="#B6B6B6")
+    amount_label = tk.Label(transfer_funds_window, text="Amount:", bg="#F5F5F0", font=tkFont.body_font, fg="#333333")
     amount_label.grid(column=0, row=curr_row + 3, padx=10, pady=10, sticky="e")
 
-    amount = tk.Entry(transfer_funds_window)
+    amount = tk.Entry(transfer_funds_window, font=tkFont.body_font)
     amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
     # confirm button
-    confirm_button = tk.Button(transfer_funds_window, text="Confirm", command=lambda: process_transfer(from_account, to_account, amount))
+    confirm_button = tk.Button(transfer_funds_window,text="Confirm", font=tkFont.button_font, bg="#F5F5F0", fg="#333333",bd=0,highlightbackground="#F5F5F0",command=lambda: process_transfer(from_account, to_account, amount))
     confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
@@ -141,8 +135,12 @@ def load_window(parent, user_id):
     global transfer_funds_window
     transfer_funds_window = tk.Toplevel(parent) # Creates window 
     transfer_funds_window.title("Bankino - Transfer Funds")
-    transfer_funds_window.geometry("600x400")
-    transfer_funds_window.configure(bg="#B6B6B6") # Configures background
+    transfer_funds_window.geometry("600x600")
+    transfer_funds_window.configure(bg="#F5F5F0") # Configures background
+    transfer_funds_window.resizable(width=False, height=False) 
+
+    nav_bar = tk.Frame( transfer_funds_window, bg="#5D866C", width=600, height=124)
+    nav_bar.place(x=0, y=0)
 
     # Configure grid layout
     ROWS = 20
@@ -153,9 +151,9 @@ def load_window(parent, user_id):
         transfer_funds_window.rowconfigure(i, weight=1)
 
     # Header
-    header_font = tkFont.Font(family="Times", size=25, weight="bold")
-    header = tk.Label(transfer_funds_window, text="Bankino", bg="#B6B6B6", font=header_font)
-    header.grid(column=1, row=0, sticky="w", pady=10)
+    header = tk.Label(transfer_funds_window,text="Transfer Funds",font=tkFont.header_font,bg="#5D866C",fg="#F5F5F0")
+    header.place(x=20, y=16)
+
 
     # Displays the GUI
     display_transfer_funds()
