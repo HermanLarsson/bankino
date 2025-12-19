@@ -1,10 +1,7 @@
 import tkinter as tk
-from tkinter import messagebox
+from tkinter import messagebox 
 import re
 import backend.db_queries as db_queries 
-import backend.transfer_funds as transfer_funds
-
-import backend.db_queries as db_queries
 import backend.transfer_funds as transfer_funds
 import fonts.bankino_fonts as fonts
 
@@ -19,9 +16,23 @@ class TransferFundsWindow(tk.Toplevel):
         # window setup
         self.title("Bankino - Transfer Funds")
         self.geometry("600x400")
-        self.configure(bg="#B6B6B6")
+        self.configure(bg="#F5F5F0")
+        self.resizable(width=False, height=False)
+        
+        self.create_grid()
+        self.create_nav_bar()   
+        self.display_transfer_funds()
+    
+    def create_nav_bar(self):
+        nav_bar = tk.Frame(self, bg="#5D866C", width=600, height=124)
+        nav_bar.place(x=0, y=0)
 
-        # GUI setup
+        #Creating header
+        header = tk.Label(self,text="Transfer Funds",font=fonts.header_font,bg="#5D866C",fg="#F5F5F0")
+        header.place(x=20, y=16)
+
+
+    def create_grid(self):
         ROWS = 20
         COLUMNS = 20
         for i in range(COLUMNS):
@@ -29,18 +40,12 @@ class TransferFundsWindow(tk.Toplevel):
         for i in range(ROWS):
             self.rowconfigure(i, weight=1)
 
-        # Header 
-        header = tk.Label(self, text="Bankino", bg="#B6B6B6", font=fonts.header_font)
-        header.grid(column=1, row=0, sticky="w", pady=10)
-       
-        self.display_transfer_funds()
-
 
     def display_transfer_funds(self):
 
        
-        from_label = tk.Label(self, text="Choose account to transfer from:", bg="#B6B6B6")
-        from_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+        from_label = tk.Label(self, text="Transfer from account:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        from_label.grid(column=0, row=11, columnspan=2, padx=10, pady=10, sticky="w")
 
         # Get the user bank accounts
         accounts = db_queries.get_bank_accounts_by_user(self.user_id)
@@ -48,28 +53,28 @@ class TransferFundsWindow(tk.Toplevel):
         # Store the account the user transfers from
         self.from_account = tk.StringVar(self)
 
-        curr_row = 1
+        curr_row = 10
         for acc_id, acc_data in accounts.items():
             curr_row += 1
-            radiobutton = tk.Radiobutton(self, text=f"{acc_id} ({acc_data['account_name']})", variable=self.from_account, value=acc_id, bg="#B6B6B6")
+            radiobutton = tk.Radiobutton(self,text=f"{acc_id} ({acc_data['account_name']})",variable=self.from_account,value=acc_id,bg="#F5F5F0", fg="#333333", font=fonts.body_font)
             radiobutton.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
         # To account label
-        to_label = tk.Label(self, text="Transfer to (account id):", bg="#B6B6B6")
+        to_label = tk.Label(self, text="Transfer to (account id):", bg="#F5F5F0", font=fonts.body_font, fg="#333333")
         to_label.grid(column=0, row=curr_row + 2, padx=10, pady=10, sticky="e")
 
         self.to_account = tk.Entry(self)
         self.to_account.grid(column=1, row=curr_row + 2, padx=10, pady=10, sticky="w")
 
         # Amount label
-        amount_label = tk.Label(self, text="Amount:", bg="#B6B6B6")
+        amount_label = tk.Label(self, text="Amount:", bg="#F5F5F0", font=fonts.body_font, fg="#333333")
         amount_label.grid(column=0, row=curr_row + 3, padx=10, pady=10, sticky="e")
 
         self.amount = tk.Entry(self)
         self.amount.grid(column=1, row=curr_row + 3, padx=10, pady=10, sticky="w")
 
-        # Confirm button
-        confirm_button = tk.Button(self, text="Confirm", command=self.process_transfer)
+        # confirm button
+        confirm_button = tk.Button(self,text="Confirm", font=fonts.button_font, bg="#F5F5F0", fg="#333333",bd=0,highlightbackground="#F5F5F0",command= lambda: self.process_transfer())
         confirm_button.grid(column=1, row=curr_row + 5, pady=10, sticky="w")
 
 
@@ -146,4 +151,3 @@ class TransferFundsWindow(tk.Toplevel):
                 messagebox.showinfo("Error", "Invalid amount entered")
         else:
             messagebox.showinfo("Error", "Input must be positive and have 0 or 2 decimal places")
-
