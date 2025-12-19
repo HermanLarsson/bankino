@@ -169,7 +169,7 @@ class BankAccountWindow(tk.Toplevel):
     def toggle_lock(self, user_id, account_id):
         users_accounts = db_queries.get_bank_accounts_by_user(user_id)
         if not users_accounts[account_id]["is_locked"]:
-            savings_window.load_window(account_id, self, user_id)
+            savings_window.SavingsWindow(self, account_id, user_id)
             return "Locked"
         else:
             answer = messagebox.askquestion('Are you sure?', f'''Account {account_id} is already Locked.
