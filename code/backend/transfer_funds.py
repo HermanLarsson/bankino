@@ -41,9 +41,12 @@ def transfer_money(user_id, from_account_id, to_account_id, amount):
         add_transaction_to_history(from_account, to_account, amount, transaction_date, from_account_id, to_account_id)
 
         write_to_accounts_json(all_accounts)
-
+        return True
+    
     except Exception as e:
         print(f"Error: {e}")
+        
+    return False
 
 def check_sufficient_funds(current_balance, withdrawal):
     if current_balance - withdrawal < 0:
