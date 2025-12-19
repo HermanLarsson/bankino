@@ -18,7 +18,7 @@ class LandingPageWindow(tk.Tk):
 
     def __init__(self, user_id):
         super().__init__()
-
+        fonts.initialize_fonts()
         # uses Toplevel instead of Tk since it is a 'child' window
         self.title('Bankino')
         self.geometry('1000x1000')
