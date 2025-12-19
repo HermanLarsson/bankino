@@ -1,6 +1,8 @@
 import tkinter as tk
 from tkinter import messagebox
 import re
+import backend.db_queries as db_queries 
+import backend.transfer_funds as transfer_funds
 
 import backend.db_queries as db_queries
 import backend.transfer_funds as transfer_funds
