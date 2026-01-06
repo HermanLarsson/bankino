@@ -44,7 +44,7 @@ class BankAccountWindow(tk.Toplevel):
             
             if account_data['savings_goal'] == 0:
                 print("Creating Butoné")
-                create_goal_button = tk.Button(self, text="Create Savings Goal", font=fonts.button_font, bg="#FFFFFF", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not self.create_savings_goal(user_id, account_id, account_data['balance']) else self.show_account_data(user_id, account_id))
+                create_goal_button = tk.Button(self, text="Create Savings Goal", font=fonts.button_font, bg="#F5F5F0", fg="#333333", bd = 0, highlightbackground="#F5F5F0", command=lambda: True if not self.create_savings_goal(user_id, account_id, account_data['balance']) else self.show_account_data(user_id, account_id))
                 create_goal_button.place(relx=0.13, rely=0.68)
             
             elif account_data['savings_goal'] > 0:

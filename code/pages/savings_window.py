@@ -1,5 +1,5 @@
 import tkinter as tk
-import tkinter.font as tkFont
+import fonts.bankino_fonts as fonts
 from tkinter import ttk, messagebox
 from datetime import datetime, timedelta
 import backend.db_queries as db_queries
@@ -8,15 +8,16 @@ import backend.db_queries as db_queries
 def set_timer(account_id, user_id):
 
     # Creating text input field for savings window
-    savings_text = tk.Label(savings_window, text = "Amount of days to lock.", font = header2_font)
-    savings_text.grid(row = 0, column = 0)
-    savings_input = tk.Entry(savings_window)
-    savings_input.grid(row = 1, column = 0)
+    savings_text = tk.Label(savings_window, text = "Amount of days to lock.", font = fonts.header2_font, bg="#F5F5F0", fg="#333333")
+    savings_text.grid(row = 8, column = 0, pady=10)
+    savings_input = tk.Entry(savings_window, font=fonts.body_font)
+    savings_input.grid(row = 9, column = 0, pady=10)
 
 
     # Creating button and calling information storage on click.
-    savings_button = tk.Button(savings_window, text= "Lock account", command = lambda : set_locked_period(savings_input.get(), account_id, user_id))
-    savings_button.grid(row = 2, column = 0)
+    savings_button = tk.Button(savings_window, text="Lock account", command=lambda: set_locked_period(savings_input.get(), account_id, user_id),
+    font=fonts.button_font, bg="#F5F5F0", fg="#333333",bd=0, highlightbackground="#F5F5F0")
+    savings_button.grid(row = 10, column = 0, pady=10)
 
 def set_locked_period(savings_input, account_id, user_id):
 
@@ -51,7 +52,10 @@ def load_window(account_id, previous_window, user_id):
         
     savings_window = tk.Toplevel(previous_window) # creates a new window on top of the previous one, uses Toplevel instead of Tk since.
     savings_window.title(f"Account: {account_id}")
-    savings_window.geometry('250x250')
+    savings_window.geometry('600x600')
+    savings_window.configure(bg="#F5F5F0")
+    savings_window.resizable(width=False, height=False)
+    
     # Configures the amount of columns and rows
     ROWS = 20
     COLUMNS = 20
@@ -60,21 +64,10 @@ def load_window(account_id, previous_window, user_id):
     for i in range(ROWS):
         savings_window.rowconfigure(i, weight = 1)
 
-    # Different fonts/formatting for labels
-    global header2_font
-    global header_font
-    global value_font
-    global header3_font
+    nav_bar = tk.Frame(savings_window, bg="#5D866C", width=600, height=124)
+    nav_bar.place(x=0, y=0)
 
-    header_font = tkFont.Font(family = "Calibri", size = 30, weight = "bold")
-    header2_font = tkFont.Font(family = "Calibri", size = 20, weight = "bold")
-    value_font = tkFont.Font(family = "Courier", size = 30, weight = "normal")
-    header3_font = tkFont.Font(family = "Calibri", size = 20, weight = "normal")
-
-
-    header = tk.Label(savings_window, text = "Bankino", font = header_font)
-    header.grid(column = 0, row = 0, sticky = tk.NSEW)
-    separator = ttk.Separator(savings_window, orient = "horizontal")
-    separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
+    header = tk.Label(savings_window, text="Bankino", font=fonts.header_font, bg="#5D866C", fg="#F5F5F0")
+    header.place(x=20, y=16)
 
     set_timer(account_id, user_id)

@@ -1,8 +1,9 @@
 import tkinter as tk
 from tkinter import messagebox
-import tkinter.font as tkFont
+import fonts.bankino_fonts as fonts
 import backend.password_checker as password_checker
 import backend.db_queries as db_queries
+from tkinter import ttk
 
 
 class AccountManagementWindow(tk.Toplevel):
@@ -12,7 +13,8 @@ class AccountManagementWindow(tk.Toplevel):
 
         self.title("Account Management")
         self.geometry("600x600")
-        self.configure(bg="#B6B6B6")
+        self.configure(bg="#F5F5F0")
+        self.resizable(width=False, height=False)
 
         self.grid_layout()
         self.create_header()
@@ -21,8 +23,8 @@ class AccountManagementWindow(tk.Toplevel):
 
     def grid_layout(self):
         # configure the grid
-        ROWS = 15
-        COLUMNS = 3
+        ROWS = 20
+        COLUMNS = 20
         for i in range(COLUMNS):
             self.columnconfigure(i, weight=1)
         for i in range(ROWS):
@@ -30,69 +32,81 @@ class AccountManagementWindow(tk.Toplevel):
 
 
     def create_header(self):
-        header_font = tkFont.Font(family="Times", size=25, weight="bold")
-        header = tk.Label(self, text="Bankino", bg="#B6B6B6", font=header_font)
-        header.grid(column=1, row=0, sticky="w", pady=10)
+
+        nav_bar = tk.Frame(self, bg="#5D866C", width=600, height=124)
+        nav_bar.place(x=0, y=0)
+
+        header = tk.Label(self, text="Bankino", font=fonts.header_font, bg="#5D866C", fg="#F5F5F0")
+        header.place(x=20, y=16)
 
 
     def display_account_management(self, user_id):
+
+        canvas = tk.Canvas(self, bg="#F5F5F0", highlightthickness=0)
+        scrollbar = ttk.Scrollbar(self, orient="vertical", command=canvas.yview)
+        scrollable_frame = tk.Frame(canvas, bg="#F5F5F0")
+        scrollable_frame.bind("<Configure>", lambda e: canvas.configure(scrollregion=canvas.bbox("all")))
+        canvas.create_window((0, 0), window=scrollable_frame, anchor="nw")
+        canvas.configure(yscrollcommand=scrollbar.set)
+        canvas.place(x=0, y=124, width=580, height=400) 
+        scrollbar.place(x=580, y=124, width=20, height=400) 
+
         # loads the user data from database
         user_data = db_queries.get_user_info(user_id)
 
         # first name input field
-        first_name_label = tk.Label(self, text="First Name:", bg="#B6B6B6")
-        first_name_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
-        self.first_name_entry = tk.Entry(self)
-        self.first_name_entry.grid(column=1, row=1, padx=10, pady=10, sticky="w")
+        first_name_label = tk.Label(scrollable_frame, text="First Name:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        first_name_label.grid(column=0, row=6, padx=10, pady=10, sticky="e")
+        self.first_name_entry = tk.Entry(scrollable_frame, font=fonts.body_font)
+        self.first_name_entry.grid(column=1, row=6, padx=10, pady=10, sticky="w")
         
         # middle name input field
-        middle_name_label = tk.Label(self, text="Middle Name:", bg="#B6B6B6")
-        middle_name_label.grid(column=0, row=2, padx=10, pady=10, sticky="e")
-        self.middle_name_entry = tk.Entry(self)
-        self.middle_name_entry.grid(column=1, row=2, padx=10, pady=10, sticky="w")
+        middle_name_label = tk.Label(scrollable_frame, text="Middle Name:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        middle_name_label.grid(column=0, row=7, padx=10, pady=10, sticky="e")
+        self.middle_name_entry = tk.Entry(scrollable_frame, font=fonts.body_font)
+        self.middle_name_entry.grid(column=1, row=7, padx=10, pady=10, sticky="w")
         
         # last name input field
-        last_name_label = tk.Label(self, text="Last Name:", bg="#B6B6B6")
-        last_name_label.grid(column=0, row=3, padx=10, pady=10, sticky="e")
-        self.last_name_entry = tk.Entry(self)
-        self.last_name_entry.grid(column=1, row=3, padx=10, pady=10, sticky="w")
+        last_name_label = tk.Label(scrollable_frame, text="Last Name:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        last_name_label.grid(column=0, row=8, padx=10, pady=10, sticky="e")
+        self.last_name_entry = tk.Entry(scrollable_frame, font=fonts.body_font)
+        self.last_name_entry.grid(column=1, row=8, padx=10, pady=10, sticky="w")
         
         # phone number input field
-        phone_label = tk.Label(self, text="Phone Number:", bg="#B6B6B6")
-        phone_label.grid(column=0, row=4, padx=10, pady=10, sticky="e")
-        self.phone_entry = tk.Entry(self)
-        self.phone_entry.grid(column=1, row=4, padx=10, pady=10, sticky="w")
+        phone_label = tk.Label(scrollable_frame, text="Phone Number:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        phone_label.grid(column=0, row=9, padx=10, pady=10, sticky="e")
+        self.phone_entry = tk.Entry(scrollable_frame, font=fonts.body_font)
+        self.phone_entry.grid(column=1, row=9, padx=10, pady=10, sticky="w")
         
         # email input field
-        email_label = tk.Label(self, text="Email:", bg="#B6B6B6")
-        email_label.grid(column=0, row=5, padx=10, pady=10, sticky="e")
-        self.email_entry = tk.Entry(self)
-        self.email_entry.grid(column=1, row=5, padx=10, pady=10, sticky="w")
+        email_label = tk.Label(scrollable_frame, text="Email:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        email_label.grid(column=0, row=10, padx=10, pady=10, sticky="e")
+        self.email_entry = tk.Entry(scrollable_frame, font=fonts.body_font)
+        self.email_entry.grid(column=1, row=10, padx=10, pady=10, sticky="w")
         
         # address input field
-        address_label = tk.Label(self, text="Address:", bg="#B6B6B6")
-        address_label.grid(column=0, row=6, padx=10, pady=10, sticky="e")
-        self.address_entry = tk.Entry(self)
-        self.address_entry.grid(column=1, row=6, padx=10, pady=10, sticky="w")
+        address_label = tk.Label(scrollable_frame, text="Address:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        address_label.grid(column=0, row=11, padx=10, pady=10, sticky="e")
+        self.address_entry = tk.Entry(scrollable_frame, font=fonts.body_font)
+        self.address_entry.grid(column=1, row=11, padx=10, pady=10, sticky="w")
     
-
         # current password input field
-        current_password_label = tk.Label(self, text="Current Password:", bg="#B6B6B6")
-        current_password_label.grid(column=0, row=7, padx=10, pady=10, sticky="e")
-        self.current_password_entry = tk.Entry(self, show="*")
-        self.current_password_entry.grid(column=1, row=7, padx=10, pady=10, sticky="w")
+        current_password_label = tk.Label(scrollable_frame, text="Current Password:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        current_password_label.grid(column=0, row=12, padx=10, pady=10, sticky="e")
+        self.current_password_entry = tk.Entry(scrollable_frame, show="*", font=fonts.body_font)
+        self.current_password_entry.grid(column=1, row=12, padx=10, pady=10, sticky="w")
     
         # new password input field
-        new_password_label = tk.Label(self, text="New Password:", bg="#B6B6B6")
-        new_password_label.grid(column=0, row=8, padx=10, pady=10, sticky="e")
-        self.new_password_entry = tk.Entry(self, show="*")
-        self.new_password_entry.grid(column=1, row=8, padx=10, pady=10, sticky="w")
+        new_password_label = tk.Label(scrollable_frame, text="New Password:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        new_password_label.grid(column=0, row=13, padx=10, pady=10, sticky="e")
+        self.new_password_entry = tk.Entry(scrollable_frame, show="*", font=fonts.body_font)
+        self.new_password_entry.grid(column=1, row=13, padx=10, pady=10, sticky="w")
 
         # confirm new password input field
-        confirm_password_label = tk.Label(self, text="Confirm Password:", bg="#B6B6B6")
-        confirm_password_label.grid(column=0, row=9, padx=10, pady=10, sticky="e")
-        self.confirm_password_entry = tk.Entry(self, show="*")
-        self.confirm_password_entry.grid(column=1, row=9, padx=10, pady=10, sticky="w")
+        confirm_password_label = tk.Label(scrollable_frame, text="Confirm Password:", bg="#F5F5F0", fg="#333333", font=fonts.body_font)
+        confirm_password_label.grid(column=0, row=14, padx=10, pady=10, sticky="e")
+        self.confirm_password_entry = tk.Entry(scrollable_frame, show="*", font=fonts.body_font)
+        self.confirm_password_entry.grid(column=1, row=14, padx=10, pady=10, sticky="w")
 
         # inserts for the fields from the database
         self.first_name_entry.insert(0, user_data["first_name"])  
@@ -118,8 +132,9 @@ class AccountManagementWindow(tk.Toplevel):
             self.address_entry.insert(0, "")
 
         # save button 
-        save_button = tk.Button(self, text="Save", command=lambda: self.update_account_info(user_id))
-        save_button.grid(column=1, row=10, pady=20, sticky="w")
+        save_button = tk.Button(self, text="Save", command=lambda: self.update_account_info(user_id), font=fonts.button_font, bg="#F5F5F0",
+        fg="#333333",bd=0, highlightbackground="#F5F5F0")
+        save_button.place(x=250, y=550)
 
 
     #Gets all the information from
