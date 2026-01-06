@@ -154,13 +154,24 @@ def write_to_cards_json(all_cards):
     return False
 
 
-def write_to_cache(user_id):
+def write_to_cache(user_id, program_state):
     try:
         with open ("./data/cache/logged_in_user.cache", "w") as file:
             file.write(user_id)
     except FileNotFoundError:
         print("Cache file not found")
+    try:
+        with open ("./data/cache/program_state.cache", "w") as file:
+            file.write(program_state)
+    except FileNotFoundError:
+        print("Cache file not found")
 
+def check_program_state():
+    try:
+        with open ("./data/cache/program_state.cache", "r") as file:
+            return file.read()
+    except FileNotFoundError:
+        print("Cache file not found")
 
 def reset_cache():
     try:
@@ -170,6 +181,14 @@ def reset_cache():
         os.makedirs("./data/cache")
         with open ("./data/cache/logged_in_user.cache", "w") as file:
             file.write("")
+
+    try:
+        with open ("./data/cache/program_state.cache", "w") as file:
+            file.write("logged_out")
+    except:
+        os.makedirs("./data/cache")
+        with open ("./data/cache/program_state.cache", "w") as file:
+            file.write("logged_out")
             
 
 # Creates and returns a unique user_id. 

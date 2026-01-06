@@ -14,11 +14,11 @@ import fonts.bankino_fonts as fonts
 
 #Program starts here
 #Main functions which runs the program
-class LandingPageWindow(tk.Toplevel):
+class LandingPageWindow(tk.Tk):
 
-    def __init__(self, user_id, parent):
-        super().__init__(parent)
-
+    def __init__(self, user_id):
+        super().__init__()
+        fonts.initialize_fonts()
         # uses Toplevel instead of Tk since it is a 'child' window
         self.title('Bankino')
         self.geometry('1000x1000')
@@ -37,7 +37,7 @@ class LandingPageWindow(tk.Toplevel):
         self.list_accounts(user_id)
 
         # calls the function to terminate the program when the user closes the landing page
-        self.protocol("WM_DELETE_WINDOW", lambda: self.close_landing_page(parent))
+        self.protocol("WM_DELETE_WINDOW", lambda: self.close_landing_page())
 
 
     def grid_layout(self):
@@ -72,16 +72,19 @@ class LandingPageWindow(tk.Toplevel):
         refresh_button.place(x = 461, y = 30)
 
         # Transfer funds button
-        transfer_funds_button = tk.Button(self, text="Transfer", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: transfer_funds_window.load_window(self, user_id))
+        transfer_funds_button = tk.Button(self, text="Transfer", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: transfer_funds_window.TransferFundsWindow(self, user_id))
         transfer_funds_button.place(x = 571, y = 30)
 
         # Deposit funds button
-        deposit_funds_button = tk.Button(self, text="Deposit", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: deposit_funds_window.load_window(self, user_id))
+        deposit_funds_button = tk.Button(self, text="Deposit", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: deposit_funds_window.DepositFundsWindow(self, user_id))
         deposit_funds_button.place(x = 690, y = 30)
 
         #Creates create new bank account button
         create_bank_account_button = tk.Button(self, text="Create Account", fg="#333333", bg="#FFFFFF", bd=0, highlightbackground = "#5D866C", font = fonts.nav_font, command=lambda: CreateBankAccount(self))
         create_bank_account_button.place(x = 800, y = 30)
+
+        logout_button = tk.Button(self, text="Log Out", fg="red", bg="#FFFFFF", bd=0, font= fonts.button_font, command=lambda: self.close_landing_page())
+        logout_button.place(relx=0.95, rely=0.95, anchor="se")
 
     #Creates labels for each accounts id, name and amount as well as button
     def list_accounts(self, user_id):
@@ -141,5 +144,6 @@ class LandingPageWindow(tk.Toplevel):
         return False
 
     # called when the user closes the landing page to destroy mainloop in login window to terminate program
-    def close_landing_page(self, login_window):
-        login_window.destroy()
+    def close_landing_page(self):
+        db_queries.write_to_cache("", "logged_out")
+        self.destroy()

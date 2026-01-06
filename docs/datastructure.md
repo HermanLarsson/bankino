@@ -54,7 +54,8 @@ The data for bank-accounts is stored seperately in ./data/bank_accounts. Also th
                 }
             ],
             card_connected: boolean,
-            card_number: string
+            card_number: string,
+            savings_goal : double ### 0 indicates NO savings goal
         }
     }
 }`

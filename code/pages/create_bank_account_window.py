@@ -1,6 +1,6 @@
 import tkinter as tk
 from tkinter import *
-import tkinter.font as tkFont
+import fonts.bankino_fonts as tkFont
 import backend.create_bank_account as create_bank_account
 import pages.landing_page as landing_page
 
@@ -10,8 +10,8 @@ class CreateBankAccount(tk.Toplevel):
         super().__init__(parent)
 
         self.title('Bankino')
-        self.geometry('600x400')
-        self.configure(bg="#B6B6B6") #Configures background
+        self.geometry('600x600')
+        self.configure(bg="#F5F5F0") #Configures background
 
         self.grid_layout()
         self.create_header()
@@ -28,17 +28,21 @@ class CreateBankAccount(tk.Toplevel):
 
     
     def create_header(self):
-        header_font = tkFont.Font(family="Times", size=25, weight="bold")
-        header = tk.Label(self, text="Bankino", bg="#B6B6B6", font=header_font)
-        header.grid(column=1, row=0, sticky="w", pady=10)
+           # Nav bar
+        nav_bar = tk.Frame(self, bg="#5D866C", width=600, height=124)
+        nav_bar.place(x=0, y=0)
+    
+    # Header
+        header = tk.Label(self, text="Create Bank Account", bg="#5D866C", fg="#F5F5F0", font=tkFont.header_font)
+        header.place(x=20, y=16)
     
 
     def display_create_bank_account(self):
-        account_name_label = tk.Label(self, text="Account Name:", bg="#B6B6B6")
-        account_name_label.grid(column=0, row=1, padx=10, pady=10, sticky="e")
+        account_name_label = tk.Label(self, text="Account Name:", bg="#F5F5F0", fg="#333333", font=tkFont.body_font)
+        account_name_label.grid(column=0, row=11, padx=10, pady=10, sticky="e")
 
-        self.account_name = tk.Entry(self)
-        self.account_name.grid(column=1, row=1, padx=10, pady=10, sticky="w")
+        self.account_name = tk.Entry(self, font=tkFont.body_font)
+        self.account_name.grid(column=1, row=11, padx=10, pady=10, sticky="w")
 
 
         account_types = [
@@ -50,22 +54,23 @@ class CreateBankAccount(tk.Toplevel):
         self.account_type = StringVar(self, "CAS (Casino Account)")
 
         #Radio button menu
-        curr_row = 2
+        curr_row = 12
         for lang in account_types:
             curr_row += 1
-            curr = Radiobutton(self, text=lang, variable=self.account_type, value=lang, bg="#B6B6B6")
+            curr = Radiobutton(self, text=lang, variable=self.account_type, value=lang, bg="#F5F5F0", fg="#333333", font=tkFont.body_font)
             curr.grid(column=1, row=curr_row, padx=1, pady=1, sticky="w")
 
         # Initialize needs_card as False by default
         self.needs_card = BooleanVar(self, False)
 
         # Generate card checkbox
-        generate_card_checkbox = tk.Checkbutton(self, text="Order Card", variable=self.needs_card, bg="#B6B6B6")
-        generate_card_checkbox.grid(column=1, row=7, pady=10, sticky="w")
+        generate_card_checkbox = tk.Checkbutton(self, text="Order Card", variable=self.needs_card, bg="#F5F5F0", fg="#333333", font=tkFont.body_font)
+        generate_card_checkbox.grid(column=1, row=18, pady=10, sticky="w")
 
         #"Create new bank account" buttom
-        create_button = tk.Button(self, text="Create New Bank Account", command=self.run_create_new_account)
-        create_button.grid(column=1, row=8, pady=10, sticky="w")
+        create_button = tk.Button(self, text="Create New Bank Account", command=self.run_create_new_account,
+                          font=tkFont.button_font, bg="#F5F5F0", fg="#333333", bd=0, highlightbackground="#F5F5F0")
+        create_button.grid(column=1, row=19, pady=10, sticky="w")
 
 
     #Calls the function that creates and stores a new bank account in data/bank_accounts/accounts.json

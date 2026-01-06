@@ -98,13 +98,13 @@ class LoginWindow(tk.Tk):
             return logged_in_user
         else:
             try:
-                db_queries.write_to_cache(logged_in_user)
+                db_queries.write_to_cache(logged_in_user, "logged_in")
                 print("Login successful.")
-                self.withdraw() # hides the login window
+                self.destroy() # hides the login window
 
                 # opens the landing page, passing the user_id of the logged in user and the login_window (as the parent)
-                LandingPageWindow(logged_in_user, self)
-                return logged_in_user
+                #LandingPageWindow(logged_in_user, self)
+                #return logged_in_user
             except FileNotFoundError:
                 print("Cache not found")
                 return ""
@@ -115,4 +115,5 @@ class LoginWindow(tk.Tk):
 
     # closes the window when the user exists the program
     def close_program(self):
+        db_queries.write_to_cache("", "closed")
         self.destroy()
