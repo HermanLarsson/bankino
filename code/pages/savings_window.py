@@ -1,4 +1,5 @@
 import tkinter as tk
+import fonts.bankino_fonts as fonts
 from tkinter import ttk, messagebox
 from datetime import datetime, timedelta
 import backend.db_queries as db_queries
@@ -15,7 +16,10 @@ class SavingsWindow(tk.Toplevel):
 
        # window setup
         self.title(f"Account: {account_id}")
-        self.geometry("250x250")
+        self.geometry('600x600')
+        self.configure(bg="#F5F5F0")
+        self.resizable(width=False, height=False)
+        
 
         # GUI setup
         ROWS = 20
@@ -26,25 +30,27 @@ class SavingsWindow(tk.Toplevel):
             self.rowconfigure(i, weight=1)
 
         # Create Header
-        header = tk.Label(self, text="Bankino", font=fonts.header_font)
-        header.grid(column=0, row=0, sticky=tk.NSEW)
+        nav_bar = tk.Frame(self, bg="#5D866C", width=600, height=124)
+        nav_bar.place(x=0, y=0)
 
-        separator = ttk.Separator(self, orient="horizontal")
-        separator.place(relx=0, rely=0.1, relwidth=1, relheight=0)
+        header = tk.Label(self, text="Bankino", font=fonts.header_font, bg="#5D866C", fg="#F5F5F0")
+        header.place(x=20, y=16)
 
         self.set_timer()
 
     # Creating input fields
     def set_timer(self):
-        savings_text = tk.Label(self, text="Amount of days to lock.", font=fonts.header2_font)
-        savings_text.grid(row=0, column=0)
+       # Creating text input field for savings window
+        savings_text = tk.Label(self, text = "Amount of days to lock.", font = fonts.header2_font, bg="#F5F5F0", fg="#333333")
+        savings_text.grid(row = 8, column = 0, pady=10)
+        self.savings_input = tk.Entry(self, font=fonts.body_font)
+        self.savings_input.grid(row = 9, column = 0, pady=10)
 
-        self.savings_input = tk.Entry(self)
-        self.savings_input.grid(row=1, column=0)
 
-        # Creating button
-        savings_button = tk.Button(self, text="Lock account", font=fonts.button_font, command=self.set_locked_period)
-        savings_button.grid(row=2, column=0)
+        # Creating button and calling information storage on click.
+        savings_button = tk.Button(self, text="Lock account", command=self.set_locked_period,
+        font=fonts.button_font, bg="#F5F5F0", fg="#333333",bd=0, highlightbackground="#F5F5F0")
+        savings_button.grid(row = 10, column = 0, pady=10)
 
 
     def set_locked_period(self):
